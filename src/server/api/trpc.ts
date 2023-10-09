@@ -114,11 +114,28 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   }
   return next({
     ctx: {
-      // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
     },
   });
 });
+
+const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
+  if (ctx.session?.user?.role !== 'admin') {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
+  return next();
+});
+
+const enforceUserIsUser = t.middleware(({ ctx, next }) => {
+  if (ctx.session?.user?.role !== 'user') {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
+  return next();
+});
+
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedureAdmin = t.procedure.use(enforceUserIsAdmin);
+export const protectedProcedureUser = t.procedure.use(enforceUserIsUser);
 
 /**
  * Protected (authenticated) procedure
@@ -128,4 +145,4 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+// export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);

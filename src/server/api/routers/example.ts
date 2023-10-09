@@ -3,6 +3,8 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
+  protectedProcedureAdmin,
+  protectedProcedureUser,
   publicProcedure,
 } from "~/server/api/trpc";
 
@@ -19,7 +21,7 @@ export const exampleRouter = createTRPCRouter({
     return ctx.db.example.findMany();
   }),
 
-  getSecretMessage: protectedProcedure.query(() => {
+  getSecretMessage: protectedProcedureUser.query(() => {
     return "you can now see this secret message!";
   }),
 });

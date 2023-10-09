@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { type Role } from "@prisma/client";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -21,7 +22,7 @@ declare module "next-auth" {
     user: DefaultSession["user"] & {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role?: Role;
     };
   }
 
@@ -38,14 +39,21 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async ({ session, user }) => {
+      // Fetch the user's role from the database using the user.id
+      const dbUser = await db.user.findUnique({ where: { id: user.id } }) as { role: Role } | null;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          role: dbUser?.role
+        },
+      };
+    },
   },
+
   adapter: PrismaAdapter(db),
   providers: [
     DiscordProvider({

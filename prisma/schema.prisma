@@ -59,8 +59,8 @@ model User {
 }
 
 model House {
-    id                      String   @id @default(cuid())
-    blok                    String
+    id                      String              @id @default(cuid())
+    blok                    String              @unique
     id_tenaga               String
     luas_tanah              Int
     luas_bangunan           Int
@@ -73,11 +73,24 @@ model House {
     kode_hum                String
     tarif_sewa              Int
     alamat                  String
-    created_at              DateTime @default(now())
-    updated_at              DateTime @updatedAt
-    user                    User     @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
+    created_at              DateTime            @default(now())
+    updated_at              DateTime            @updatedAt
+    user                    User                @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
+    catatan                 CatatanPenghunian[]
 
     @@index([id_tenaga])
+}
+
+model CatatanPenghunian {
+    id         String   @id @default(cuid())
+    blok       String
+    judul      String
+    catatan    String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    house      House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+
+    @@index([blok])
 }
 
 model VerificationToken {

@@ -26,22 +26,18 @@ export const houseRouter = createTRPCRouter({
             });
         }),
 
-    getAllHouses: protectedProcedure.query(async () => {
+    getAllHouses: protectedProcedureAdmin.query(async () => {
         return await db.house.findMany();
     }),
 
-    // // READ a Specific House by ID
-    getHouseById: protectedProcedure
-        .input(z.object({
-            id: z.string(),
-        }))
-        .query(async ({ input }) => {
-            return await db.house.findUnique({
-                where: { id: input.id }
-            });
-        }),
+    // Get House by User ID
+    getHouseByUserId: protectedProcedure.query(async ({ ctx }) => {
+        return await db.house.findMany({
+            where: { id_tenaga: ctx.session?.user?.id }
+        });
+    }),
 
-    // // UPDATE a House
+    // UPDATE a House
     updateHouse: protectedProcedureAdmin
         .input(z.object({
             id: z.string(),
@@ -67,7 +63,7 @@ export const houseRouter = createTRPCRouter({
             });
         }),
 
-    // // DELETE a House
+    // DELETE a House
     deleteHouse: protectedProcedureAdmin
         .input(z.object({
             id: z.string(),

@@ -86,6 +86,12 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
                 <Link href="/recap">
                   <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
                 </Link>
+                <Button
+                  onClick={() => void signOut()}
+                  className="flex text-gray-800 rounded-md text-center px-3 py-2"
+                >
+                  Sign Out
+                </Button>
               </div>
             )}
             {sessionData?.user.role === "user" && (
@@ -99,6 +105,12 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
                 <Link href="/recap">
                   <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
                 </Link>
+                <Button
+                  onClick={() => void signOut()}
+                  className="flex text-gray-800 rounded-md text-center px-3 py-2"
+                >
+                  Sign Out
+                </Button>
               </div>
             )}
           </div>

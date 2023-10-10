@@ -59,17 +59,14 @@ export default function Home() {
 function AuthShowcase() {
   const { data: sessionData } = useSession();
 
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
+  const { data: secretMessage } = api.example.getSecretMessage.useQuery(undefined, {
+    enabled: !!sessionData,
+  });
 
-  const { data: house } = api.house.getAllHouses.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
+  const { data: house } = api.house.getAllHouses.useQuery(undefined, {
+    enabled: !!sessionData,
+  });
   console.log(house)
-
 
   console.log(sessionData)
 
@@ -85,7 +82,9 @@ function AuthShowcase() {
       >
         {sessionData ? "Sign out" : "Sign in"}
       </button>
-      Hi {sessionData?.user?.name} 👋 u r a {sessionData?.user.role}
+      <p className="text-white font-bold">
+        Hi {sessionData?.user?.name} 👋 u r an {sessionData?.user.role}
+      </p>
     </div>
   );
 }

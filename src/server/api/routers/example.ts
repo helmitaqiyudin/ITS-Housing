@@ -3,8 +3,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
-  protectedProcedureAdmin,
-  protectedProcedureUser,
   publicProcedure,
 } from "~/server/api/trpc";
 
@@ -17,7 +15,7 @@ export const exampleRouter = createTRPCRouter({
       };
     }),
 
-  getSecretMessage: protectedProcedureUser.query(() => {
+  getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
 });

@@ -112,6 +112,9 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+  if (ctx.session?.user?.role === 'admin') {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
   return next({
     ctx: {
       session: { ...ctx.session, user: ctx.session.user },
@@ -123,19 +126,15 @@ const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
   if (ctx.session?.user?.role !== 'admin') {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
-  return next();
-});
-
-const enforceUserIsUser = t.middleware(({ ctx, next }) => {
-  if (ctx.session?.user?.role !== 'user') {
-    throw new TRPCError({ code: "FORBIDDEN" });
-  }
-  return next();
+  return next({
+    ctx: {
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 export const protectedProcedureAdmin = t.procedure.use(enforceUserIsAdmin);
-export const protectedProcedureUser = t.procedure.use(enforceUserIsUser);
 
 /**
  * Protected (authenticated) procedure

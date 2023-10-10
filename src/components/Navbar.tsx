@@ -54,6 +54,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
           
+          <div ref={ref}>
           {sessionData ? (
           <div className="md:hidden">
             <Burger opened={opened} onClick={toggle} color="indigo" />
@@ -70,7 +71,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
               </Button>
             </div>
           )}
-          <div className={`absolute top-16 left-0 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`} ref={ref}>
+          <div className={`absolute top-16 left-0 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`}>
             {sessionData?.user.role === "admin" && (
               <div className="flex flex-col text-start space-y-3 py-2 px-3">
                 <Link href="/manage-houses">
@@ -100,6 +101,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
                 </Link>
               </div>
             )}
+          </div>
           </div>
           <div className="hidden md:flex items-center">
             {sessionData ? (

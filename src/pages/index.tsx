@@ -64,6 +64,13 @@ function AuthShowcase() {
     { enabled: sessionData?.user !== undefined }
   );
 
+  const { data: house } = api.house.getAllHouses.useQuery(
+    undefined, // no input
+    { enabled: sessionData?.user !== undefined }
+  );
+  console.log(house)
+
+
   console.log(sessionData)
 
   return (

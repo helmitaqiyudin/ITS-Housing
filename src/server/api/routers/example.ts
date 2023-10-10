@@ -17,10 +17,6 @@ export const exampleRouter = createTRPCRouter({
       };
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.db.example.findMany();
-  }),
-
   getSecretMessage: protectedProcedureUser.query(() => {
     return "you can now see this secret message!";
   }),

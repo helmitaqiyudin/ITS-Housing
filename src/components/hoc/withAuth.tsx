@@ -45,61 +45,32 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
   const ComponentWithAuth = (props: Omit<T, keyof WithAuthProps>) => {
     const router = useRouter();
     const { query } = router;
+    const { data: sessionData, status } = useSession();
 
-    //#region  //*=========== STORE ===========
-     const { data: sessionData, status } = useSession();
-     console.log(sessionData);
-      console.log(status);
-    //#endregion  //*======== STORE ===========
+    // Local state to determine if it's the first render
+    const [firstRender, setFirstRender] = React.useState(true);
 
-    const checkAuth = React.useCallback(() => {
-      if (status === 'unauthenticated') {
-        void signOut();
-        return;
+    React.useEffect(() => {
+      if (status !== 'loading') {
+        setFirstRender(false);
       }
     }, [status]);
 
     React.useEffect(() => {
-      // run checkAuth every page visit
-      checkAuth();
+      // If it's not the first render and the status is 'unauthenticated', sign in
+      if (!firstRender && status === 'unauthenticated' && routeRole !== 'auth' && routeRole !== 'optional') {
+        void signIn();
+        return;
+      }
 
-      // run checkAuth every focus changes
-      window.addEventListener('focus', checkAuth);
-      return () => {
-        window.removeEventListener('focus', checkAuth);
-      };
-    }, [checkAuth]);
-
-    React.useEffect(() => {
-      if (status !== 'loading') {
-        if (status === 'authenticated' && sessionData) {
-          // // Prevent authenticated user from accessing auth or other role pages
-          // if (routeRole === 'auth') {
-          //   if (query?.redirect) {
-          //     void router.replace(query.redirect as string);
-          //   } else {
-          //     void router.replace(HOME_ROUTE);
-          //   }
-          // }
-          if (sessionData.user.role !== allowedRole) {
-            sessionData.user.role && void router.replace(HOME_ROUTE[sessionData.user.role]);
-          }
-        } else {
-          // Prevent unauthenticated user from accessing protected pages
-          if (routeRole !== 'auth' && routeRole !== 'optional') {
-            void signIn();
-          }
+      if (status === 'authenticated' && sessionData) {
+        if (sessionData.user.role !== allowedRole) {
+          sessionData.user.role && void router.replace(HOME_ROUTE[sessionData.user.role]);
         }
       }
-    }, [status, sessionData, query, router]);
+    }, [status, sessionData, firstRender]);
 
-    if (
-      // If unauthenticated user want to access protected pages
-      (status === 'loading' || status === 'unauthenticated' ) &&
-      // auth pages and optional pages are allowed to access without login
-      routeRole !== 'auth' &&
-      routeRole !== 'optional'
-    ) {
+    if (status === 'loading' || (firstRender && status === 'unauthenticated')) {
       return (
         <div className='flex min-h-screen flex-col items-center justify-center text-gray-800'>
           <ImSpinner8 className='mb-4 animate-spin text-4xl' />

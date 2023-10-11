@@ -3,8 +3,8 @@ import Seo from "~/components/Seo";
 import Router from "next/router";
 
 function HouseDetail() {
-  const { id } = Router.query;
-  console.log(id);
+  // const { id } = Router.query;
+  // console.log(id);
 
   return (
     <Navbar>

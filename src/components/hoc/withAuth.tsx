@@ -68,7 +68,7 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
           sessionData.user.role && void router.replace(HOME_ROUTE[sessionData.user.role]);
         }
       }
-    }, [status, sessionData, firstRender]);
+    }, [status, sessionData, firstRender, router]);
 
     if (status === 'loading' || (firstRender && status === 'unauthenticated')) {
       return (

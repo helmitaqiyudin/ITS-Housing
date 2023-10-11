@@ -1,15 +1,9 @@
-import { Navbar } from "~/components/Navbar";
-import Seo from "~/components/Seo";
+import withAuth from "~/components/hoc/withAuth";
 
 function Home() {
   return (
-    <Navbar>
-      <Seo />
-      <main className=" min-h-screen bg-gradient-to-b from-white to-gray-300">
-
-      </main>
-    </Navbar>
+    <></>
   );
 }
 
-export default Home
+export default withAuth(Home, 'all');

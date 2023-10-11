@@ -5,7 +5,6 @@ import { useDisclosure, useClickOutside } from "@mantine/hooks";
 
 export const Navbar = ({ children }: { children: React.ReactNode }) => {
   const { data: sessionData } = useSession();
-  console.log(sessionData);
   const [opened, { toggle }] = useDisclosure();
   const ref = useClickOutside(() => {
     if (opened) {
@@ -73,7 +72,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
             )}
             <Transition transition="scale-y" mounted={opened} >
               {(transitionStyle) => (
-                <div className={`absolute top-16 left-0 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 1 }}>
+                <div className={`absolute top-16 left-0 py-2 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 1 }}>
                   {sessionData?.user.role === "admin" && (
                     <div className="flex flex-col text-start space-y-3 py-2 px-3">
                       <Link href="/admin/manage-houses">

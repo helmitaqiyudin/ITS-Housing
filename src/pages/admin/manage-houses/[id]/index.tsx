@@ -1,16 +1,19 @@
 import { Navbar } from "~/components/Navbar";
 import Seo from "~/components/Seo";
-import withAuth from "~/components/hoc/withAuth";
+import Router from "next/router";
 
-const AdminHome = () => {
+function HouseDetail() {
+  const { id } = Router.query;
+  console.log(id);
+
   return (
     <Navbar>
-      <Seo templateTitle="Dashboard" />
+      <Seo templateTitle="Detail Rumah Negara" />
       <main className=" min-h-screen bg-gradient-to-b from-white to-gray-300">
-        Dashboard Admin
+
       </main>
     </Navbar>
   );
 }
 
-export default withAuth(AdminHome, 'all', 'admin');
+export default HouseDetail

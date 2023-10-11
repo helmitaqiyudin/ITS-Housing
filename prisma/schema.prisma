@@ -59,7 +59,7 @@ model User {
 }
 
 model House {
-    id                      String              @id @default(cuid())
+    id                      String              @id @default(uuid())
     blok                    String              @unique
     id_tenaga               String
     luas_tanah              Int
@@ -69,9 +69,9 @@ model House {
     sumber_dana_pembangunan String
     golongan                String
     sk_golongan             String
-    nomor_hum               String
-    kode_hum                String
-    tarif_sewa              Int
+    nomor_hum               String?
+    kode_hum                String?
+    tarif_sewa              Int?
     alamat                  String
     created_at              DateTime            @default(now())
     updated_at              DateTime            @updatedAt
@@ -82,7 +82,7 @@ model House {
 }
 
 model CatatanPenghunian {
-    id         String   @id @default(cuid())
+    id         String   @id @default(uuid())
     blok       String
     judul      String
     catatan    String

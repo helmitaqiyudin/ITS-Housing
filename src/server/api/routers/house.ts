@@ -27,7 +27,18 @@ export const houseRouter = createTRPCRouter({
         }),
 
     getAllHouses: protectedProcedureAdmin.query(async () => {
-        return await db.house.findMany();
+        return await db.house.findMany({
+            select: {
+                id: true,
+                blok: true,
+                user: {
+                    select: {
+                        name: true,
+                    }
+                },
+                alamat: true,
+            }
+        });
     }),
 
     // Get House by User ID
@@ -36,6 +47,20 @@ export const houseRouter = createTRPCRouter({
             where: { id_tenaga: ctx.session?.user?.id }
         });
     }),
+
+    // Get House by House ID
+    getHouseById: protectedProcedure
+        .input(z.object({
+            id: z.string(),
+        }))
+        .query(async ({ input }) => {
+            if (!input) {
+                throw new Error("Input is undefined");
+            }
+            return await db.house.findUnique({
+                where: { id: input.id }
+            });
+        }),
 
     // UPDATE a House
     updateHouse: protectedProcedureAdmin

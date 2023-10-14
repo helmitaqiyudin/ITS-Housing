@@ -49,7 +49,7 @@ export const houseRouter = createTRPCRouter({
     }),
 
     // Get House by House ID
-    getHouseById: protectedProcedure
+    getHouseById: protectedProcedureAdmin
         .input(z.object({
             id: z.string(),
         }))
@@ -58,7 +58,27 @@ export const houseRouter = createTRPCRouter({
                 throw new Error("Input is undefined");
             }
             return await db.house.findUnique({
-                where: { id: input.id }
+                where: { id: input.id },
+                select: {
+                    alamat: true,
+                    blok: true,
+                    id_tenaga: true,
+                    luas_tanah: true,
+                    luas_bangunan: true,
+                    dokumen_kepemilikan: true,
+                    tanggal_sk_rektor: true,
+                    sumber_dana_pembangunan: true,
+                    golongan: true,
+                    sk_golongan: true,
+                    nomor_hum: true,
+                    kode_hum: true,
+                    tarif_sewa: true,
+                    user: {
+                        select: {
+                            name: true,
+                        }
+                    },
+                }
             });
         }),
 

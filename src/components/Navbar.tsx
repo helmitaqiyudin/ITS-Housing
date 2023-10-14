@@ -134,13 +134,10 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
                     <MenuLabel className="text-gray-800 px-3 py-2">
                       Hi, {sessionData.user.name}
                     </MenuLabel>
-                    <Menu.Item>
-                      <Button
-                        onClick={() => void signOut()}
-                        className="flex text-gray-800 rounded-md text-center px-3 py-2"
-                      >
+                    <Menu.Item onClick={() => void signOut()} className="text-gray-800 px-3 py-2 hover:bg-slate-200">
+                      <div className="text-center">
                         Sign Out
-                      </Button>
+                      </div>
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>

@@ -21,7 +21,7 @@ export const catatanPenghunianRouter = createTRPCRouter({
     }),
 
     // READ a Specific catatan by ID
-    getCatatanPenghunianByBlok: protectedProcedure
+    getCatatanPenghunianByBlok: protectedProcedureAdmin
         .input(z.object({
             blok: z.string(),
         }))

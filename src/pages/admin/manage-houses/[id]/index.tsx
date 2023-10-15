@@ -9,7 +9,9 @@ import PageTitle from "~/components/PageTitle";
 import { Card, Grid, Modal, Paper } from '@mantine/core';
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
+import { AiFillDelete } from "react-icons/ai";
+import { useState } from "react";
 
 function HouseDetail() {
   const router = useRouter();
@@ -96,15 +98,69 @@ type CatatanPenghunianProps = {
 };
 
 function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
-  const { data: catatanPenghunian } = api.catatan_penghunian.getCatatanPenghunianByBlok.useQuery({ blok: blok });
+  const { data: catatanPenghunian, refetch } = api.catatan_penghunian.getCatatanPenghunianByBlok.useQuery({ blok: blok });
   // console.log(catatanPenghunian);
 
+  const refetcher = () => {
+    void refetch();
+  }
+
   const [opened, { open, close }] = useDisclosure(false);
+  
+  const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+  const [selectedCatatanId, setSelectedCatatanId] = useState('');
+
+  const { mutate } = api.catatan_penghunian.deleteCatatanPenghunian.useMutation();
+
+  const openDeleteModal = (id: string) => {
+    setSelectedCatatanId(id); // Set the selected catatan id for deletion
+    setDeleteConfirmationModal(true); // Open the delete confirmation modal
+  };
+
+  const closeDeleteModal = () => {
+    setSelectedCatatanId(''); // Reset the selected catatan id on modal close
+    setDeleteConfirmationModal(false); // Close the modal
+  };
+
+  const deleteCatatan = () => {
+    if (selectedCatatanId) {
+      mutate(
+        { id: selectedCatatanId },
+        {
+          onSuccess: () => {
+            toast.success("Catatan berhasil dihapus");
+            void refetch(); // Refetch the catatan list after deletion
+            closeDeleteModal(); // Close the delete modal
+          },
+          onError: (error) => {
+            console.error(error);
+            toast.error("Catatan gagal dihapus");
+          },
+        }
+      );
+    }
+  };
 
   return (
     <>
+      <Modal opened={deleteConfirmationModal} onClose={closeDeleteModal} centered>
+        <div className="flex flex-col">
+          <div className="mb-4">
+            <p className="text-lg font-semibold text-gray-800">Apakah anda yakin ingin menghapus catatan ini?</p>
+          </div>
+          <div className="flex items-center justify-end">
+            <button
+              type="button"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={deleteCatatan}
+            >
+              Hapus Catatan
+            </button>
+          </div>
+        </div>
+      </Modal>
       <Modal opened={opened} onClose={close} title="Catatan Penghunian" centered>
-        <Form blok={blok} close={close} />
+        <FormCreateCatatan blok={blok} close={close} refetch={refetcher} />
       </Modal>
       <div className="flex text-center mt-5">
         <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian •</p><a onClick={open} className="self-center text-blue-500 font-medium cursor-pointer"><span>Tambah</span> </a>
@@ -115,7 +171,13 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
             <Card shadow="sm" className="p-2">
               <div className="flex justify-between">
                 <p className="text-lg font-semibold text-gray-800">{catatan.judul}</p>
-                <p className="text-sm text-gray-800">{moment(catatan.created_at).format("DD MMMM YYYY")}</p>
+                <div className="flex gap-3">
+                  <p className="text-sm text-gray-800 self-center">{moment(catatan.created_at).format("DD MMMM YYYY")}</p>
+                  {/* delete button */}
+                  <button className="text-red-500 hover:text-red-700 self-center" onClick={() => openDeleteModal(catatan.id)}>
+                    <AiFillDelete />
+                  </button>
+                </div>
               </div>
               <p className="text-gray-800">{catatan.catatan}</p>
             </Card>
@@ -131,7 +193,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
   );
 }
 
-function Form ({blok, close}: {blok: string, close: () => void}) {
+function FormCreateCatatan({ blok, close, refetch }: { blok: string; close: () => void; refetch: () => void }) {
   const form = useForm({
     initialValues: {
       judul: "",
@@ -154,71 +216,70 @@ function Form ({blok, close}: {blok: string, close: () => void}) {
           toast.success("Catatan berhasil ditambahkan");
           form.reset();
           close();
+          void refetch()
         },
         onError: (error) => {
           console.error(error);
           toast.error("Catatan gagal ditambahkan");
         },
       }
-      );
-    // console.log(form.values);
-    // form.reset();
-    // close();
+    );
   }
-  
-  const handleSubmit = () => {;
+
+  const handleSubmit = () => {
+    ;
     form.validate();
-      if (!form.isValid()){
-        return;
-      }
-      submitForm();
-    };
+    if (!form.isValid()) {
+      return;
+    }
+    submitForm();
+  };
 
   return (
     <form
-          onSubmit={(e) => {
-            handleSubmit();
-            e.preventDefault();
-          }}
-        >
-          <div className="flex flex-col">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="judul">
-                Judul
-              </label>
-              <input
-                {...form.getInputProps("judul")}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="judul"
-                placeholder="Judul"
-              />
-              {form.errors.judul && (
-                <div className="text-red-500 text-sm mt-1">{form.errors.judul}</div>
-              )}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="catatan">
-                Catatan
-              </label>
-              <textarea
-                {...form.getInputProps("catatan")}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Catatan"
-              />
-              {form.errors.catatan && (
-                <div className="text-red-500 text-sm mt-1">{form.errors.catatan}</div>
-              )}
-            </div>
-            <div className="flex items-center justify-end">
-              <button
-                type="submit" 
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Tambah Catatan
-              </button>
-            </div>
-          </div>
-        </form>
+      onSubmit={(e) => {
+        handleSubmit();
+        e.preventDefault();
+      }}
+    >
+      <div className="flex flex-col">
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="judul">
+            Judul
+          </label>
+          <input
+            {...form.getInputProps("judul")}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="judul"
+            placeholder="Judul"
+          />
+          {form.errors.judul && (
+            <div className="text-red-500 text-sm">{form.errors.judul}</div>
+          )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="catatan">
+            Catatan
+          </label>
+          <textarea
+            {...form.getInputProps("catatan")}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Catatan"
+          />
+          {form.errors.catatan && (
+            <div className="text-red-500 text-sm">{form.errors.catatan}</div>
+          )}
+        </div>
+        <div className="flex items-center justify-end">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Tambah Catatan
+          </button>
+        </div>
+      </div>
+    </form>
   )
 }
 

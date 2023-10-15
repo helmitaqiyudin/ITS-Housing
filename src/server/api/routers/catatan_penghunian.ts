@@ -52,9 +52,9 @@ export const catatanPenghunianRouter = createTRPCRouter({
         .input(z.object({
             id: z.string(),
         }))
-        .query(async ({ input }) => {
+        .mutation(async ({ input }) => {
             return await db.catatanPenghunian.delete({
-                where: { id: input.id },
+                where: { id: input.id }
             });
         }),
 });

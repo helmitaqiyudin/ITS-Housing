@@ -7,21 +7,21 @@ export const catatanPenghunianRouter = createTRPCRouter({
     createCatatanPenghunian: protectedProcedureAdmin
         .input(z.object({
             blok: z.string(),
-            judul: z.string(),
-            catatan: z.string(),
+            judul: z.string().min(3),
+            catatan: z.string().min(3),
         }))
-        .query(async ({ input }) => {
+        .mutation(async ({ input }) => {
             return await db.catatanPenghunian.create({
-                data: input
+                data: {
+                    blok: input.blok,
+                    judul: input.judul,
+                    catatan: input.catatan,
+                }
             });
         }),
 
-    getAllCatatanPenghunian: protectedProcedureAdmin.query(async () => {
-        return await db.catatanPenghunian.findMany();
-    }),
-
     // READ a Specific catatan by ID
-    getCatatanPenghunianByBlok: protectedProcedureAdmin
+    getCatatanPenghunianByBlok: protectedProcedure
         .input(z.object({
             blok: z.string(),
         }))

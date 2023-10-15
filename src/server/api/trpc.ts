@@ -112,9 +112,9 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
-  if (ctx.session?.user?.role === 'admin') {
-    throw new TRPCError({ code: "FORBIDDEN" });
-  }
+  // if (ctx.session?.user?.role === 'admin') {
+  //   throw new TRPCError({ code: "FORBIDDEN" });
+  // }
   return next({
     ctx: {
       session: { ...ctx.session, user: ctx.session.user },

@@ -6,7 +6,7 @@ const AdminHome = () => {
   return (
     <Navbar>
       <Seo templateTitle="Dashboard" />
-      <main className=" min-h-screen bg-gradient-to-b from-white to-gray-300">
+      <main className=" min-h-screen bg-white">
         Dashboard Admin
       </main>
     </Navbar>

@@ -113,13 +113,13 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
   const { mutate } = api.catatan_penghunian.deleteCatatanPenghunian.useMutation();
 
   const openDeleteModal = (id: string) => {
-    setSelectedCatatanId(id); // Set the selected catatan id for deletion
-    setDeleteConfirmationModal(true); // Open the delete confirmation modal
+    setSelectedCatatanId(id); 
+    setDeleteConfirmationModal(true); 
   };
 
   const closeDeleteModal = () => {
-    setSelectedCatatanId(''); // Reset the selected catatan id on modal close
-    setDeleteConfirmationModal(false); // Close the modal
+    setSelectedCatatanId(''); 
+    setDeleteConfirmationModal(false);
   };
 
   const deleteCatatan = () => {
@@ -129,7 +129,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
         {
           onSuccess: () => {
             toast.success("Catatan berhasil dihapus");
-            void refetch(); // Refetch the catatan list after deletion
+            void refetcher(); // Refetch the catatan list after deletion
             closeDeleteModal(); // Close the delete modal
           },
           onError: (error) => {

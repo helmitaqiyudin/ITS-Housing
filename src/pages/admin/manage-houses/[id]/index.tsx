@@ -28,7 +28,7 @@ function HouseDetail() {
         <PageTitle title="Detail Rumah Negara" />
         <div className="container mx-auto">
           <div className="flex text-center">
-            <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit#house`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
+            <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
           </div>
           <Paper className="p-5 border-8" shadow="sm" style={{ borderRadius: '8px', border: '1px solid #E5E7EB' }}>
             <Grid gutter="md" grow={false}>

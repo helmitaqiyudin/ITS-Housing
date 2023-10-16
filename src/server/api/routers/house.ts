@@ -20,9 +20,10 @@ export const houseRouter = createTRPCRouter({
             tarif_sewa: z.number(),
             alamat: z.string(),
         }))
-        .query(async ({ input }) => {
+        .mutation(async ({ input }) => {
+            const createData = input;
             return await db.house.create({
-                data: input
+                data: createData
             });
         }),
 
@@ -60,6 +61,7 @@ export const houseRouter = createTRPCRouter({
             return await db.house.findUnique({
                 where: { id: input.id },
                 select: {
+                    id: true,
                     alamat: true,
                     blok: true,
                     id_tenaga: true,
@@ -100,7 +102,7 @@ export const houseRouter = createTRPCRouter({
             tarif_sewa: z.number(),
             alamat: z.string(),
         }))
-        .query(async ({ input }) => {
+        .mutation(async ({ input }) => {
             const { id, ...updateData } = input;
             return await db.house.update({
                 where: { id: id },

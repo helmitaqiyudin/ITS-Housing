@@ -233,7 +233,7 @@ function EditHouse() {
                   color="red"
                   fullWidth
                   radius={"md"}
-                  onClick={() =>void router.push(`/admin/manage-houses/${id?.toString() ?? ""}`)}
+                  onClick={() => router.back()}
                 >
                   Batal
                 </Button>

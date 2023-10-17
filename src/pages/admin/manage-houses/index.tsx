@@ -1,7 +1,7 @@
 import { Navbar } from "~/components/Navbar";
 import Seo from "~/components/Seo";
 import withAuth from "~/components/hoc/withAuth";
-import { columns } from "./columns";
+import { columns } from "../../../components/tablecolumns/housecolumns";
 import { DataTable } from "~/components/DataTable";
 
 import { api } from "~/utils/api";

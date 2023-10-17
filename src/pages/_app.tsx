@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { MantineProvider } from "@mantine/core";
 import { ToastContainer } from "react-toastify";

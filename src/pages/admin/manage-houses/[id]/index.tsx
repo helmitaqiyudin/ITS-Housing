@@ -13,6 +13,7 @@ import { toast } from "react-toastify"
 import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
 import withAuth from "~/components/hoc/withAuth";
+import MapComponent from "~/components/Map";
 
 function HouseDetail() {
   const router = useRouter();
@@ -28,6 +29,7 @@ function HouseDetail() {
       <main className=" min-h-screen">
         <PageTitle title="Detail Rumah Negara" />
         <div className="container mx-auto">
+          <MapComponent />
           <div className="flex text-center">
             <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
           </div>

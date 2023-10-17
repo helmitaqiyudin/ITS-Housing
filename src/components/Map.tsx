@@ -58,14 +58,14 @@ export default function MapComponent({ boundary }: MapComponentProps) {
     useEffect(() => {
         if (isLoaded && mapRef.current && center && !flown) {
             const flyToOptions = {
-                center: center, 
+                center: center,
                 zoom: 18,
                 duration: 2500
             };
             mapRef.current.flyTo(flyToOptions);
             setFlown(true);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoaded]);
 
     const handleMapLoad = () => {
@@ -76,11 +76,11 @@ export default function MapComponent({ boundary }: MapComponentProps) {
     const [viewState, setViewState] = useState(initialViewport);
     return (
         <>
-            <div className="flex justify-center shadow-md">
+            <div className="flex justify-center shadow-md relative">
                 <LoadingOverlay
                     visible={!isLoaded}
-                    opacity={0.5}
-                    color="gray"
+                    zIndex={9999}
+                    loaderProps={{ color: 'blue', type: 'bars' }}
                 />
                 <Map
                     {...viewState}

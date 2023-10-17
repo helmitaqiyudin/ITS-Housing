@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Navbar } from "~/components/Navbar";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
-import { Paper, Grid, TextInput, NativeSelect, Button } from "@mantine/core";
+import { Paper, Grid, TextInput, NativeSelect, Button, LoadingOverlay } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 
 
@@ -40,9 +40,14 @@ function EditHouse() {
   });
 
   if (!house || !user) {
-    return <div>Loading...</div>; // Or any loading spinner
+    return(
+      <LoadingOverlay 
+      visible={true}
+      zIndex={9999}
+      loaderProps={{color: 'blue', type: 'bars'}}
+      />
+    )
   }
-
 
   const submitForm = () => {
     mutation.mutate(

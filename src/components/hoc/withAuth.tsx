@@ -1,5 +1,5 @@
 import { type Role } from '@prisma/client';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { ImSpinner8 } from 'react-icons/im';
@@ -44,7 +44,6 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
 ) {
   const ComponentWithAuth = (props: Omit<T, keyof WithAuthProps>) => {
     const router = useRouter();
-    const { query } = router;
     const { data: sessionData, status } = useSession();
 
     // Local state to determine if it's the first render

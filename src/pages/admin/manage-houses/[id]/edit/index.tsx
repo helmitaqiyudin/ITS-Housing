@@ -9,6 +9,7 @@ import { DateInput } from "@mantine/dates";
 import { api } from "~/utils/api";
 import { useForm } from "@mantine/form";
 import { toast } from "react-toastify";
+import withAuth from "~/components/hoc/withAuth";
 
 function EditHouse() {
   const router = useRouter();
@@ -250,4 +251,4 @@ function EditHouse() {
   );
 }
 
-export default EditHouse
+export default withAuth(EditHouse, 'all', 'admin');

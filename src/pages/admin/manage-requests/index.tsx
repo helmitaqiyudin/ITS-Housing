@@ -1,5 +1,6 @@
 import { Navbar } from "~/components/Navbar";
 import Seo from "~/components/Seo";
+import withAuth from "~/components/hoc/withAuth";
 
 function ManageRequests() {
   return (
@@ -12,4 +13,4 @@ function ManageRequests() {
   );
 }
 
-export default ManageRequests
+export default withAuth(ManageRequests, "all", 'admin');

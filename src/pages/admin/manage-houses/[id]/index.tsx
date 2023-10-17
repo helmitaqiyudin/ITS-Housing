@@ -12,6 +12,7 @@ import { useForm } from "@mantine/form";
 import { toast } from "react-toastify"
 import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
+import withAuth from "~/components/hoc/withAuth";
 
 function HouseDetail() {
   const router = useRouter();
@@ -38,7 +39,7 @@ function HouseDetail() {
               </Grid.Col>
               <Grid.Col span={{ xs: 12, md: 3 }}>
                 <dt className="font-medium text-gray-900">Nama Lengkap</dt>
-                <dd className="text-gray-700">{house?.user.name}</dd>
+                <dd className="text-gray-700">{house?.user?.name}</dd>
               </Grid.Col>
               <Grid.Col span={{ xs: 12, md: 3 }}>
                 <dt className="font-medium text-gray-900">Dokumen Kepemilikan</dt>
@@ -283,4 +284,4 @@ function FormCreateCatatan({ blok, close, refetch }: { blok: string; close: () =
   )
 }
 
-export default HouseDetail;
+export default withAuth(HouseDetail, 'all', 'admin');;

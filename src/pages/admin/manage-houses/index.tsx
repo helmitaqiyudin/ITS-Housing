@@ -22,7 +22,7 @@ function ManageHouse() {
     return (
       <Table.Tr key={house.id}>
         <Table.Td>{house.blok}</Table.Td>
-        <Table.Td>{house.user.name}</Table.Td>
+        <Table.Td>{house.user?.name}</Table.Td>
         <Table.Td>{house.alamat}</Table.Td>
         <Table.Td ><IoMdOpen onClick={() => handleClick(house.id)} className="cursor-pointer hover:bg-white" /></Table.Td>
       </Table.Tr>
@@ -56,4 +56,4 @@ function ManageHouse() {
   );
 }
 
-export default withAuth(ManageHouse, "auth", 'admin');
+export default withAuth(ManageHouse, "all", 'admin');

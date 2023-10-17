@@ -1,5 +1,6 @@
 import { Navbar } from "~/components/Navbar";
 import Seo from "~/components/Seo";
+import withAuth from "~/components/hoc/withAuth";
 
 function AdminRecap() {
   return (
@@ -12,4 +13,4 @@ function AdminRecap() {
   );
 }
 
-export default AdminRecap
+export default withAuth(AdminRecap, "all", 'admin');

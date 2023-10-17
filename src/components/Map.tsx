@@ -1,6 +1,6 @@
 import Map, { FullscreenControl, NavigationControl, Source, Layer, type MapRef } from "react-map-gl";
 import { useState, useRef, useEffect } from "react";
-import { LoadingOverlay } from "@mantine/core";
+import { LoadingOverlay, Button } from "@mantine/core";
 
 type MapComponentProps = {
     boundary: string;
@@ -59,7 +59,7 @@ export default function MapComponent({ boundary }: MapComponentProps) {
         if (isLoaded && mapRef.current && center && !flown) {
             const flyToOptions = {
                 center: center, 
-                zoom: 17.5,
+                zoom: 18,
                 duration: 2500
             };
             mapRef.current.flyTo(flyToOptions);
@@ -75,48 +75,57 @@ export default function MapComponent({ boundary }: MapComponentProps) {
 
     const [viewState, setViewState] = useState(initialViewport);
     return (
-        <div className="flex justify-center shadow-md">
-            <LoadingOverlay
-                visible={!isLoaded}
-                opacity={0.5}
-                color="gray"
-            />
-            <Map
-                {...viewState}
-                initialViewState={initialViewport}
-                mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
-                onMove={(evt) => setViewState(evt.viewState)}
-                style={{
-                    width: "100%",
-                    height: "30vh",
-                    borderRadius: "0.375rem",
+        <>
+            <div className="flex justify-center shadow-md">
+                <LoadingOverlay
+                    visible={!isLoaded}
+                    opacity={0.5}
+                    color="gray"
+                />
+                <Map
+                    {...viewState}
+                    initialViewState={initialViewport}
+                    mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    onMove={(evt) => setViewState(evt.viewState)}
+                    style={{
+                        width: "100%",
+                        height: "30vh",
+                        borderRadius: "0.375rem",
 
-                }}
-                maxZoom={20}
-                minZoom={16}
-                dragRotate={false}
-                maxBounds={ITS_BOUNDS}
-                ref={mapRef}
-                onLoad={handleMapLoad}
-                onClick={(evt) => {
-                    // log the latitude and longitude of the clicked point
-                    console.log(evt.lngLat);
-                }}
-            >
-                <Source id="its" type="geojson" data={GeoJson}>
-                    <Layer
-                        id="its"
-                        type="fill"
-                        paint={{
-                            "fill-color": "red",
-                            "fill-opacity": 0.3,
-                        }}
-                    />
-                </Source>
-                <FullscreenControl />
-                <NavigationControl />
-            </Map>
-        </div>
+                    }}
+                    maxZoom={20}
+                    minZoom={16}
+                    dragRotate={false}
+                    maxBounds={ITS_BOUNDS}
+                    ref={mapRef}
+                    onLoad={handleMapLoad}
+                    onClick={(evt) => {
+                        // log the latitude and longitude of the clicked point
+                        console.log(evt.lngLat);
+                    }}
+                >
+                    <Source id="its" type="geojson" data={GeoJson}>
+                        <Layer
+                            id="its"
+                            type="fill"
+                            paint={{
+                                "fill-color": "red",
+                                "fill-opacity": 0.3,
+                            }}
+                        />
+                    </Source>
+                    <FullscreenControl />
+                    <NavigationControl />
+                </Map>
+            </div>
+            <div className="flex justify-end mt-2">
+                <a href={`https://www.google.com/maps/dir/?api=1&destination=${center[1]},${center[0]}`} target="_blank" rel="noreferrer">
+                    <Button variant="light" color="blue" fullWidth>
+                        Get Direction
+                    </Button>
+                </a>
+            </div>
+        </>
     );
 }

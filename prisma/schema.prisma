@@ -73,6 +73,7 @@ model House {
     kode_hum                String?
     tarif_sewa              Int?
     alamat                  String
+    boundary                String?
     created_at              DateTime            @default(now())
     updated_at              DateTime            @updatedAt
     user                    User?                @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)

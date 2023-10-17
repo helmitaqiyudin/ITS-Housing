@@ -22,14 +22,13 @@ function HouseDetail() {
   const { data: house } = api.house.getHouseById.useQuery({ id: id! as string });
   // console.log(house);
   const blok = house?.blok;
-
   return (
     <Navbar>
       <Seo templateTitle="Detail Rumah Negara" />
       <main className=" min-h-screen">
         <PageTitle title="Detail Rumah Negara" />
         <div className="container mx-auto">
-          <MapComponent />
+          {house?.boundary && <MapComponent boundary={house.boundary} />}
           <div className="flex text-center">
             <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
           </div>
@@ -109,19 +108,19 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
   }
 
   const [opened, { open, close }] = useDisclosure(false);
-  
+
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [selectedCatatanId, setSelectedCatatanId] = useState('');
 
   const { mutate } = api.catatan_penghunian.deleteCatatanPenghunian.useMutation();
 
   const openDeleteModal = (id: string) => {
-    setSelectedCatatanId(id); 
-    setDeleteConfirmationModal(true); 
+    setSelectedCatatanId(id);
+    setDeleteConfirmationModal(true);
   };
 
   const closeDeleteModal = () => {
-    setSelectedCatatanId(''); 
+    setSelectedCatatanId('');
     setDeleteConfirmationModal(false);
   };
 

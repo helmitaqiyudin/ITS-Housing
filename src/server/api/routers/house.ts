@@ -74,6 +74,7 @@ export const houseRouter = createTRPCRouter({
                     sk_golongan: true,
                     nomor_hum: true,
                     kode_hum: true,
+                    boundary: true,
                     tarif_sewa: true,
                     user: {
                         select: {

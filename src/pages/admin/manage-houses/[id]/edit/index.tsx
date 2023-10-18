@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Navbar } from "~/components/Navbar";
+import { Navbar } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
 import { Paper, Grid, TextInput, NativeSelect, Button, LoadingOverlay } from "@mantine/core";
@@ -119,11 +119,10 @@ function EditHouse() {
                   <label className="font-medium text-gray-900">Nama Lengkap</label>
                   <NativeSelect
                     placeholder="Nama Lengkap"
-                    value={form.values.id_tenaga} // This should reflect the field you're actually controlling
+                    value={form.values.id_tenaga} 
                     onChange={(event) => {
                       const selectedUserId = event.currentTarget.value;
-                      form.setFieldValue("id_tenaga", selectedUserId); // Update the relevant field in your form state
-                      // Optionally, you might want to set other related user fields here, depending on your logic.
+                      form.setFieldValue("id_tenaga", selectedUserId); 
                     }}
                     required
                   >

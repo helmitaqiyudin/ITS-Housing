@@ -1,4 +1,4 @@
-import { Navbar } from "~/components/Navbar";
+import { Navbar } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import { useRouter } from "next/router";
 import moment from "moment";

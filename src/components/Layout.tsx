@@ -155,7 +155,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </nav>
-      <main className="flex-grow">
+      <main className="flex-grow pb-10">
         {children}
       </main>
     </div>

@@ -8,8 +8,8 @@ import {
     TableHeader,
     TableRow,
 } from "~/components/ui/table"
+import { NativeSelect, TextInput } from "@mantine/core";
 import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -39,17 +39,53 @@ export function DataTable<TData, TValue>({
             columnFilters,
         },
     })
-    
+
+    const filteroptions = [
+        { value: "blok", label: "Blok" },
+        { value: "user", label: "Nama Penghuni" },
+        { value: "alamat", label: "Alamat" },
+    ]
+
+    const [filter, setFilter] = React.useState(filteroptions[0]?.value)
+    const [filterValue, setFilterValue] = React.useState("")
+
+    const handleChangeFilter = (event : React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedFilter = event.target.value;
+        setFilter(selectedFilter);
+        setFilterValue("");
+        table.getColumn(selectedFilter?.split('.')[0] ?? "")?.setFilterValue("");
+
+        table.getColumn("blok")?.setFilterValue("");
+        table.getColumn("user")?.setFilterValue("");
+        table.getColumn("alamat")?.setFilterValue("");
+        
+    }
+
+    const handleChangeFilterValue = (event : React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFilterValue = event.target.value;
+        setFilterValue(selectedFilterValue);
+        table.getColumn(filter?.split('.')[0] ?? "")?.setFilterValue(selectedFilterValue);
+    }
+
     return (
         <div>
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter Blok Rumah..."
-                    value={(table.getColumn("blok")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("blok")?.setFilterValue(event.target.value)
-                    }
+            <div className="flex items-center py-4 gap-5">
+                <NativeSelect
                     className="max-w-sm"
+                    value={filter}
+                    onChange={(event) => handleChangeFilter(event)}
+                >
+                    {filteroptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </NativeSelect>
+                <TextInput
+                    placeholder={`Filter by ${filter}`}
+                    value={filterValue}
+                    onChange={(event) => handleChangeFilterValue(event)}
+                    className="max-w-sm w-full"
                 />
             </div>
             <div className="rounded-md border">

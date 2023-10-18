@@ -85,7 +85,8 @@ export const columns: ColumnDef<House>[] = [
         },
     },
     {
-        accessorKey: "name",
+        accessorKey: "user",
+        accessorFn: (row) => row.user ? row.user.name : null,
         header: ({ column }) => {
             return (
                 <div className="flex items-center justify-end">

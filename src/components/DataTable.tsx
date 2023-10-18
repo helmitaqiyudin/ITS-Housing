@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
                     ))}
                 </NativeSelect>
                 <TextInput
-                    placeholder={`Filter by ${filter}`}
+                    placeholder={`Filter by ${filteroptions.find((option) => option.value === filter)?.label}`}
                     value={filterValue}
                     onChange={(event) => handleChangeFilterValue(event)}
                     className="max-w-sm w-full"

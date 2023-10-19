@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Layout } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
-import { Paper, Grid, TextInput, NativeSelect, Button, LoadingOverlay } from "@mantine/core";
+import { Paper, Grid, TextInput, Button, LoadingOverlay, Select } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 
 
@@ -18,7 +18,7 @@ function EditHouse() {
   const { data: house, refetch } = api.house.getHouseById.useQuery({ id: id! as string });
   const { data: user } = api.user.getAllUsers.useQuery();
   const mutation = api.house.updateHouse.useMutation();
-  
+
   const userObject = user?.find((user) => user.id === house?.id_tenaga);
 
   const form = useForm({
@@ -40,11 +40,11 @@ function EditHouse() {
   });
 
   if (!house || !user) {
-    return(
-      <LoadingOverlay 
-      visible={true}
-      zIndex={9999}
-      loaderProps={{color: 'blue', type: 'bars'}}
+    return (
+      <LoadingOverlay
+        visible={true}
+        zIndex={9999}
+        loaderProps={{ color: 'blue', type: 'bars' }}
       />
     )
   }
@@ -116,21 +116,16 @@ function EditHouse() {
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <label className="font-medium text-gray-900">Nama Lengkap</label>
-                  <NativeSelect
+                  <Select
                     placeholder="Nama Lengkap"
-                    value={form.values.id_tenaga} 
-                    onChange={(event) => {
-                      const selectedUserId = event.currentTarget.value;
-                      form.setFieldValue("id_tenaga", selectedUserId); 
-                    }}
+                    value={form.values.id_tenaga}
+                    onChange={(value) => form.setFieldValue("id_tenaga", value ?? "")}
+                    data={user.map(({ id, name }) => ({ value: id, label: name ?? "" }))}
                     required
-                  >
-                    {user.map((user) => (
-                      <option key={user.id} value={user.id}>
-                        {user.name}
-                      </option>
-                    ))}
-                  </NativeSelect>
+                    searchable
+                    nothingFoundMessage="Nothing found"
+                    withCheckIcon={false}
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <label className="font-medium text-gray-900">Dokumen Kepemilikan</label>
@@ -145,7 +140,10 @@ function EditHouse() {
                   <TextInput
                     placeholder="Luas Tanah"
                     value={form.values.luas_tanah ?? ""}
-                    onChange={(event) => form.setFieldValue("luas_tanah", parseInt(event.currentTarget.value))}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      form.setFieldValue("luas_tanah", value ? parseInt(value) : 0);
+                    }}
                     required />
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
@@ -161,7 +159,10 @@ function EditHouse() {
                   <TextInput
                     placeholder="Luas Bangunan"
                     value={form.values.luas_bangunan ?? ""}
-                    onChange={(event) => form.setFieldValue("luas_bangunan", parseInt(event.currentTarget.value))}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      form.setFieldValue("luas_bangunan", value ? parseInt(value) : 0);
+                    }}
                     required />
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
@@ -169,7 +170,8 @@ function EditHouse() {
                   <DateInput
                     placeholder="Tanggal SK Rektor"
                     value={form.values.tanggal_sk_rektor ? new Date(form.values.tanggal_sk_rektor) : undefined}
-                    onChange={(date) => form.setFieldValue("tanggal_sk_rektor", date ? new Date(date) : undefined)}
+                    onChange={(date) => form.setFieldValue("tanggal_sk_rektor", date ? new Date(date) : new Date())}
+
                     required />
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
@@ -177,7 +179,10 @@ function EditHouse() {
                   <TextInput
                     placeholder="Tarif Sewa"
                     value={form.values.tarif_sewa ?? ""}
-                    onChange={(event) => form.setFieldValue("tarif_sewa", parseInt(event.currentTarget.value))}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      form.setFieldValue("tarif_sewa", value ? parseInt(value) : 0);
+                    }}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>

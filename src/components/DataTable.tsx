@@ -20,11 +20,13 @@ import { DateInput } from "@mantine/dates";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    refetchData: () => void
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    refetchData,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -79,7 +81,7 @@ export function DataTable<TData, TValue>({
     return (
         <div>
             <Modal opened={opened} onClose={close} title="Tambah Rumah" centered size="100%">
-                <FormCreateHouse close={close} />
+                <FormCreateHouse close={close} refetchData={refetchData} />
             </Modal>
             <div className="flex items-center justify-between gap-5">
                 <div className="flex items-center py-4 gap-5">
@@ -173,7 +175,7 @@ export function DataTable<TData, TValue>({
     )
 }
 
-function FormCreateHouse({ close }: { close: () => void }) {
+function FormCreateHouse({ close, refetchData }: { close: () => void, refetchData: () => void }) {
     const { data: user } = api.user.getAllUsers.useQuery();
     const mutation = api.house.createHouse.useMutation();
 
@@ -225,10 +227,10 @@ function FormCreateHouse({ close }: { close: () => void }) {
             },
             {
                 onSuccess: () => {
-                    console.log('Success response:', Response);
                     toast.success("Rumah berhasil ditambahkan");
                     form.reset();
                     close();
+                    refetchData();
                 },
                 onError: (error) => {
                     console.error(error);

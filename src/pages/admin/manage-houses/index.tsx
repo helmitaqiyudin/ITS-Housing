@@ -9,7 +9,7 @@ import PageTitle from "~/components/PageTitle";
 import { LoadingOverlay } from "@mantine/core";
 
 function ManageHouse() {
-  const { data: houses, error, isLoading } = api.house.getAllHouses.useQuery();
+  const { data: houses, error, isLoading, refetch } = api.house.getAllHouses.useQuery();
 
   if (isLoading) {
     return(
@@ -25,6 +25,10 @@ function ManageHouse() {
     return <div>Error: {error.message}</div>; 
   }
 
+  const refetcher = () => {
+    void refetch();
+  }
+
   return (
     <Navbar>
       <Seo templateTitle="Rumah Negara" />
@@ -33,7 +37,7 @@ function ManageHouse() {
           <div className="flex flex-col items-center justify-center">
             <PageTitle title="Rumah Negara" />
             <div className="w-full">
-              <DataTable columns={columns} data={houses} />
+              <DataTable columns={columns} data={houses} refetchData={refetcher} />
             </div>
           </div>
         </div>

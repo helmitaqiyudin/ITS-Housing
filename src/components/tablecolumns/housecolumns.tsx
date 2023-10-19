@@ -39,10 +39,6 @@ function ActionsCell({ row }: ActionsCellProps) {
       void router.push(`/admin/manage-houses/${row.original.id}`);
     };
     
-    const handleEdit = () => {
-    void router.push(`/admin/manage-houses/${row.original.id}/edit`);
-    };
-    
     return (
       <div className="text-right">
         <DropdownMenu>
@@ -56,7 +52,6 @@ function ActionsCell({ row }: ActionsCellProps) {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleViewDetail}>View Detail</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

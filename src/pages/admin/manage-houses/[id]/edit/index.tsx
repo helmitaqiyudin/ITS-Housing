@@ -82,7 +82,6 @@ function EditHouse() {
   }
 
   const handleSubmit = () => {
-    ;
     form.validate();
     if (!form.isValid()) {
       return;
@@ -238,8 +237,8 @@ function EditHouse() {
                 </Button>
                 <Button
                   type="submit"
-                  variant="light"
-                  color="blue"
+                  variant="filled"
+                  color="green"
                   fullWidth
                   radius={"md"}
                   loading={mutation.isLoading}

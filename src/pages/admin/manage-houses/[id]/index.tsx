@@ -1,4 +1,4 @@
-import { Navbar } from "~/components/Layout";
+import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import { useRouter } from "next/router";
 import moment from "moment";
@@ -23,7 +23,7 @@ function HouseDetail() {
   // console.log(house);
   const blok = house?.blok;
   return (
-    <Navbar>
+    <Layout>
       <Seo templateTitle="Detail Rumah Negara" />
       <main className=" min-h-screen">
         <PageTitle title="Detail Rumah Negara" />
@@ -91,7 +91,7 @@ function HouseDetail() {
           {blok && <CatatanPenghunian blok={blok} />}
         </div>
       </main>
-    </Navbar>
+    </Layout>
   );
 }
 

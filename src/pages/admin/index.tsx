@@ -1,15 +1,15 @@
-import { Navbar } from "~/components/Layout";
+import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import withAuth from "~/components/hoc/withAuth";
 
 const AdminHome = () => {
   return (
-    <Navbar>
+    <Layout>
       <Seo templateTitle="Dashboard" />
       <main className=" min-h-screen bg-white">
         Dashboard Admin
       </main>
-    </Navbar>
+    </Layout>
   );
 }
 

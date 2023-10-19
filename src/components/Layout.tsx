@@ -2,8 +2,14 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Avatar, Button, Menu, MenuLabel, Burger, Transition } from "@mantine/core";
 import { useDisclosure, useClickOutside } from "@mantine/hooks";
+import { api } from "~/utils/api";
 
-export const Navbar = ({ children }: { children: React.ReactNode }) => {
+enum Role {
+  Admin = "admin",
+  User = "user"
+}
+
+export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { data: sessionData } = useSession();
   const [opened, { toggle }] = useDisclosure();
   const ref = useClickOutside(() => {
@@ -12,6 +18,19 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
     }
   });
 
+  // for development purpose only, remove this and footer later
+  const switchRoleMutation = api.user.switchRole.useMutation();
+  const id = sessionData?.user.id;
+
+  const handleRoleSwitch = async (role: Role) => {
+    try {
+      await switchRoleMutation.mutateAsync({id: id ?? "", role: role});
+      window.location.reload();
+    } catch (error) {
+      console.error('Role switch failed:', error);
+    }
+  };
+  
   return (
     <div className="flex flex-col h-screen">
       <nav className="bg-gray-800 p-4">
@@ -158,6 +177,29 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
       <main className="flex-grow pb-10">
         {children}
       </main>
+      <footer className="bg-gray-800 text-white text-center py-5">
+        <div className="flex justify-end gap-5 px-5">
+        <p className="self-center">
+          Role Switcher (for development) :
+        </p>
+        {sessionData?.user.role === "admin" && (
+          <Button
+            onClick={() => void handleRoleSwitch(Role.User)}
+            className="flex text-gray-800 rounded-md text-center px-3 py-2"
+          >
+            Switch to User
+          </Button>
+          )}
+          {sessionData?.user.role === "user" && (
+          <Button
+            onClick={() => void handleRoleSwitch(Role.Admin)}
+            className="flex text-gray-800 rounded-md text-center px-3 py-2"
+          >
+            Switch to Admin
+          </Button>
+          )}
+        </div>
+    </footer>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Navbar } from "~/components/Layout";
+import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import withAuth from "~/components/hoc/withAuth";
 import { columns } from "../../../components/tablecolumns/housecolumns";
@@ -30,7 +30,7 @@ function ManageHouse() {
   }
 
   return (
-    <Navbar>
+    <Layout>
       <Seo templateTitle="Rumah Negara" />
       <main className="min-h-screen bg-white">
         <div className="container mx-auto">
@@ -42,7 +42,7 @@ function ManageHouse() {
           </div>
         </div>
       </main>
-    </Navbar>
+    </Layout>
   );
 }
 

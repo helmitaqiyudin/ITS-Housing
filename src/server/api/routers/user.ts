@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedureAdmin } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, protectedProcedureAdmin } from "~/server/api/trpc";
 import { db } from "~/server/db";
+
+enum Role {
+    Admin = "admin",
+    User = "user",
+}
 
 export const userRouter = createTRPCRouter({
     getAllUsers: protectedProcedureAdmin.query(async () => {
@@ -27,4 +32,23 @@ export const userRouter = createTRPCRouter({
                 where: { id: input.id }
             });
         }),
+
+    // for development only
+    switchRole: protectedProcedure
+        .input(z.object({
+            id: z.string(),
+            role: z.string(),
+        }))
+        .mutation(async ({ input }) => {
+            if (!input) {
+                throw new Error("Input is undefined");
+            }
+            return await db.user.update({
+                where: { id: input.id },
+                data: {
+                    role: input.role as Role,
+                }
+            });
+        }),
+
 });

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Navbar } from "~/components/Layout";
+import { Layout } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
 import { Paper, Grid, TextInput, NativeSelect, Button, LoadingOverlay } from "@mantine/core";
@@ -91,7 +91,7 @@ function EditHouse() {
 
 
   return (
-    <Navbar>
+    <Layout>
       <Seo templateTitle="Edit Rumah Negara" />
       <main className=" min-h-screen">
         <PageTitle title="Edit Rumah Negara" />
@@ -250,7 +250,7 @@ function EditHouse() {
           </Paper>
         </div>
       </main>
-    </Navbar>
+    </Layout>
   );
 }
 

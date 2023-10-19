@@ -1,15 +1,15 @@
-import { Navbar } from "~/components/Layout";
+import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import withAuth from "~/components/hoc/withAuth";
 
 function AdminRecap() {
   return (
-    <Navbar>
+    <Layout>
       <Seo templateTitle="Rekap" />
       <main className=" min-h-screen bg-white">
 
       </main>
-    </Navbar>
+    </Layout>
   );
 }
 

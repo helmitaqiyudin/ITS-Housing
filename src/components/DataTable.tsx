@@ -83,8 +83,8 @@ export function DataTable<TData, TValue>({
             <Modal opened={opened} onClose={close} title="Tambah Rumah" centered size="100%">
                 <FormCreateHouse close={close} refetchData={refetchData} />
             </Modal>
-            <div className="flex items-center justify-between gap-5">
-                <div className="flex items-center py-4 gap-5">
+            <div className="flex md:items-center justify-between gap-2 md:gap-5 md:flex-row flex-col-reverse py-4">
+                <div className="flex items-center gap-5">
                     <NativeSelect
                         className="max-w-sm"
                         value={filter}
@@ -103,7 +103,7 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm w-full"
                     />
                 </div>
-                <div className="flex items-center justify-end py-4">
+                <div className="flex items-end justify-end">
                     <MantineButton size="sm" color="green" onClick={open}>
                         Tambah Rumah
                     </MantineButton>

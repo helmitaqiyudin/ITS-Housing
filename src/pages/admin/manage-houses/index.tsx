@@ -8,21 +8,27 @@ import { api } from "~/utils/api";
 import PageTitle from "~/components/PageTitle";
 import { LoadingOverlay } from "@mantine/core";
 
+const filteroptions = [
+  { value: "blok", label: "Blok" },
+  { value: "user", label: "Nama Penghuni" },
+  { value: "alamat", label: "Alamat" },
+]
+
 function ManageHouse() {
   const { data: houses, error, isLoading, refetch } = api.house.getAllHouses.useQuery();
 
   if (isLoading) {
-    return(
-      <LoadingOverlay 
-      visible={true}
-      zIndex={9999}
-      loaderProps={{color: 'blue', type: 'bars'}}
+    return (
+      <LoadingOverlay
+        visible={true}
+        zIndex={9999}
+        loaderProps={{ color: 'blue', type: 'bars' }}
       />
-    ); 
+    );
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>; 
+    return <div>Error: {error.message}</div>;
   }
 
   const refetcher = () => {
@@ -37,7 +43,7 @@ function ManageHouse() {
           <div className="flex flex-col items-center justify-center">
             <PageTitle title="Rumah Negara" />
             <div className="w-full">
-              <DataTable columns={columns} data={houses} refetchData={refetcher} />
+              <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
             </div>
           </div>
         </div>

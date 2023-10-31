@@ -14,6 +14,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
 import withAuth from "~/components/hoc/withAuth";
 import MapComponent from "~/components/Map";
+import { Button } from "@mantine/core";
 
 function HouseDetail() {
   const router = useRouter();
@@ -151,13 +152,14 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
             <p className="text-lg font-semibold text-gray-800">Apakah anda yakin ingin menghapus catatan ini?</p>
           </div>
           <div className="flex items-center justify-end">
-            <button
+            <Button
               type="button"
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              variant="filled"
+              color="red"
               onClick={deleteCatatan}
             >
               Hapus Catatan
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>
@@ -175,7 +177,6 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
                 <p className="text-lg font-semibold text-gray-800">{catatan.judul}</p>
                 <div className="flex gap-3">
                   <p className="text-sm text-gray-800 self-center">{moment(catatan.created_at).format("DD MMMM YYYY")}</p>
-                  {/* delete button */}
                   <button className="text-red-500 hover:text-red-700 self-center" onClick={() => openDeleteModal(catatan.id)}>
                     <AiFillDelete />
                   </button>
@@ -273,12 +274,13 @@ function FormCreateCatatan({ blok, close, refetch }: { blok: string; close: () =
           )}
         </div>
         <div className="flex items-center justify-end">
-          <button
+          <Button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            variant="filled"
+            color="green"
           >
             Tambah Catatan
-          </button>
+          </Button>
         </div>
       </div>
     </form>

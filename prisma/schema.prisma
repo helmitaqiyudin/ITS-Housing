@@ -55,13 +55,13 @@ model User {
     role          Role?     @default(admin)
     accounts      Account[]
     sessions      Session[]
-    house         House[]
+    house         House?
 }
 
 model House {
     id                      String              @id @default(uuid())
     blok                    String              @unique
-    id_tenaga               String
+    id_tenaga               String @unique
     luas_tanah              Int
     luas_bangunan           Int
     dokumen_kepemilikan     String

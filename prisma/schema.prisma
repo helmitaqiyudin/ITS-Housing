@@ -47,21 +47,22 @@ enum Role {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    role          Role?     @default(admin)
-    accounts      Account[]
-    sessions      Session[]
-    house         House?
+    id              String            @id @default(cuid())
+    name            String?
+    email           String?           @unique
+    emailVerified   DateTime?
+    image           String?
+    role            Role?             @default(admin)
+    accounts        Account[]
+    sessions        Session[]
+    house           House?
+    AjuanPembayaran AjuanPembayaran[]
 }
 
 model House {
     id                      String              @id @default(uuid())
     blok                    String              @unique
-    id_tenaga               String @unique
+    id_tenaga               String              @unique
     luas_tanah              Int
     luas_bangunan           Int
     dokumen_kepemilikan     String
@@ -76,10 +77,58 @@ model House {
     boundary                String?
     created_at              DateTime            @default(now())
     updated_at              DateTime            @updatedAt
-    user                    User?                @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
-    catatan                 CatatanPenghunian[]
+    user                    User?               @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
+    CatatanPenghunian       CatatanPenghunian[]
+    HouseDocument           HouseDocument[]
+    Pembayaran              Pembayaran[]
+    SejarahPenghunian       SejarahPenghunian[]
+    AjuanRenovasi           AjuanRenovasi[]
+    AjuanPembayaran         AjuanPembayaran[]
 
     @@index([id_tenaga])
+}
+
+model HouseDocument {
+    id           String   @id @default(uuid())
+    blok         String
+    nama_dokumen String
+    url          String
+    keterangan   String?
+    created_at   DateTime @default(now())
+    updated_at   DateTime @updatedAt
+    house        House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+
+    @@index([blok])
+}
+
+model Pembayaran {
+    id            String   @id @default(uuid())
+    blok          String
+    nama_penghuni String
+    bulan_sewa    String
+    tanggal_bayar DateTime
+    jumlah_bayar  Int
+    sisa_bayar    Int
+    keterangan    String?
+    created_at    DateTime @default(now())
+    updated_at    DateTime @updatedAt
+    house         House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+
+    @@index([blok])
+}
+
+model SejarahPenghunian {
+    id             String   @id @default(uuid())
+    blok           String
+    nama           String
+    tanggal_masuk  DateTime
+    tanggal_keluar DateTime
+    keterangan     String?
+    created_at     DateTime @default(now())
+    updated_at     DateTime @updatedAt
+    house          House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+
+    @@index([blok])
 }
 
 model CatatanPenghunian {
@@ -92,6 +141,70 @@ model CatatanPenghunian {
     house      House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
 
     @@index([blok])
+}
+
+enum StatusKonfirmasi {
+    BelumDiajukan
+    Menunggu
+    Diterima
+    Ditolak
+}
+
+model AjuanRenovasi {
+    id                    String                 @id @default(uuid())
+    blok                  String
+    nama_penghuni         String
+    tanggal_ajuan         DateTime
+    keterangan            String?
+    status                StatusKonfirmasi       @default(BelumDiajukan)
+    created_at            DateTime               @default(now())
+    updated_at            DateTime               @updatedAt
+    house                 House                  @relation(fields: [blok], references: [blok], onDelete: Cascade)
+    AjuanRenovasiDocument AjuanRenovasiDocument?
+
+    @@index([blok])
+}
+
+model AjuanRenovasiDocument {
+    id            String        @id @default(uuid())
+    nama_dokumen  String
+    url           String
+    keterangan    String?
+    AjuanRenovasi AjuanRenovasi @relation(fields: [id], references: [id], onDelete: Cascade)
+    created_at    DateTime      @default(now())
+    updated_at    DateTime      @updatedAt
+
+    @@index([id])
+}
+
+model AjuanPembayaran {
+    id                      String                   @id @default(uuid())
+    blok                    String
+    id_tenaga               String
+    bulan_bayar             String
+    jumlah_bayar            Int
+    keterangan              String?
+    status                  StatusKonfirmasi         @default(BelumDiajukan)
+    created_at              DateTime                 @default(now())
+    updated_at              DateTime                 @updatedAt
+    house                   House                    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+    user                    User                     @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
+    AjuanPembayaranDocument AjuanPembayaranDocument?
+
+    @@index([blok])
+    @@index([id_tenaga])
+}
+
+model AjuanPembayaranDocument {
+    id              String          @id @default(uuid())
+    nama_dokumen    String
+    url             String
+    keterangan      String?
+    AjuanPembayaran AjuanPembayaran @relation(fields: [id], references: [id], onDelete: Cascade)
+    created_at      DateTime        @default(now())
+    updated_at      DateTime        @updatedAt
+
+    @@index([id])
 }
 
 model VerificationToken {

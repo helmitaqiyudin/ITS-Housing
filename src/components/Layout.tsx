@@ -24,13 +24,13 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const handleRoleSwitch = async (role: Role) => {
     try {
-      await switchRoleMutation.mutateAsync({id: id ?? "", role: role});
+      await switchRoleMutation.mutateAsync({ id: id ?? "", role: role });
       window.location.reload();
     } catch (error) {
       console.error('Role switch failed:', error);
     }
   };
-  
+
   return (
     <div className="flex flex-col h-screen">
       <nav className="bg-gray-800 p-4">
@@ -179,27 +179,27 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
       <footer className="bg-gray-800 text-white text-center py-5">
         <div className="flex justify-end gap-5 px-5">
-        <p className="self-center">
-          Role Switcher (for development) :
-        </p>
-        {sessionData?.user.role === "admin" && (
-          <Button
-            onClick={() => void handleRoleSwitch(Role.User)}
-            className="flex text-gray-800 rounded-md text-center px-3 py-2"
-          >
-            Switch to User
-          </Button>
+          <p className="self-center">
+            Role Switcher (for development) :
+          </p>
+          {sessionData?.user.role === "admin" && (
+            <Button
+              onClick={() => void handleRoleSwitch(Role.User)}
+              className="flex text-gray-800 rounded-md text-center px-3 py-2"
+            >
+              Switch to User
+            </Button>
           )}
           {sessionData?.user.role === "user" && (
-          <Button
-            onClick={() => void handleRoleSwitch(Role.Admin)}
-            className="flex text-gray-800 rounded-md text-center px-3 py-2"
-          >
-            Switch to Admin
-          </Button>
+            <Button
+              onClick={() => void handleRoleSwitch(Role.Admin)}
+              className="flex text-gray-800 rounded-md text-center px-3 py-2"
+            >
+              Switch to Admin
+            </Button>
           )}
         </div>
-    </footer>
+      </footer>
     </div>
   );
 };

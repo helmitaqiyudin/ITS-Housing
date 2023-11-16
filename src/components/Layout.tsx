@@ -61,8 +61,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   <Link href="/user/my-house">
                     <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara Saya</div>
                   </Link>
-                  <Link href="/user/new-request">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Buat Ajuan</div>
+                  <Link href="/user/my-request">
+                    <div className="text-md text-gray-300 font-semibold hover:text-white">Ajuan</div>
                   </Link>
                   <Link href="/user/recap">
                     <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
@@ -119,8 +119,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                       <Link href="/user/my-house">
                         <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara Saya</div>
                       </Link>
-                      <Link href="/user/new-request">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Buat Ajuan</div>
+                      <Link href="/user/my-request">
+                        <div className="text-md text-gray-300 font-semibold hover:text-white">Ajuan</div>
                       </Link>
                       <Link href="/user/recap">
                         <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>

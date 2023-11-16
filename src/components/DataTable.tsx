@@ -12,7 +12,8 @@ import { NativeSelect, TextInput, Modal } from "@mantine/core";
 import { Button } from "~/components/ui/button"
 import { Button as MantineButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import FormCreateHouse from "~/admin/rumahnegara/TambahRumah";
+import FormCreateHouse from "~/components/admin/rumahnegara/TambahRumah";
+import FormCreatePaymentRequest from "./user/ajuan/TambahAjuanPembayaran";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -74,8 +75,9 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <Modal opened={opened} onClose={close} centered size="100%" title= {`Tambah ${buttonlabel ?? ""}`}>
-                <FormCreateHouse close={close} refetchData={refetchData} />
+            <Modal opened={opened} onClose={close} centered size="100%" title={`Tambah ${buttonlabel ?? ""}`}>
+                {buttonlabel === "Rumah" && <FormCreateHouse close={close} refetchData={refetchData} />}
+                {buttonlabel === "Ajuan" && <FormCreatePaymentRequest close={close} refetchData={refetchData} />}
             </Modal>
             <div className="flex md:items-center justify-between gap-2 md:gap-5 md:flex-row flex-col-reverse py-4">
                 <div className="flex items-center gap-5 justify-between">

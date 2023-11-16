@@ -1,5 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table"
-import { type House } from "./housecolumns";
+import { type User, type House } from "./housecolumns";
 import { MoreHorizontal, ChevronsUpDown as ArrowUpDown, ChevronDown as ArrowDown, ChevronUp as ArrowUp } from "lucide-react";
 import {
     DropdownMenu,
@@ -14,9 +14,10 @@ import { useRouter } from "next/router";
 
 export type AjuanPembayaran = {
     id: string;
+    user: User;
     house: House;
     status: string;
-    created_at: string | null;
+    created_at: string;
 };
 
 type Row = {
@@ -62,7 +63,7 @@ export const columns: ColumnDef<AjuanPembayaran>[] = [
     },
     {
         accessorKey: "user",
-        accessorFn: (row) => row.house?.user?.name,
+        accessorFn: (row) => row.user.name,
         header: ({ column }) => {
             const handleSort = () => {
                 column.toggleSorting(column.getIsSorted() === "asc");
@@ -89,7 +90,7 @@ export const columns: ColumnDef<AjuanPembayaran>[] = [
             )
         },
         cell: ({ row }) => {
-            return <div className="text-right font-medium">{row?.original?.house?.user?.name}</div>;
+            return <div className="text-right font-medium">{row.original.user.name}</div>;
         }
     },
     {
@@ -121,7 +122,7 @@ export const columns: ColumnDef<AjuanPembayaran>[] = [
             );
         },
         cell: ({ row }) => {
-            return <div className="text-right font-medium">{row?.original?.house?.blok}</div>;
+            return <div className="text-right font-medium">{row.original.house.blok}</div>;
         },
     },
     {

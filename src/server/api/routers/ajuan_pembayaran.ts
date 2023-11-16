@@ -9,10 +9,31 @@ import moment from "moment";
 
 export const ajuanPembayaranRouter = createTRPCRouter({
   getAjuanPembayaranbyUserId: protectedProcedure.query(async ({ ctx }) => {
+    const userHouse = await db.house.findUnique({
+      where: { id_tenaga: ctx.session?.user?.id },
+      select: {
+        blok: true,
+      },
+    });
+
+    if (!userHouse) {
+      return [];
+    }
+
     const ajuanPembayarans = await db.ajuanPembayaran.findMany({
-      where: { id_tenaga: ctx.session.user.id },
+      where: {
+        id_tenaga: ctx.session.user.id,
+        house: {
+          blok: userHouse.blok,
+        },
+      },
       select: {
         id: true,
+        user: {
+          select: {
+            name: true,
+          },
+        },
         house: {
           select: {
             id: true,

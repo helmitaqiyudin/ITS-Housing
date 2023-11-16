@@ -77,13 +77,14 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                             />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
-                            <NumberInput
-                                label="Jumlah Bayar"
+                            <TextInput
                                 placeholder="Jumlah Bayar"
                                 value={form.values.jumlah_bayar}
-                                onChange={(value) => form.setFieldValue('jumlah_bayar', value ? parseInt(value, 10) : 0)}
-                                required
-                            />
+                                onChange={(event) => {
+                                    const value = event.currentTarget.value;
+                                    form.setFieldValue("jumlah_bayar", value ? parseInt(value) : 0);
+                                }}
+                                required />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
                             <TextInput

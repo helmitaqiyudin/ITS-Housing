@@ -1,9 +1,15 @@
 import { api } from "~/utils/api";
 import { useForm } from "@mantine/form";
 import { toast } from "react-toastify";
-import { LoadingOverlay, Paper, Grid, Select, TextInput, NumberInput } from "@mantine/core";
+import { LoadingOverlay, Paper, Grid, TextInput } from "@mantine/core";
 import { Button as MantineButton } from "@mantine/core";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+
+const formatRupiah = (value: number) => {
+    const stringValue = value.toString();
+    return stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
 
 export default function FormCreatePaymentRequest({ close, refetchData }: { close: () => void, refetchData: () => void }) {
     const mutation = api.ajuan_pembayaran.createAjuanPembayaran.useMutation();
@@ -25,6 +31,7 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
             ...form.values,
             id_tenaga: user,
             blok: blok,
+            jumlah_bayar: jumlahBayarRaw,
         };
 
         mutation.mutate(formData, {
@@ -50,6 +57,7 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
     };
 
     const { data: houseData } = api.house.getHouseByUserId.useQuery();
+    const [jumlahBayarRaw, setJumlahBayarRaw] = useState(0);
 
     if (!sessionData || !houseData) {
         return (
@@ -63,8 +71,6 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
 
     const user = sessionData.user.id;
     const blok = houseData.blok;
-
-    // append user id and blok to form values
 
     return (
         <>
@@ -106,12 +112,13 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                             <TextInput
                                 label="Jumlah Bayar"
                                 placeholder="Jumlah Bayar"
-                                value={form.values.jumlah_bayar}
+                                value={formatRupiah(jumlahBayarRaw)}
                                 onChange={(event) => {
-                                    const value = event.currentTarget.value;
-                                    form.setFieldValue("jumlah_bayar", value ? parseInt(value) : 0);
+                                    const value = event.currentTarget.value.replace(/\D/g, ''); // Remove non-numeric characters
+                                    setJumlahBayarRaw(value ? parseInt(value, 10) : 0);
                                 }}
-                                required />
+                                required
+                            />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
                             <TextInput

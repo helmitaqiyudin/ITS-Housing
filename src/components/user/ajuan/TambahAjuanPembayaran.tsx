@@ -3,9 +3,12 @@ import { useForm } from "@mantine/form";
 import { toast } from "react-toastify";
 import { LoadingOverlay, Paper, Grid, Select, TextInput, NumberInput } from "@mantine/core";
 import { Button as MantineButton } from "@mantine/core";
+import { useSession } from "next-auth/react";
 
 export default function FormCreatePaymentRequest({ close, refetchData }: { close: () => void, refetchData: () => void }) {
     const mutation = api.ajuan_pembayaran.createAjuanPembayaran.useMutation();
+    const { data: sessionData } = useSession();
+    // console.log(sessionData);
 
     const form = useForm({
         initialValues: {
@@ -20,6 +23,8 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
     const submitForm = () => {
         const formData = {
             ...form.values,
+            id_tenaga: user,
+            blok: blok,
         };
 
         mutation.mutate(formData, {
@@ -44,6 +49,23 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
         submitForm();
     };
 
+    const { data: houseData } = api.house.getHouseByUserId.useQuery();
+
+    if (!sessionData || !houseData) {
+        return (
+            <LoadingOverlay
+                visible={true}
+                zIndex={9999}
+                loaderProps={{ color: 'blue', type: 'bars' }}
+            />
+        );
+    }
+
+    const user = sessionData.user.id;
+    const blok = houseData.blok;
+
+    // append user id and blok to form values
+
     return (
         <>
             <Paper className="p-5 border-8" shadow="sm" style={{ borderRadius: '8px', border: '1px solid #E5E7EB' }}>
@@ -57,7 +79,9 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                                 label="Blok"
                                 placeholder="Blok"
                                 {...form.getInputProps('blok')}
+                                value={blok}
                                 required
+                                disabled
                             />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
@@ -65,7 +89,9 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                                 label="ID Tenaga"
                                 placeholder="ID Tenaga"
                                 {...form.getInputProps('id_tenaga')}
+                                value={user ?? ""}
                                 required
+                                disabled
                             />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
@@ -78,6 +104,7 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>
                             <TextInput
+                                label="Jumlah Bayar"
                                 placeholder="Jumlah Bayar"
                                 value={form.values.jumlah_bayar}
                                 onChange={(event) => {

@@ -31,7 +31,7 @@ function UserRequest() {
   const refetcher = () => {
     void refetch();
   }
-  console.log(pembayaran);
+  // console.log(pembayaran);
   return (
     <Layout>
       <Seo templateTitle="Ajuan Saya" />

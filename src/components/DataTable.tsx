@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
             <div className="flex md:items-center justify-between gap-2 md:gap-5 md:flex-row flex-col-reverse py-4">
                 <div className="flex items-center gap-5 justify-between">
                     <NativeSelect
-                        className="max-w-sm"
+                        className="md:w-full max-w-sm"
                         value={filter}
                         onChange={(event) => handleChangeFilter(event)}
                     >

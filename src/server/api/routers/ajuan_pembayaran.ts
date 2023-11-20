@@ -25,54 +25,101 @@ export const ajuanPembayaranRouter = createTRPCRouter({
       });
     }),
 
-  getAjuanPembayaranbyUserId: protectedProcedure.query(async ({ ctx }) => {
-    const userHouse = await db.house.findUnique({
-      where: { id_tenaga: ctx.session?.user?.id },
-      select: {
-        blok: true,
-      },
-    });
-
-    if (!userHouse) {
-      return [];
-    }
-
-    const ajuanPembayarans = await db.ajuanPembayaran.findMany({
-      where: {
-        id_tenaga: ctx.session.user.id,
-        house: {
-          blok: userHouse.blok,
+  getAjuanPembayaranbyUserId: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const userHouse = await db.house.findUnique({
+        where: { id_tenaga: ctx.session?.user?.id },
+        select: {
+          blok: true,
         },
-      },
-      select: {
-        id: true,
-        user: {
-          select: {
-            name: true,
+      });
+
+      if (!userHouse) {
+        return [];
+      }
+
+      const ajuanPembayarans = await db.ajuanPembayaran.findMany({
+        where: {
+          id_tenaga: ctx.session.user.id,
+          house: {
+            blok: userHouse.blok,
           },
         },
-        house: {
-          select: {
-            id: true,
-            blok: true,
-            alamat: true,
-            user: {
-              select: {
-                name: true,
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
               },
             },
           },
+          status: true,
+          created_at: true,
         },
-        status: true,
-        created_at: true,
-      },
-    });
+      });
 
-    return ajuanPembayarans.map((ajuan) => ({
-      ...ajuan,
-      created_at: ajuan.created_at.toISOString(),
-    }));
-  }),
+      const ajuanrenovasis = await db.ajuanRenovasi.findMany({
+        where: {
+          id_tenaga: ctx.session.user.id,
+          house: {
+            blok: userHouse.blok,
+          },
+        },
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          status: true,
+          created_at: true,
+        },
+      });
+
+      // return ajuanPembayarans.map((ajuan) => ({
+      //   ...ajuan,
+      //   created_at: ajuan.created_at.toISOString(),
+      // }));
+
+      if (input === "pembayaran") {
+        return ajuanPembayarans.map((ajuan) => ({
+          ...ajuan,
+          created_at: ajuan.created_at.toISOString(),
+        }));
+      } else if (input === "renovasi") {
+        return ajuanrenovasis.map((ajuan) => ({
+          ...ajuan,
+          created_at: ajuan.created_at.toISOString(),
+        }));
+      } else {
+        return [];
+      }
+    }),
 
   getAllAjuanPembayaran: protectedProcedureAdmin.query(async () => {
     const ajuanPembayarans = await db.ajuanPembayaran.findMany({

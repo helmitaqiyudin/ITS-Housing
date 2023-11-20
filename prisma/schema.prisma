@@ -57,6 +57,7 @@ model User {
     sessions        Session[]
     house           House?
     AjuanPembayaran AjuanPembayaran[]
+    AjuanRenovasi   AjuanRenovasi[]
 }
 
 model House {
@@ -153,16 +154,18 @@ enum StatusKonfirmasi {
 model AjuanRenovasi {
     id                    String                 @id @default(uuid())
     blok                  String
-    nama_penghuni         String
+    id_tenaga             String
     tanggal_ajuan         DateTime
     keterangan            String?
     status                StatusKonfirmasi       @default(BelumDiajukan)
     created_at            DateTime               @default(now())
     updated_at            DateTime               @updatedAt
     house                 House                  @relation(fields: [blok], references: [blok], onDelete: Cascade)
+    user                  User                   @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
     AjuanRenovasiDocument AjuanRenovasiDocument?
 
     @@index([blok])
+    @@index([id_tenaga])
 }
 
 model AjuanRenovasiDocument {

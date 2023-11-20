@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 
 import PageTitle from "~/components/PageTitle";
 import withAuth from "~/components/hoc/withAuth";
-import { LoadingOverlay, SegmentedControl } from "@mantine/core";
+import { Skeleton, SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 
 const filteroptions = [
@@ -17,15 +17,6 @@ const filteroptions = [
 function UserRequest() {
   const [query, setQuery] = useState("pembayaran");
   const { data: pembayaran, error, isLoading, refetch } = api.ajuan.getAjuanPembayaranbyUserId.useQuery(query);
-  if (isLoading) {
-    return (
-      <LoadingOverlay
-        visible={true}
-        zIndex={9999}
-        loaderProps={{ color: 'blue', type: 'bars' }}
-      />
-    );
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -52,10 +43,12 @@ function UserRequest() {
               onChange={(value) => {
                 setQuery(value);
               }} />
-            <div className="w-full">
-              {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
-              {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
-            </div>
+            {isLoading ? <Skeleton height={300} className="mt-5" /> :
+              <div className="w-full">
+                {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
+                {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
+              </div>
+            }
           </div>
         </div>
       </main>

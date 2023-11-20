@@ -41,6 +41,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
+    "geist": "^1.1.0",
     "lucide-react": "^0.288.0",
     "mapbox-gl": "^2.15.0",
     "moment": "^2.29.4",

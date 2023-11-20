@@ -2,6 +2,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
+
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
@@ -12,6 +13,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MantineProvider } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -19,8 +23,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <MantineProvider>
-      <Component {...pageProps} />
-      <ToastContainer theme="colored"/>
+        <main className={GeistSans.className}>
+          <Component {...pageProps} />
+          <ToastContainer theme="colored" />
+        </main>
       </MantineProvider>
     </SessionProvider>
   );

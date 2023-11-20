@@ -6,7 +6,7 @@ import { DataTable } from "~/components/DataTable";
 
 import { api } from "~/utils/api";
 import PageTitle from "~/components/PageTitle";
-import { LoadingOverlay } from "@mantine/core";
+import { Skeleton } from "@mantine/core";
 
 const filteroptions = [
   { value: "blok", label: "Blok" },
@@ -16,16 +16,6 @@ const filteroptions = [
 
 function ManageHouse() {
   const { data: houses, error, isLoading, refetch } = api.house.getAllHouses.useQuery();
-
-  if (isLoading) {
-    return (
-      <LoadingOverlay
-        visible={true}
-        zIndex={9999}
-        loaderProps={{ color: 'blue', type: 'bars' }}
-      />
-    );
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -42,9 +32,11 @@ function ManageHouse() {
         <div className="container mx-auto">
           <div className="flex flex-col items-center justify-center">
             <PageTitle title="Rumah Negara" />
-            <div className="w-full">
-              <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
-            </div>
+            {isLoading ? <Skeleton height={300} className="mt-5" /> :
+              <div className="w-full">
+                <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
+              </div>
+            }
           </div>
         </div>
       </main>

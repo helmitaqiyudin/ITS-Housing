@@ -4,15 +4,9 @@ import { toast } from "react-toastify";
 import { LoadingOverlay, Paper, Grid, TextInput } from "@mantine/core";
 import { Button as MantineButton } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
-const formatRupiah = (value: number) => {
-    const stringValue = value.toString();
-    return stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-};
-
-export default function FormCreatePaymentRequest({ close, refetchData }: { close: () => void, refetchData: () => void }) {
-    const mutation = api.ajuan.createAjuanPembayaran.useMutation();
+export default function FormCreateRenovationRequest({ close, refetchData }: { close: () => void, refetchData: () => void }) {
+    const mutation = api.ajuan.createAjuanRenovasi.useMutation();
     const { data: sessionData } = useSession();
     // console.log(sessionData);
 
@@ -20,8 +14,6 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
         initialValues: {
             blok: "",
             id_tenaga: "",
-            bulan_bayar: "",
-            jumlah_bayar: 0,
             keterangan: "",
         },
     });
@@ -31,7 +23,6 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
             ...form.values,
             id_tenaga: user,
             blok: blok,
-            jumlah_bayar: jumlahBayarRaw,
         };
 
         mutation.mutate(formData, {
@@ -57,7 +48,6 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
     };
 
     const { data: houseData } = api.house.getHouseByUserId.useQuery();
-    const [jumlahBayarRaw, setJumlahBayarRaw] = useState(0);
 
     if (!sessionData || !houseData) {
         return (
@@ -98,26 +88,6 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                                 value={user ?? ""}
                                 required
                                 disabled
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={{ xs: 12, md: 6 }}>
-                            <TextInput
-                                label="Bulan Bayar"
-                                placeholder="Bulan Bayar"
-                                {...form.getInputProps('bulan_bayar')}
-                                required
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={{ xs: 12, md: 6 }}>
-                            <TextInput
-                                label="Jumlah Bayar"
-                                placeholder="Jumlah Bayar"
-                                value={formatRupiah(jumlahBayarRaw)}
-                                onChange={(event) => {
-                                    const value = event.currentTarget.value.replace(/\D/g, ''); // Remove non-numeric characters
-                                    setJumlahBayarRaw(value ? parseInt(value, 10) : 0);
-                                }}
-                                required
                             />
                         </Grid.Col>
                         <Grid.Col span={{ xs: 12, md: 6 }}>

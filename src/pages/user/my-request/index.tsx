@@ -16,7 +16,7 @@ const filteroptions = [
 
 function UserRequest() {
   const [query, setQuery] = useState("pembayaran");
-  const { data: pembayaran, error, isLoading, refetch } = api.ajuan_pembayaran.getAjuanPembayaranbyUserId.useQuery(query);
+  const { data: pembayaran, error, isLoading, refetch } = api.ajuan.getAjuanPembayaranbyUserId.useQuery(query);
   if (isLoading) {
     return (
       <LoadingOverlay
@@ -53,7 +53,8 @@ function UserRequest() {
                 setQuery(value);
               }} />
             <div className="w-full">
-              <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan" />
+              {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
+              {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
             </div>
           </div>
         </div>

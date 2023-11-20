@@ -155,7 +155,6 @@ model AjuanRenovasi {
     id                    String                 @id @default(uuid())
     blok                  String
     id_tenaga             String
-    tanggal_ajuan         DateTime
     keterangan            String?
     status                StatusKonfirmasi       @default(BelumDiajukan)
     created_at            DateTime               @default(now())

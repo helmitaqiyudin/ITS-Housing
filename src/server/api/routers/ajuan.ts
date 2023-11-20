@@ -6,7 +6,7 @@ import {
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
-export const ajuanPembayaranRouter = createTRPCRouter({
+export const ajuanRouter = createTRPCRouter({
   // CREATE a new Ajuan Pembayaran
   createAjuanPembayaran: protectedProcedure
     .input(
@@ -21,6 +21,21 @@ export const ajuanPembayaranRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const createData = input;
       return await db.ajuanPembayaran.create({
+        data: createData,
+      });
+    }),
+
+    createAjuanRenovasi: protectedProcedure
+    .input(
+      z.object({
+        blok: z.string(),
+        id_tenaga: z.string(),
+        keterangan: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const createData = input;
+      return await db.ajuanRenovasi.create({
         data: createData,
       });
     }),

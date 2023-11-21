@@ -58,7 +58,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <nav className="bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 drop-shadow-md backdrop-blur-[5px]">
+      <nav className="bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 md:drop-shadow-md backdrop-blur-[5px]">
         <div className="px-5 mx-auto flex justify-between items-center h-[60px]">
           <div className="flex items-center space-x-20">
             <Link href="/">
@@ -85,7 +85,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             )}
             <Transition transition="scale-y" mounted={opened} >
               {(transitionStyle) => (
-                <div className={`absolute top-14 left-0 py-2 w-full bg-white md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
+                <div className={`absolute top-14 left-0 py-2 w-full bg-[hsla(0,0%,100%,.85)] drop-shadow-md backdrop-blur-[5px] md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
                   {sessionData?.user.role === "admin" && (
                     <div className="flex flex-col text-start space-y-5 py-2 px-3">
                       <Link href="/admin">

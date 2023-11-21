@@ -17,69 +17,71 @@ function HouseDetail() {
     <Layout>
       <Seo templateTitle="Detail Rumah Negara" />
       <main className=" min-h-screen">
-        <PageTitle title="Rumah Negara Saya" />
-        <div className="container mx-auto">
-          {house?.boundary && <MapComponent boundary={house.boundary} />}
-          <div className="flex text-center">
-            <p className="text-lg font-semibold text-gray-800 p-2">Detail</p>
+        <div className="container mx-auto my-10">
+          <div className="bg-white rounded-md drop-shadow-md p-5">
+            <PageTitle title="Rumah Negara Saya" />
+            {house?.boundary && <MapComponent boundary={house.boundary} />}
+            <div className="flex text-center">
+              <p className="text-lg font-semibold text-gray-800 p-2">Detail</p>
+            </div>
+            <Paper className="p-5 border-8">
+              <Grid gutter="md" grow={false}>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Blok Rumah</dt>
+                  <dd className="text-gray-700">{house?.blok}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Nama Lengkap</dt>
+                  <dd className="text-gray-700">{house?.user?.name}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Dokumen Kepemilikan</dt>
+                  <dd className="text-gray-700">{house?.dokumen_kepemilikan}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Luas Tanah</dt>
+                  <dd className="text-gray-700">{house?.luas_tanah}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Alamat</dt>
+                  <dd className="text-gray-700">{house?.alamat}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Luas Bangunan</dt>
+                  <dd className="text-gray-700">{house?.luas_bangunan}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Tanggal SK Rektor</dt>
+                  <dd className="text-gray-700">{moment(house?.tanggal_sk_rektor).format("DD MMMM YYYY")}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Tarif Sewa</dt>
+                  <dd className="text-gray-700">{house?.tarif_sewa}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Sumber Dana Pembangunan</dt>
+                  <dd className="text-gray-700">{house?.sumber_dana_pembangunan}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Golongan</dt>
+                  <dd className="text-gray-700">{house?.golongan}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">No. SK Penetapan Golongan</dt>
+                  <dd className="text-gray-700">{house?.sk_golongan}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Nomor Hum</dt>
+                  <dd className="text-gray-700">{house?.nomor_hum}</dd>
+                </Grid.Col>
+                <Grid.Col span={{ xs: 12, md: 3 }}>
+                  <dt className="font-medium text-gray-900">Kode Hum</dt>
+                  <dd className="text-gray-700">{house?.kode_hum}</dd>
+                </Grid.Col>
+              </Grid>
+            </Paper>
+            {blok && <CatatanPenghunian blok={blok} />}
           </div>
-          <Paper className="p-5 border-8" shadow="sm" style={{ borderRadius: '8px', border: '1px solid #E5E7EB' }}>
-            <Grid gutter="md" grow={false}>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Blok Rumah</dt>
-                <dd className="text-gray-700">{house?.blok}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Nama Lengkap</dt>
-                <dd className="text-gray-700">{house?.user?.name}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Dokumen Kepemilikan</dt>
-                <dd className="text-gray-700">{house?.dokumen_kepemilikan}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Luas Tanah</dt>
-                <dd className="text-gray-700">{house?.luas_tanah}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Alamat</dt>
-                <dd className="text-gray-700">{house?.alamat}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Luas Bangunan</dt>
-                <dd className="text-gray-700">{house?.luas_bangunan}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Tanggal SK Rektor</dt>
-                <dd className="text-gray-700">{moment(house?.tanggal_sk_rektor).format("DD MMMM YYYY")}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Tarif Sewa</dt>
-                <dd className="text-gray-700">{house?.tarif_sewa}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Sumber Dana Pembangunan</dt>
-                <dd className="text-gray-700">{house?.sumber_dana_pembangunan}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Golongan</dt>
-                <dd className="text-gray-700">{house?.golongan}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">No. SK Penetapan Golongan</dt>
-                <dd className="text-gray-700">{house?.sk_golongan}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Nomor Hum</dt>
-                <dd className="text-gray-700">{house?.nomor_hum}</dd>
-              </Grid.Col>
-              <Grid.Col span={{ xs: 12, md: 3 }}>
-                <dt className="font-medium text-gray-900">Kode Hum</dt>
-                <dd className="text-gray-700">{house?.kode_hum}</dd>
-              </Grid.Col>
-            </Grid>
-          </Paper>
-          {blok && <CatatanPenghunian blok={blok} />}
         </div>
       </main>
     </Layout>
@@ -114,7 +116,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
         )
       })}
       {catatanPenghunian?.length === 0 && (
-        <div className="flex justify-center p-2">
+        <div className="flex justify-center p-3">
           <p className="text-lg font-semibold text-gray-800">Belum ada catatan penghunian</p>
         </div>
       )}

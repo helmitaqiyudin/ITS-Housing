@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <Modal opened={opened} onClose={close} centered size="100%" title={`Tambah ${buttonlabel ?? ""}`}>
+            <Modal opened={opened} onClose={close} centered size="100%" radius={"md"} title={`Tambah ${buttonlabel ?? ""}`}>
                 {buttonlabel === "Rumah" && <FormCreateHouse close={close} refetchData={refetchData} />}
                 {buttonlabel === "Ajuan Pembayaran" && <FormCreatePaymentRequest close={close} refetchData={refetchData} />}
                 {buttonlabel === "Ajuan Renovasi" && <FormCreateRenovationRequest close={close} refetchData={refetchData} />}

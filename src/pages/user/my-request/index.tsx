@@ -29,8 +29,8 @@ function UserRequest() {
     <Layout>
       <Seo templateTitle="Ajuan Saya" />
       <main className=" min-h-screen">
-        <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-center">
+        <div className="container mx-auto my-10">
+          <div className="flex flex-col items-center justify-center bg-white p-5 rounded-md drop-shadow-md">
             <PageTitle title="Daftar Ajuan Saya" />
             <SegmentedControl
               w={{ xs: "10%", md: "30%" }}

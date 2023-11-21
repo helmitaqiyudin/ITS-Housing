@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Avatar, Button, Menu, MenuLabel, Burger, Transition } from "@mantine/core";
 import { useDisclosure, useClickOutside } from "@mantine/hooks";
 import { api } from "~/utils/api";
+import { LayoutDashboard, Home, Users, ListChecks, Book } from "lucide-react";
+import { useRouter } from "next/router";
 
 enum Role {
   Admin = "admin",
@@ -18,6 +20,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   });
 
+
+
   // for development purpose only, remove this and footer later
   const switchRoleMutation = api.user.switchRole.useMutation();
   const id = sessionData?.user.id;
@@ -31,45 +35,35 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const useCurrentPath = () => {
+    const router = useRouter();
+    return router.pathname;
+  };
+
+
+  const SidebarLink = ({ href, label, icon }: { href: string, label: string, icon: React.ReactNode }) => {
+    const currentPath = useCurrentPath();
+
+    return (
+      <Link href={href}>
+        <div
+          className={`text-sm font-medium p-2 rounded-lg flex items-center gap-2 ${currentPath === href ? "bg-white text-slate-700 drop-shadow-md" : "text-slate-700 hover:bg-gray-200"
+            }`}
+        >
+          {icon}{label}
+        </div>
+      </Link>
+    );
+  };
+
   return (
     <div className="flex flex-col h-screen">
-      <nav className="bg-gray-800">
+      <nav className="bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 drop-shadow-md backdrop-blur-[5px]">
         <div className="px-5 mx-auto flex justify-between items-center h-[60px]">
           <div className="flex items-center space-x-20">
             <Link href="/">
-              <div className="text-2xl font-bold text-white">TPRN</div>
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-800 to-cyan-500 bg-clip-text text-transparent">TPRN</div>
             </Link>
-            <div className="hidden md:flex">
-              {sessionData?.user.role === "admin" && (
-                <div className="flex space-x-10">
-                  <Link href="/admin/manage-houses">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara</div>
-                  </Link>
-                  <Link href="/admin/manage-users">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Daftar User</div>
-                  </Link>
-                  <Link href="/admin/manage-requests">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Daftar Ajuan</div>
-                  </Link>
-                  <Link href="/admin/recap">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
-                  </Link>
-                </div>
-              )}
-              {sessionData?.user.role === "user" && (
-                <div className="flex space-x-10">
-                  <Link href="/user/my-house">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara Saya</div>
-                  </Link>
-                  <Link href="/user/my-request">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Ajuan</div>
-                  </Link>
-                  <Link href="/user/recap">
-                    <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
-                  </Link>
-                </div>
-              )}
-            </div>
           </div>
 
           <div ref={ref}>
@@ -93,18 +87,21 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               {(transitionStyle) => (
                 <div className={`absolute top-14 left-0 py-2 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
                   {sessionData?.user.role === "admin" && (
-                    <div className="flex flex-col text-start space-y-3 py-2 px-3">
+                    <div className="flex flex-col text-start space-y-5 py-2 px-3">
+                      <Link href="/admin">
+                        <div className="text-sm text-white font-medium ">Dashboard</div>
+                      </Link>
                       <Link href="/admin/manage-houses">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara</div>
+                        <div className="text-sm text-white font-medium ">Rumah Negara</div>
                       </Link>
                       <Link href="/admin/manage-users">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Daftar User</div>
+                        <div className="text-sm text-white font-medium ">Daftar User</div>
                       </Link>
                       <Link href="/admin/manage-requests">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Daftar Ajuan</div>
+                        <div className="text-sm text-white font-medium ">Daftar Ajuan</div>
                       </Link>
                       <Link href="/admin/recap">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
+                        <div className="text-sm text-white font-medium ">Rekap</div>
                       </Link>
                       <Button
                         onClick={() => void signOut()}
@@ -115,15 +112,18 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                   )}
                   {sessionData?.user.role === "user" && (
-                    <div className="flex flex-col text-start space-y-3 py-2 px-3">
+                    <div className="flex flex-col text-start space-y-5 py-2 px-3">
+                      <Link href="/user">
+                        <div className="text-sm text-white font-medium ">Dashboard</div>
+                      </Link>
                       <Link href="/user/my-house">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Rumah Negara Saya</div>
+                        <div className="text-sm text-white font-medium ">Rumah Negara Saya</div>
                       </Link>
                       <Link href="/user/my-request">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Ajuan</div>
+                        <div className="text-sm text-white font-medium ">Ajuan</div>
                       </Link>
                       <Link href="/user/recap">
-                        <div className="text-md text-gray-300 font-semibold hover:text-white">Rekap</div>
+                        <div className="text-sm text-white font-medium ">Rekap</div>
                       </Link>
                       <Button
                         onClick={() => void signOut()}
@@ -174,18 +174,43 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </nav>
-      <main className="flex-grow pb-10">
-        {children}
+      <main className="flex-grow pt-16 bg-[#f0f2f5]">
+        <div className="md:flex">
+          <div className="hidden md:flex md:w-[20%]">
+            <div className="hidden md:flex w-full p-5">
+              {sessionData?.user.role === "admin" && (
+                <div className="flex flex-col space-y-5 w-[70%]">
+                  <SidebarLink href="/admin" label="Dashboard" icon={<LayoutDashboard />} />
+                  <SidebarLink href="/admin/manage-houses" label="Rumah Negara" icon={<Home />} />
+                  <SidebarLink href="/admin/manage-users" label="Daftar User" icon={<Users />} />
+                  <SidebarLink href="/admin/manage-requests" label="Daftar Ajuan" icon={<ListChecks />} />
+                  <SidebarLink href="/admin/recap" label="Rekap" icon={<Book />} />
+                </div>
+              )}
+              {sessionData?.user.role === "user" && (
+                <div className="flex flex-col space-y-5 w-[70%]">
+                  <SidebarLink href="/user" label="Dashboard" icon={<LayoutDashboard />} />
+                  <SidebarLink href="/user/my-house" label="Rumah Negara Saya" icon={<Home />} />
+                  <SidebarLink href="/user/my-request" label="Ajuan" icon={<ListChecks />} />
+                  <SidebarLink href="/user/recap" label="Rekap" icon={<Book />} />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="w-full ">
+            {children}
+          </div>
+        </div>
       </main>
-      <footer className="bg-gray-800 text-white text-center py-5">
+      <footer className="bg-gray-800 text-center py-3">
         <div className="flex justify-end gap-5 px-5">
-          <p className="self-center">
+          <p className="self-center text-white">
             Role Switcher (for development) :
           </p>
           {sessionData?.user.role === "admin" && (
             <Button
               onClick={() => void handleRoleSwitch(Role.User)}
-              className="flex text-gray-800 rounded-md text-center px-3 py-2"
+              className="flex text-white rounded-md text-center px-3 py-2"
             >
               Switch to User
             </Button>
@@ -193,7 +218,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           {sessionData?.user.role === "user" && (
             <Button
               onClick={() => void handleRoleSwitch(Role.Admin)}
-              className="flex text-gray-800 rounded-md text-center px-3 py-2"
+              className="flex text-white rounded-md text-center px-3 py-2"
             >
               Switch to Admin
             </Button>

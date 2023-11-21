@@ -6,7 +6,7 @@ function ManageRequests() {
   return (
     <Layout>
       <Seo templateTitle="Daftar Ajuan" />
-      <main className=" min-h-screen bg-white">
+      <main className=" min-h-screen">
 
       </main>
     </Layout>

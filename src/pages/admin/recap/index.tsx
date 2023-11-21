@@ -6,7 +6,7 @@ function AdminRecap() {
   return (
     <Layout>
       <Seo templateTitle="Rekap" />
-      <main className=" min-h-screen bg-white">
+      <main className=" min-h-screen">
 
       </main>
     </Layout>

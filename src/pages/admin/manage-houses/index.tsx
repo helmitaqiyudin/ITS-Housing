@@ -28,9 +28,9 @@ function ManageHouse() {
   return (
     <Layout>
       <Seo templateTitle="Rumah Negara" />
-      <main className="min-h-screen bg-white">
-        <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-center">
+      <main className="min-h-screen">
+        <div className="container mx-auto my-10">
+          <div className="flex flex-col items-center justify-center bg-white p-5 rounded-md drop-shadow-md">
             <PageTitle title="Rumah Negara" />
             {isLoading ? <Skeleton height={300} className="mt-5" /> :
               <div className="w-full">

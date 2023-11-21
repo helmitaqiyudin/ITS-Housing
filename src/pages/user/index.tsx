@@ -6,7 +6,7 @@ const UserHome = () => {
   return (
     <Layout>
       <Seo templateTitle="Dashboard" />
-      <main className=" min-h-screen bg-white">
+      <main className=" min-h-screen">
         Dashboard User
       </main>
     </Layout>

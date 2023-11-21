@@ -26,8 +26,8 @@ function HouseDetail() {
   return (
     <Layout>
       <Seo templateTitle="Detail Rumah Negara" />
-      <main className=" min-h-screen">
-        <div className="container mx-auto my-10">
+      <main className=" min-h-[100vh]">
+        <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
             <PageTitle title="Detail Rumah Negara" />
             {house?.boundary && <MapComponent boundary={house.boundary} />}

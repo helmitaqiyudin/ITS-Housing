@@ -6,7 +6,7 @@ function ManageRequests() {
   return (
     <Layout>
       <Seo templateTitle="Daftar Ajuan" />
-      <main className=" min-h-screen">
+      <main className=" min-h-[100vh]">
 
       </main>
     </Layout>

@@ -28,15 +28,17 @@ function ManageHouse() {
   return (
     <Layout>
       <Seo templateTitle="Rumah Negara" />
-      <main className="min-h-screen">
-        <div className="container mx-auto my-10">
-          <div className="flex flex-col items-center justify-center bg-white p-5 rounded-md drop-shadow-md">
+      <main className="min-h-[100vh]">
+        <div className="md:container mx-auto my-10">
+          <div className=" bg-white p-5 rounded-md drop-shadow-md">
             <PageTitle title="Rumah Negara" />
-            {isLoading ? <Skeleton height={300} className="mt-5" /> :
-              <div className="w-full">
-                <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
-              </div>
-            }
+            <div className="flex flex-col items-center justify-center w-full">
+              {isLoading ? <Skeleton height={300} className="mt-5" /> :
+                <div className="w-full">
+                  <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
+                </div>
+              }
+            </div>
           </div>
         </div>
       </main>

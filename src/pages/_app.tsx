@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <MantineProvider>
-        <main className={`bg-[#f0f2f5] ${GeistSans.className}`}>
+        <main className={`bg-[#f0f2f5] text-black ${GeistSans.className}`}>
           <Component {...pageProps} />
           <ToastContainer theme="colored" />
         </main>

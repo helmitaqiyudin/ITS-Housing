@@ -28,27 +28,29 @@ function UserRequest() {
   return (
     <Layout>
       <Seo templateTitle="Ajuan Saya" />
-      <main className=" min-h-screen">
-        <div className="container mx-auto my-10">
-          <div className="flex flex-col items-center justify-center bg-white p-5 rounded-md drop-shadow-md">
+      <main className=" min-h-[100vh]">
+        <div className="md:container mx-auto my-10">
+          <div className="bg-white p-5 rounded-md drop-shadow-md">
             <PageTitle title="Daftar Ajuan Saya" />
-            <SegmentedControl
-              w={{ xs: "10%", md: "30%" }}
-              radius="md"
-              data={[
-                { value: "pembayaran", label: "Pembayaran" },
-                { value: "renovasi", label: "Renovasi" },
-              ]}
-              value={query}
-              onChange={(value) => {
-                setQuery(value);
-              }} />
-            {isLoading ? <Skeleton height={300} className="mt-5" /> :
-              <div className="w-full">
-                {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
-                {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
-              </div>
-            }
+            <div className="flex flex-col items-center justify-center w-full">
+              <SegmentedControl
+                w={{ xs: "10%", md: "30%" }}
+                radius="md"
+                data={[
+                  { value: "pembayaran", label: "Pembayaran" },
+                  { value: "renovasi", label: "Renovasi" },
+                ]}
+                value={query}
+                onChange={(value) => {
+                  setQuery(value);
+                }} />
+              {isLoading ? <Skeleton height={300} className="mt-5" /> :
+                <div className="w-full">
+                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
+                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
+                </div>
+              }
+            </div>
           </div>
         </div>
       </main>

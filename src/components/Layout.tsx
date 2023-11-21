@@ -47,7 +47,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
       <Link href={href}>
         <div
-          className={`text-sm font-medium p-2 rounded-lg flex items-center gap-2 ${currentPath === href ? "bg-white text-slate-700 drop-shadow-md" : "text-slate-700 hover:bg-gray-200"
+          className={`text-sm font-medium p-2 rounded-lg flex items-center gap-2 ${currentPath === href ? "bg-white text-gray-700 drop-shadow-md" : "text-gray-700 hover:bg-gray-200"
             }`}
         >
           {icon}{label}
@@ -85,23 +85,23 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             )}
             <Transition transition="scale-y" mounted={opened} >
               {(transitionStyle) => (
-                <div className={`absolute top-14 left-0 py-2 w-full bg-gray-800 md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
+                <div className={`absolute top-14 left-0 py-2 w-full bg-white md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
                   {sessionData?.user.role === "admin" && (
                     <div className="flex flex-col text-start space-y-5 py-2 px-3">
                       <Link href="/admin">
-                        <div className="text-sm text-white font-medium ">Dashboard</div>
+                        <div className="text-sm text-black font-medium ">Dashboard</div>
                       </Link>
                       <Link href="/admin/manage-houses">
-                        <div className="text-sm text-white font-medium ">Rumah Negara</div>
+                        <div className="text-sm text-black font-medium ">Rumah Negara</div>
                       </Link>
                       <Link href="/admin/manage-users">
-                        <div className="text-sm text-white font-medium ">Daftar User</div>
+                        <div className="text-sm text-black font-medium ">Daftar User</div>
                       </Link>
                       <Link href="/admin/manage-requests">
-                        <div className="text-sm text-white font-medium ">Daftar Ajuan</div>
+                        <div className="text-sm text-black font-medium ">Daftar Ajuan</div>
                       </Link>
                       <Link href="/admin/recap">
-                        <div className="text-sm text-white font-medium ">Rekap</div>
+                        <div className="text-sm text-black font-medium ">Rekap</div>
                       </Link>
                       <Button
                         onClick={() => void signOut()}
@@ -114,16 +114,16 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   {sessionData?.user.role === "user" && (
                     <div className="flex flex-col text-start space-y-5 py-2 px-3">
                       <Link href="/user">
-                        <div className="text-sm text-white font-medium ">Dashboard</div>
+                        <div className="text-sm text-black font-medium ">Dashboard</div>
                       </Link>
                       <Link href="/user/my-house">
-                        <div className="text-sm text-white font-medium ">Rumah Negara Saya</div>
+                        <div className="text-sm text-black font-medium ">Rumah Negara Saya</div>
                       </Link>
                       <Link href="/user/my-request">
-                        <div className="text-sm text-white font-medium ">Ajuan</div>
+                        <div className="text-sm text-black font-medium ">Ajuan</div>
                       </Link>
                       <Link href="/user/recap">
-                        <div className="text-sm text-white font-medium ">Rekap</div>
+                        <div className="text-sm text-black font-medium ">Rekap</div>
                       </Link>
                       <Button
                         onClick={() => void signOut()}
@@ -144,9 +144,10 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   <Menu.Target>
                     <Avatar
                       size="md"
-                      radius="xl"
+                      radius="lg"
                       src={sessionData.user.image}
                       className="cursor-pointer"
+                      variant="outline"
                     />
                   </Menu.Target>
                   <Menu.Dropdown className="text-center">
@@ -175,8 +176,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </nav>
       <main className="flex-grow pt-16 bg-[#f0f2f5]">
-        <div className="md:flex">
-          <div className="hidden md:flex md:w-[20%]">
+        <div className="sidebar md:flex">
+          <div className="hidden md:flex md:w-[20%] fixed z-[5]">
             <div className="hidden md:flex w-full p-5">
               {sessionData?.user.role === "admin" && (
                 <div className="flex flex-col space-y-5 w-[70%]">
@@ -197,11 +198,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               )}
             </div>
           </div>
-          <div className="w-full ">
+          <div className={`w-full md:ml-[20%] ${opened ? "blur-[2px]" : "blur-none"}`}>
             {children}
           </div>
         </div>
-      </main>
+      </main >
       <footer className="bg-gray-800 text-center py-3">
         <div className="flex justify-end gap-5 px-5">
           <p className="self-center text-white">
@@ -225,6 +226,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           )}
         </div>
       </footer>
-    </div>
+    </div >
   );
 };

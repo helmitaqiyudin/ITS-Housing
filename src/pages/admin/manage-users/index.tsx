@@ -6,7 +6,7 @@ function ManageUsers() {
   return (
     <Layout>
       <Seo templateTitle="Daftar User" />
-      <main className=" min-h-screen">
+      <main className=" min-h-[100vh]">
 
       </main>
     </Layout>

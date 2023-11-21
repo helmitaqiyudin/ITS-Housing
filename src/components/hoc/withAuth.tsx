@@ -71,7 +71,7 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
 
     if (status === 'loading' || (firstRender && status === 'unauthenticated')) {
       return (
-        <div className='flex min-h-screen flex-col items-center justify-center text-gray-800'>
+        <div className='flex min-h-[100vh] flex-col items-center justify-center text-gray-800'>
           <ImSpinner8 className='mb-4 animate-spin text-4xl' />
           <p>Loading...</p>
         </div>

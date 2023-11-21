@@ -5,8 +5,8 @@ type PageTitleProps = {
 };
 const PageTitle: React.FC<PageTitleProps> = ({ title }) => {
   return (
-    <div className="p-7 md:p-10 md:mb-5">
-      <h1 className="text-3xl font-bold text-gray-800 text-center">{title}</h1>
+    <div className="p-5 md:p-3 md:mb-5 flex justify-center md:justify-start">
+      <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
     </div>
   );
 };

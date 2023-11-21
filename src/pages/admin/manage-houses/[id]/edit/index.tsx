@@ -93,8 +93,8 @@ function EditHouse() {
   return (
     <Layout>
       <Seo templateTitle="Edit Rumah Negara" />
-      <main className=" min-h-screen">
-        <div className="container mx-auto my-10">
+      <main className=" min-h-[100vh]">
+        <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
             <PageTitle title="Edit Rumah Negara" />
             <div className="flex text-center">

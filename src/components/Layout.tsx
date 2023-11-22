@@ -44,10 +44,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const SidebarLink = ({ href, label, icon }: { href: string, label: string, icon: React.ReactNode }) => {
     const currentPath = useCurrentPath();
 
+    const active = currentPath.startsWith(href);
+
     return (
       <Link href={href}>
         <div
-          className={`text-sm font-medium p-2 rounded-lg flex items-center gap-2 ${currentPath === href ? "bg-white text-gray-700 drop-shadow-md" : "text-gray-700 hover:bg-gray-200"
+          className={`text-sm font-medium p-2 rounded-lg flex items-center gap-2 ${active ? "bg-white text-gray-700 drop-shadow-md" : "text-gray-700 hover:bg-gray-200"
             }`}
         >
           {icon}{label}
@@ -88,7 +90,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 <div className={`absolute top-14 left-0 py-2 w-full bg-[hsla(0,0%,100%,.85)] drop-shadow-md backdrop-blur-[5px] md:hidden ${opened ? "block" : "hidden"}`} style={{ ...transitionStyle, zIndex: 100 }}>
                   {sessionData?.user.role === "admin" && (
                     <div className="flex flex-col text-start space-y-5 py-2 px-3">
-                      <Link href="/admin">
+                      <Link href="/admin/dashboard">
                         <div className="text-sm text-black font-medium ">Dashboard</div>
                       </Link>
                       <Link href="/admin/manage-houses">
@@ -113,7 +115,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   )}
                   {sessionData?.user.role === "user" && (
                     <div className="flex flex-col text-start space-y-5 py-2 px-3">
-                      <Link href="/user">
+                      <Link href="/user/dashboard">
                         <div className="text-sm text-black font-medium ">Dashboard</div>
                       </Link>
                       <Link href="/user/my-house">
@@ -181,7 +183,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="hidden md:flex w-full p-5">
               {sessionData?.user.role === "admin" && (
                 <div className="flex flex-col space-y-5 w-[70%]">
-                  <SidebarLink href="/admin" label="Dashboard" icon={<LayoutDashboard />} />
+                  <SidebarLink href="/admin/dashboard" label="Dashboard" icon={<LayoutDashboard />} />
                   <SidebarLink href="/admin/manage-houses" label="Rumah Negara" icon={<Home />} />
                   <SidebarLink href="/admin/manage-users" label="Daftar User" icon={<Users />} />
                   <SidebarLink href="/admin/manage-requests" label="Daftar Ajuan" icon={<ListChecks />} />
@@ -190,7 +192,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               )}
               {sessionData?.user.role === "user" && (
                 <div className="flex flex-col space-y-5 w-[70%]">
-                  <SidebarLink href="/user" label="Dashboard" icon={<LayoutDashboard />} />
+                  <SidebarLink href="/user/dashboard" label="Dashboard" icon={<LayoutDashboard />} />
                   <SidebarLink href="/user/my-house" label="Rumah Negara Saya" icon={<Home />} />
                   <SidebarLink href="/user/my-request" label="Ajuan" icon={<ListChecks />} />
                   <SidebarLink href="/user/recap" label="Rekap" icon={<Book />} />

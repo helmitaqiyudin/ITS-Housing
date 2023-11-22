@@ -9,8 +9,8 @@ export interface WithAuthProps {
 }
 
 const HOME_ROUTE = {
-  admin: '/admin',
-  user: '/user',
+  admin: '/admin/dashboard',
+  user: '/user/dashboard',
 };
 
 enum RouteRole {

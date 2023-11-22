@@ -2,7 +2,6 @@ import { Layout } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
 import withAuth from "~/components/hoc/withAuth";
-
 const UserHome = () => {
   return (
     <Layout>
@@ -20,5 +19,4 @@ const UserHome = () => {
     </Layout >
   );
 }
-
 export default withAuth(UserHome, 'all', 'user');

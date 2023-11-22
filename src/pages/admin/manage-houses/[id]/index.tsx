@@ -168,8 +168,8 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
       <Modal opened={opened} onClose={close} radius={"md"} title="Catatan Penghunian" centered>
         <FormCreateCatatan blok={blok} close={close} refetch={refetcher} />
       </Modal>
-      <div className="flex text-center mt-5">
-        <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian •</p><a onClick={open} className="self-center text-blue-500 font-medium cursor-pointer"><span>Tambah</span> </a>
+      <div className="flex flex-wrap text-center mt-5">
+        <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian •</p><a onClick={open} className="self-center text-blue-500 font-medium cursor-pointer"><span>Tambah</span></a>
       </div>
       {catatanPenghunian?.map((catatan) => {
         return (
@@ -191,7 +191,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
       })}
       {catatanPenghunian?.length === 0 && (
         <div className="flex justify-center p-3">
-          <p className="text-lg font-semibold text-gray-800">Belum ada catatan penghunian</p>
+          <p className="text-lg font-normal text-gray-800">Belum ada catatan penghunian</p>
         </div>
       )}
     </>

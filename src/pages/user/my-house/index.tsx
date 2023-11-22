@@ -97,7 +97,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
   // console.log(catatanPenghunian);
   return (
     <>
-      <div className="flex text-center mt-5">
+      <div className="flex text-center flex-wrap mt-5">
         <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian</p>
       </div>
       {catatanPenghunian?.map((catatan) => {
@@ -117,7 +117,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
       })}
       {catatanPenghunian?.length === 0 && (
         <div className="flex justify-center p-3">
-          <p className="text-lg font-semibold text-gray-800">Belum ada catatan penghunian</p>
+          <p className="text-lg font-normal text-gray-800">Belum ada catatan penghunian</p>
         </div>
       )}
     </>

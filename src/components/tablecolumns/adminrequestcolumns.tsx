@@ -34,7 +34,7 @@ function ActionsCell({ row }: ActionsCellProps) {
     const router = useRouter();
 
     const handleViewDetail = () => {
-        void router.push(`/user/my-request/${row.original.id}`);
+        void router.push(`/admin/manage-requests/${row.original.id}`);
     };
 
     return (

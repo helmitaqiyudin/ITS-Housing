@@ -1,13 +1,60 @@
 import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
+import { columns } from "~/components/tablecolumns/adminrequestcolumns";
+import { DataTable } from "~/components/DataTable";
+
+import { api } from "~/utils/api";
+
+import PageTitle from "~/components/PageTitle";
 import withAuth from "~/components/hoc/withAuth";
+import { Skeleton, SegmentedControl } from "@mantine/core";
+import { useState } from "react";
+
+const filteroptions = [
+  { value: "status", label: "Status" },
+  { value: "user", label: "Nama Penghuni" },
+  { value: "blok", label: "Blok" },
+];
+
 
 function ManageRequests() {
+  const [query, setQuery] = useState("pembayaran");
+  const { data: pembayaran, error, isLoading, refetch } = api.ajuan.getAllAjuanPembayaran.useQuery(query);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  const refetcher = () => {
+    void refetch();
+  }
   return (
     <Layout>
       <Seo templateTitle="Daftar Ajuan" />
       <main className=" min-h-[100vh]">
-
+        <div className="md:container mx-auto my-10">
+          <div className="bg-white p-5 rounded-md drop-shadow-md">
+            <PageTitle title="Daftar Ajuan" />
+            <div className="flex flex-col items-center justify-center w-full">
+              <SegmentedControl
+                w={{ xs: "10%", md: "30%" }}
+                radius="md"
+                data={[
+                  { value: "pembayaran", label: "Pembayaran" },
+                  { value: "renovasi", label: "Renovasi" },
+                ]}
+                value={query}
+                onChange={(value) => {
+                  setQuery(value);
+                }} />
+              {isLoading ? <Skeleton height={300} className="mt-5" /> :
+                <div className="w-full">
+                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} />}
+                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} />}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
       </main>
     </Layout>
   );

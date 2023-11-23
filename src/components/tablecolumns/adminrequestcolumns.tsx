@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { Badge } from '@mantine/core';
 import moment from "moment";
 
-export type AjuanUser = {
+export type AjuanAdmin = {
     id: string;
     user: User;
     house: House;
@@ -23,7 +23,7 @@ export type AjuanUser = {
 };
 
 type Row = {
-    original: AjuanUser;
+    original: AjuanAdmin;
 };
 
 type ActionsCellProps = {
@@ -56,7 +56,7 @@ function ActionsCell({ row }: ActionsCellProps) {
     );
 }
 
-export const columns: ColumnDef<AjuanUser>[] = [
+export const columns: ColumnDef<AjuanAdmin>[] = [
     {
         accessorKey: "No.",
         cell: ({ row }) => {
@@ -66,11 +66,26 @@ export const columns: ColumnDef<AjuanUser>[] = [
     {
         accessorKey: "user",
         accessorFn: (row) => row.user.name,
-        header: () => {
+        header: ({ column }) => {
+            const handleSort = () => {
+                column.toggleSorting(column.getIsSorted() === "asc");
+            };
+
+            const getSortIcon = () => {
+                switch (column.getIsSorted()) {
+                    case "asc":
+                        return <ArrowUp className="ml-2 h-4 w-4" />;
+                    case "desc":
+                        return <ArrowDown className="ml-2 h-4 w-4" />;
+                    default:
+                        return <ArrowUpDown className="ml-2 h-4 w-4" />;
+                }
+            };
             return (
                 <div className="flex items-center justify-end">
-                    <Button variant="ghost" className="text-right">
+                    <Button onClick={handleSort} variant="ghost" className="text-right">
                         Nama Penghuni
+                        {getSortIcon()}
                     </Button>
                 </div>
             )
@@ -82,11 +97,26 @@ export const columns: ColumnDef<AjuanUser>[] = [
     {
         accessorKey: "blok",
         accessorFn: (row) => row.house.blok,
-        header: () => {
+        header: ({ column }) => {
+            const handleSort = () => {
+                column.toggleSorting(column.getIsSorted() === "asc");
+            };
+
+            const getSortIcon = () => {
+                switch (column.getIsSorted()) {
+                    case "asc":
+                        return <ArrowUp className="ml-2 h-4 w-4" />;
+                    case "desc":
+                        return <ArrowDown className="ml-2 h-4 w-4" />;
+                    default:
+                        return <ArrowUpDown className="ml-2 h-4 w-4" />;
+                }
+            };
             return (
                 <div className="flex items-center justify-end">
-                    <Button variant="ghost" className="text-right">
+                    <Button onClick={handleSort} variant="ghost" className="text-right">
                         Blok Rumah
+                        {getSortIcon()}
                     </Button>
                 </div>
             );

@@ -25,7 +25,7 @@ export const ajuanRouter = createTRPCRouter({
       });
     }),
 
-    createAjuanRenovasi: protectedProcedure
+  createAjuanRenovasi: protectedProcedure
     .input(
       z.object({
         blok: z.string(),
@@ -116,11 +116,6 @@ export const ajuanRouter = createTRPCRouter({
         },
       });
 
-      // return ajuanPembayarans.map((ajuan) => ({
-      //   ...ajuan,
-      //   created_at: ajuan.created_at.toISOString(),
-      // }));
-
       if (input === "pembayaran") {
         return ajuanPembayarans.map((ajuan) => ({
           ...ajuan,
@@ -136,35 +131,71 @@ export const ajuanRouter = createTRPCRouter({
       }
     }),
 
-  getAllAjuanPembayaran: protectedProcedureAdmin.query(async () => {
-    const ajuanPembayarans = await db.ajuanPembayaran.findMany({
-      select: {
-        id: true,
-        user: {
-          select: {
-            name: true,
+  getAllAjuanPembayaran: protectedProcedureAdmin
+    .input(z.string())
+    .query(async ({ input }) => {
+      const ajuanPembayarans = await db.ajuanPembayaran.findMany({
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
           },
-        },
-        house: {
-          select: {
-            id: true,
-            blok: true,
-            alamat: true,
-            user: {
-              select: {
-                name: true,
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
               },
             },
           },
+          status: true,
+          created_at: true,
         },
-        status: true,
-        created_at: true,
-      },
-    });
+      });
 
-    return ajuanPembayarans.map((ajuan) => ({
-      ...ajuan,
-      created_at: ajuan.created_at.toISOString(),
-    }));
-  }),
+      const ajuanrenovasis = await db.ajuanRenovasi.findMany({
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          status: true,
+          created_at: true,
+        },
+      });
+
+      if (input === "pembayaran") {
+        return ajuanPembayarans.map((ajuan) => ({
+          ...ajuan,
+          created_at: ajuan.created_at.toISOString(),
+        }));
+      } else if (input === "renovasi") {
+        return ajuanrenovasis.map((ajuan) => ({
+          ...ajuan,
+          created_at: ajuan.created_at.toISOString(),
+        }));
+      } else {
+        return [];
+      }
+    }),
 });

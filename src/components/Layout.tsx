@@ -60,7 +60,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <nav className="bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 md:drop-shadow-md backdrop-blur-[5px]">
+      <nav className={`bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 ${!opened && "drop-shadow-md"} backdrop-blur-[5px]`}>
         <div className="px-5 mx-auto flex justify-between items-center h-[60px]">
           <div className="flex items-center space-x-20">
             <Link href="/">
@@ -119,7 +119,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                         <div className="text-sm text-black font-medium ">Dashboard</div>
                       </Link>
                       <Link href="/user/my-house">
-                        <div className="text-sm text-black font-medium ">Rumah Negara Saya</div>
+                        <div className="text-sm text-black font-medium ">Rumah Negara</div>
                       </Link>
                       <Link href="/user/my-request">
                         <div className="text-sm text-black font-medium ">Ajuan</div>
@@ -193,7 +193,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               {sessionData?.user.role === "user" && (
                 <div className="flex flex-col space-y-5 w-[70%]">
                   <SidebarLink href="/user/dashboard" label="Dashboard" icon={<LayoutDashboard />} />
-                  <SidebarLink href="/user/my-house" label="Rumah Negara Saya" icon={<Home />} />
+                  <SidebarLink href="/user/my-house" label="Rumah Negara" icon={<Home />} />
                   <SidebarLink href="/user/my-request" label="Ajuan" icon={<ListChecks />} />
                   <SidebarLink href="/user/recap" label="Rekap" icon={<Book />} />
                 </div>

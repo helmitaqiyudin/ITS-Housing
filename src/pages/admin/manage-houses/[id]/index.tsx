@@ -29,7 +29,7 @@ function HouseDetail() {
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
-            <PageTitle title="Detail Rumah Negara" />
+            <PageTitle title="Detail Rumah Negara" withBackButton />
             {house?.boundary && <MapComponent boundary={house.boundary} />}
             <div className="flex text-center">
               <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>

@@ -96,7 +96,7 @@ function EditHouse() {
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
-            <PageTitle title="Edit Rumah Negara" />
+            <PageTitle title="Edit Rumah Negara" withBackButton />
             <div className="flex text-center">
               <p className="text-lg font-semibold text-gray-800 p-2">Detail</p>
             </div>

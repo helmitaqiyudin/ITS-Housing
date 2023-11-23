@@ -135,6 +135,11 @@ export const ajuanRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ input }) => {
       const ajuanPembayarans = await db.ajuanPembayaran.findMany({
+        where: {
+          status: {
+            not: "BelumDiajukan",
+          },
+        },
         select: {
           id: true,
           user: {
@@ -160,6 +165,11 @@ export const ajuanRouter = createTRPCRouter({
       });
 
       const ajuanrenovasis = await db.ajuanRenovasi.findMany({
+        where: {
+          status: {
+            not: "BelumDiajukan",
+          },
+        },
         select: {
           id: true,
           user: {

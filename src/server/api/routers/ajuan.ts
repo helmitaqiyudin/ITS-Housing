@@ -6,6 +6,48 @@ import {
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
+interface AjuanPembayaran {
+  id: string;
+  user: {
+    name: string;
+  };
+  house: {
+    id: string;
+    blok: string;
+    alamat: string;
+    user: {
+      name: string;
+    };
+  };
+  bulan_bayar: string;
+  jumlah_bayar: number;
+  AjuanPembayaranDocument: unknown;
+  keterangan: string;
+  status: string;
+  created_at: Date;
+  type: "Pembayaran";
+}
+
+interface AjuanRenovasi {
+  id: string;
+  user: {
+    name: string;
+  };
+  house: {
+    id: string;
+    blok: string;
+    alamat: string;
+    user: {
+      name: string;
+    };
+  };
+  AjuanRenovasiDocument: unknown;
+  keterangan: string;
+  status: string;
+  created_at: Date;
+  type: "Renovasi";
+}
+
 export const ajuanRouter = createTRPCRouter({
   // CREATE a new Ajuan Pembayaran
   createAjuanPembayaran: protectedProcedure
@@ -74,6 +116,13 @@ export const ajuanRouter = createTRPCRouter({
         },
       });
 
+      if (ajuanPembayaran) {
+        return {
+          ...ajuanPembayaran,
+          type: "Pembayaran", // Ensure the type property is set correctly
+        } as AjuanPembayaran; // Explicit type assertion
+      }
+
       const ajuanRenovasi = await db.ajuanRenovasi.findUnique({
         where: { id: input },
         select: {
@@ -95,26 +144,21 @@ export const ajuanRouter = createTRPCRouter({
               },
             },
           },
+          AjuanRenovasiDocument: true,
+          keterangan: true,
           status: true,
           created_at: true,
         },
       });
 
-      if (ajuanPembayaran) {
-        return {
-          ...ajuanPembayaran,
-          created_at: ajuanPembayaran.created_at.toISOString(),
-          type: "Pembayaran",
-        };
-      } else if (ajuanRenovasi) {
+      if (ajuanRenovasi) {
         return {
           ...ajuanRenovasi,
-          created_at: ajuanRenovasi.created_at.toISOString(),
-          type: "Renovasi",
-        };
-      } else {
-        return null;
+          type: "Renovasi", // Ensure the type property is set correctly
+        } as AjuanRenovasi; // Explicit type assertion
       }
+
+      return null;
     }),
 
   getAjuanbyUserId: protectedProcedure

@@ -15,7 +15,7 @@ function AjuanDetail() {
     const { id } = router.query;
 
     const { data: ajuan } = api.ajuan.getAjuanbyId.useQuery(id! as string);
-    console.log(ajuan);
+    // console.log(ajuan);
 
     if (!ajuan) {
         return (
@@ -107,7 +107,7 @@ function AjuanDetail() {
                                         </Grid.Col>
                                         <Grid.Col span={{ xs: 12, md: 3 }}>
                                             <dt className="font-medium text-gray-900">Jumlah Bayar</dt>
-                                            <dd className="text-gray-700">{toRupiah(ajuan.jumlah_bayar)}</dd>
+                                            <dd className="text-gray-700">{toRupiah(ajuan.jumlah_bayar as number)}</dd>
                                         </Grid.Col>
                                     </>
                                 )}

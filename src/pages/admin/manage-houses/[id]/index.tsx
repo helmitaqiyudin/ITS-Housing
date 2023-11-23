@@ -174,7 +174,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
       {catatanPenghunian?.map((catatan) => {
         return (
           <div key={catatan.id} className="mb-2">
-            <Card shadow="sm" className="p-2">
+            <Card withBorder className="p-2">
               <div className="flex justify-between">
                 <p className="text-lg font-semibold text-gray-800">{catatan.judul}</p>
                 <div className="flex gap-3">

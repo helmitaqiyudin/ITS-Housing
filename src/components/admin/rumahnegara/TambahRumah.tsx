@@ -80,7 +80,7 @@ export default function FormCreateHouse({ close, refetchData }: { close: () => v
 
     return (
         <>
-            <Paper className="p-5 border-8" shadow="sm" style={{ borderRadius: '8px', border: '1px solid #E5E7EB' }}>
+            <Paper className="p-5">
                 <form className="mb-5 flex flex-col" onSubmit={(e) => {
                     handleSubmit();
                     e.preventDefault();

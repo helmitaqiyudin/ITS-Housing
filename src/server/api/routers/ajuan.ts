@@ -40,7 +40,84 @@ export const ajuanRouter = createTRPCRouter({
       });
     }),
 
-  getAjuanPembayaranbyUserId: protectedProcedure
+  getAjuanbyId: protectedProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      // search by id on db ajuan pembayaran or ajuan renovasi which one is match with the id
+      const ajuanPembayaran = await db.ajuanPembayaran.findUnique({
+        where: { id: input },
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          bulan_bayar: true,
+          jumlah_bayar: true,
+          AjuanPembayaranDocument: true,
+          keterangan: true,
+          status: true,
+          created_at: true,
+        },
+      });
+
+      const ajuanRenovasi = await db.ajuanRenovasi.findUnique({
+        where: { id: input },
+        select: {
+          id: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          house: {
+            select: {
+              id: true,
+              blok: true,
+              alamat: true,
+              user: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          status: true,
+          created_at: true,
+        },
+      });
+
+      if (ajuanPembayaran) {
+        return {
+          ...ajuanPembayaran,
+          created_at: ajuanPembayaran.created_at.toISOString(),
+          type: "Pembayaran",
+        };
+      } else if (ajuanRenovasi) {
+        return {
+          ...ajuanRenovasi,
+          created_at: ajuanRenovasi.created_at.toISOString(),
+          type: "Renovasi",
+        };
+      } else {
+        return null;
+      }
+    }),
+
+  getAjuanbyUserId: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const userHouse = await db.house.findUnique({
@@ -131,7 +208,7 @@ export const ajuanRouter = createTRPCRouter({
       }
     }),
 
-  getAllAjuanPembayaran: protectedProcedureAdmin
+  getAllAjuan: protectedProcedureAdmin
     .input(z.string())
     .query(async ({ input }) => {
       const ajuanPembayarans = await db.ajuanPembayaran.findMany({

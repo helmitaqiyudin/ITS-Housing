@@ -42,9 +42,13 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
 
   const SidebarLink = ({ href, label, icon }: { href: string, label: string, icon: React.ReactNode }) => {
+    const hrefWithoutHash = href.split("#")[0];
+
     const currentPath = useCurrentPath();
 
-    const active = currentPath.startsWith(href);
+    if (!hrefWithoutHash) return null;
+
+    const active = currentPath.startsWith(hrefWithoutHash);
 
     return (
       <Link href={href}>
@@ -59,7 +63,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <nav className={`bg-[hsla(0,0%,100%,.85)] fixed w-full z-10 ${!opened && "drop-shadow-md"} backdrop-blur-[5px]`}>
         <div className="px-5 mx-auto flex justify-between items-center h-[60px]">
           <div className="flex items-center space-x-20">
@@ -99,7 +103,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                       <Link href="/admin/manage-users">
                         <div className="text-sm text-black font-medium ">Daftar User</div>
                       </Link>
-                      <Link href="/admin/manage-requests">
+                      <Link href="/admin/manage-requests#pembayaran">
                         <div className="text-sm text-black font-medium ">Daftar Ajuan</div>
                       </Link>
                       <Link href="/admin/recap">
@@ -121,7 +125,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                       <Link href="/user/my-house">
                         <div className="text-sm text-black font-medium ">Rumah Negara</div>
                       </Link>
-                      <Link href="/user/my-request">
+                      <Link href="/user/my-requests#pembayaran">
                         <div className="text-sm text-black font-medium ">Ajuan</div>
                       </Link>
                       <Link href="/user/recap">
@@ -186,7 +190,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   <SidebarLink href="/admin/dashboard" label="Dashboard" icon={<LayoutDashboard />} />
                   <SidebarLink href="/admin/manage-houses" label="Rumah Negara" icon={<Home />} />
                   <SidebarLink href="/admin/manage-users" label="Daftar User" icon={<Users />} />
-                  <SidebarLink href="/admin/manage-requests" label="Daftar Ajuan" icon={<ListChecks />} />
+                  <SidebarLink href="/admin/manage-requests#pembayaran" label="Daftar Ajuan" icon={<ListChecks />} />
                   <SidebarLink href="/admin/recap" label="Rekap" icon={<Book />} />
                 </div>
               )}
@@ -194,7 +198,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 <div className="flex flex-col space-y-5 w-[70%]">
                   <SidebarLink href="/user/dashboard" label="Dashboard" icon={<LayoutDashboard />} />
                   <SidebarLink href="/user/my-house" label="Rumah Negara" icon={<Home />} />
-                  <SidebarLink href="/user/my-request" label="Ajuan" icon={<ListChecks />} />
+                  <SidebarLink href="/user/my-requests#pembayaran" label="Ajuan" icon={<ListChecks />} />
                   <SidebarLink href="/user/recap" label="Rekap" icon={<Book />} />
                 </div>
               )}

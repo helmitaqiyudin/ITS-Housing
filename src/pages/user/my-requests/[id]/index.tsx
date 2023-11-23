@@ -107,7 +107,7 @@ function AjuanDetail() {
                                         </Grid.Col>
                                         <Grid.Col span={{ xs: 12, md: 3 }}>
                                             <dt className="font-medium text-gray-900">Jumlah Bayar</dt>
-                                            <dd className="text-gray-700">{toRupiah(ajuan.jumlah_bayar as number)}</dd>
+                                            <dd className="text-gray-700">{toRupiah(ajuan.jumlah_bayar)}</dd>
                                         </Grid.Col>
                                     </>
                                 )}

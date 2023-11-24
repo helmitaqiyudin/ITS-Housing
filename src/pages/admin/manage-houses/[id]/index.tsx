@@ -134,8 +134,8 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
         {
           onSuccess: () => {
             toast.success("Catatan berhasil dihapus");
-            void refetcher(); // Refetch the catatan list after deletion
-            closeDeleteModal(); // Close the delete modal
+            void refetcher();
+            closeDeleteModal();
           },
           onError: (error) => {
             console.error(error);

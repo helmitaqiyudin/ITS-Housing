@@ -27,14 +27,14 @@ export default function FormCreateRenovationRequest({ close, refetchData }: { cl
 
         mutation.mutate(formData, {
             onSuccess: () => {
-                toast.success("Permintaan pembayaran berhasil dibuat");
+                toast.success("Ajuan renovasi berhasil dibuat");
                 form.reset();
                 close();
                 refetchData();
             },
             onError: (error) => {
                 console.error(error);
-                toast.error("Gagal membuat permintaan pembayaran");
+                toast.error("Gagal membuat ajuan renovasi");
             },
         });
     };

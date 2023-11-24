@@ -36,14 +36,14 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
 
         mutation.mutate(formData, {
             onSuccess: () => {
-                toast.success("Permintaan pembayaran berhasil dibuat");
+                toast.success("Ajuan pembayaran berhasil dibuat");
                 form.reset();
                 close();
                 refetchData();
             },
             onError: (error) => {
                 console.error(error);
-                toast.error("Gagal membuat permintaan pembayaran");
+                toast.error("Gagal membuat ajuan pembayaran");
             },
         });
     };

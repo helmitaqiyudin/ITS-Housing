@@ -2,7 +2,6 @@ import { Layout } from "~/components/Layout";
 import Seo from "~/components/Seo";
 import { useRouter } from "next/router";
 import moment from "moment";
-import Link from "next/link";
 
 import { api } from "~/utils/api";
 import PageTitle from "~/components/PageTitle";
@@ -74,7 +73,7 @@ function AjuanDetail() {
                     <div className="bg-white rounded-md drop-shadow-md p-5">
                         <PageTitle title={`Detail Ajuan ${ajuan.type}`} withBackButton />
                         <div className="flex text-center">
-                            <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/admin/manage-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
+                            <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan</p>
                         </div>
                         <Paper className="p-5 border-8">
                             <Grid gutter="md" grow={false}>

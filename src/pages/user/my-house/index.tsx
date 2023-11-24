@@ -15,7 +15,7 @@ function HouseDetail() {
   const blok = house?.blok;
   return (
     <Layout>
-      <Seo templateTitle="Rumah Negara Saya" />
+      <Seo templateTitle="Rumah Negara" />
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">

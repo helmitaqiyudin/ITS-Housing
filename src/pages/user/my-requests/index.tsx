@@ -44,7 +44,7 @@ function UserRequest() {
   // console.log(pembayaran);
   return (
     <Layout>
-      <Seo templateTitle="Ajuan Saya" />
+      <Seo templateTitle="Ajuan" />
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white p-5 rounded-md drop-shadow-md">

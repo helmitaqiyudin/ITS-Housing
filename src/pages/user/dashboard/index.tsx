@@ -5,7 +5,7 @@ import withAuth from "~/components/hoc/withAuth";
 const UserHome = () => {
   return (
     <Layout>
-      <Seo templateTitle="Dashboard User" />
+      <Seo templateTitle="Dashboard" />
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white p-5 rounded-md drop-shadow-md">

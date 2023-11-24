@@ -74,7 +74,7 @@ function AjuanDetail() {
                     <div className="bg-white rounded-md drop-shadow-md p-5">
                         <PageTitle title={`Detail Ajuan ${ajuan.type}`} withBackButton />
                         <div className="flex text-center">
-                            <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
+                            <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/admin/manage-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
                         </div>
                         <Paper className="p-5 border-8">
                             <Grid gutter="md" grow={false}>
@@ -125,4 +125,4 @@ function AjuanDetail() {
     );
 }
 
-export default withAuth(AjuanDetail, 'all', 'user');;
+export default withAuth(AjuanDetail, 'all', 'admin');;

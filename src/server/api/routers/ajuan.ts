@@ -240,12 +240,10 @@ export const ajuanRouter = createTRPCRouter({
       if (input === "pembayaran") {
         return ajuanPembayarans.map((ajuan) => ({
           ...ajuan,
-          created_at: ajuan.created_at.toISOString(),
         }));
       } else if (input === "renovasi") {
         return ajuanrenovasis.map((ajuan) => ({
           ...ajuan,
-          created_at: ajuan.created_at.toISOString(),
         }));
       } else {
         return [];
@@ -318,12 +316,10 @@ export const ajuanRouter = createTRPCRouter({
       if (input === "pembayaran") {
         return ajuanPembayarans.map((ajuan) => ({
           ...ajuan,
-          created_at: ajuan.created_at.toISOString(),
         }));
       } else if (input === "renovasi") {
         return ajuanrenovasis.map((ajuan) => ({
           ...ajuan,
-          created_at: ajuan.created_at.toISOString(),
         }));
       } else {
         return [];

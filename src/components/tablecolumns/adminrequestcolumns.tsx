@@ -19,7 +19,7 @@ export type AjuanAdmin = {
     user: User;
     house: House;
     status: string;
-    created_at: string;
+    created_at: Date;
 };
 
 type Row = {
@@ -154,12 +154,9 @@ export const columns: ColumnDef<AjuanAdmin>[] = [
             );
         },
         cell: ({ row }) => {
-            // convert string to date
-            const date = new Date(row.original.created_at);
-
             return (
                 <div className="text-right font-medium">
-                    {moment(date).format("DD MMMM YYYY HH:mm A")}
+                    {moment(row.original.created_at).format("DD MMMM YYYY HH:mm A")}
                 </div>
             );
         },

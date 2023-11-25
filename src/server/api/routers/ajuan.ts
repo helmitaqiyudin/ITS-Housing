@@ -48,6 +48,17 @@ interface AjuanRenovasi {
   type: "Renovasi";
 }
 
+enum StatusUpdateUser {
+  BelumDiajukan = "BelumDiajukan",
+  Menunggu = "Menunggu",
+}
+
+enum StatusUpdateAdmin {
+  Menunggu = "Menunggu",
+  Diterima = "Diterima",
+  Ditolak = "Ditolak",
+}
+
 export const ajuanRouter = createTRPCRouter({
   // CREATE a new Ajuan Pembayaran
   createAjuanPembayaran: protectedProcedure
@@ -79,6 +90,85 @@ export const ajuanRouter = createTRPCRouter({
       const createData = input;
       return await db.ajuanRenovasi.create({
         data: createData,
+      });
+    }),
+
+  // UPDATE status ajuan user
+  updateAjuanPembayaran: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(StatusUpdateUser),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const updateData = input;
+      return await db.ajuanPembayaran.update({
+        where: { id: updateData.id },
+        data: { status: updateData.status },
+      });
+    }),
+
+  updateAjuanRenovasi: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(StatusUpdateUser),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const updateData = input;
+      return await db.ajuanRenovasi.update({
+        where: { id: updateData.id },
+        data: { status: updateData.status },
+      });
+    }),
+
+  // UPDATE status ajuan admin
+  updateAjuanPembayaranAdmin: protectedProcedureAdmin
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(StatusUpdateAdmin),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const updateData = input;
+      return await db.ajuanPembayaran.update({
+        where: { id: updateData.id },
+        data: { status: updateData.status },
+      });
+    }),
+
+  updateAjuanRenovasiAdmin: protectedProcedureAdmin
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(StatusUpdateAdmin),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const updateData = input;
+      return await db.ajuanRenovasi.update({
+        where: { id: updateData.id },
+        data: { status: updateData.status },
+      });
+    }),
+
+  // DELETE ajuan
+  deleteAjuanPembayaran: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.ajuanPembayaran.delete({
+        where: { id: input },
+      });
+    }),
+
+  deleteAjuanRenovasi: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.ajuanRenovasi.delete({
+        where: { id: input },
       });
     }),
 

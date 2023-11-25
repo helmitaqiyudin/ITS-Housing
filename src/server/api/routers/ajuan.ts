@@ -5,6 +5,10 @@ import {
   protectedProcedureAdmin,
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
+import {
+  StatusUpdateUser,
+  StatusUpdateAdmin,
+} from "~/pages/user/my-requests/[id]";
 
 interface AjuanPembayaran {
   id: string;
@@ -46,17 +50,6 @@ interface AjuanRenovasi {
   status: string;
   created_at: Date;
   type: "Renovasi";
-}
-
-enum StatusUpdateUser {
-  BelumDiajukan = "BelumDiajukan",
-  Menunggu = "Menunggu",
-}
-
-enum StatusUpdateAdmin {
-  Menunggu = "Menunggu",
-  Diterima = "Diterima",
-  Ditolak = "Ditolak",
 }
 
 export const ajuanRouter = createTRPCRouter({

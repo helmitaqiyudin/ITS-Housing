@@ -9,12 +9,26 @@ import PageTitle from "~/components/PageTitle";
 import { Badge, Grid, Paper } from '@mantine/core';
 import withAuth from "~/components/hoc/withAuth";
 import { Skeleton } from "@mantine/core";
+import { toast } from "react-toastify";
+
+export enum StatusUpdateUser {
+    BelumDiajukan = "BelumDiajukan",
+    Menunggu = "Menunggu",
+}
+
+export enum StatusUpdateAdmin {
+    Menunggu = "Menunggu",
+    Diterima = "Diterima",
+    Ditolak = "Ditolak",
+}
 
 function AjuanDetail() {
     const router = useRouter();
     const { id } = router.query;
 
     const { data: ajuan } = api.ajuan.getAjuanbyId.useQuery(id! as string);
+    const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaran.useMutation();
+    const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasi.useMutation();
     // console.log(ajuan);
 
     if (!ajuan) {
@@ -115,9 +129,89 @@ function AjuanDetail() {
                                     <dt className="font-medium text-gray-900">Status</dt>
                                     <dd className="text-gray-700">{statusBadge(ajuan.status)}</dd>
                                 </Grid.Col>
-
                             </Grid>
                         </Paper>
+                        {/* Update status to Menunggu */}
+                        {ajuan.status === "BelumDiajukan" && ajuan.type === "Pembayaran" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusPembayaran(
+                                            { id: ajuan.id, status: StatusUpdateUser.Menunggu },
+                                            {
+                                                onSuccess: () => {
+                                                    toast.success("Ajuan berhasil diajukan");
+                                                    void router.push("/user/my-requests");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Ajukan
+                                </button>
+                            </div>
+                        )}
+                        {ajuan.status === "BelumDiajukan" && ajuan.type === "Renovasi" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusRenovasi(
+                                            { id: ajuan.id, status: StatusUpdateUser.Menunggu },
+                                            {
+                                                onSuccess: () => {
+                                                    toast.success("Ajuan berhasil diajukan");
+                                                    void router.push("/user/my-requests");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Ajukan
+                                </button>
+                            </div>
+                        )}
+                        {ajuan.status === "Menunggu" && ajuan.type === "Pembayaran" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusPembayaran(
+                                            { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
+                                            {
+                                                onSuccess: () => {
+                                                    toast.success("Ajuan berhasil dibatalkan");
+                                                    void router.push("/user/my-requests");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Batalkan
+                                </button>
+                            </div>
+                        )}
+                        {ajuan.status === "Menunggu" && ajuan.type === "Renovasi" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusRenovasi(
+                                            { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
+                                            {
+                                                onSuccess: () => {
+                                                    toast.success("Ajuan berhasil dibatalkan");
+                                                    void router.push("/user/my-requests");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Batalkan
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>

@@ -10,6 +10,7 @@ import { Badge, Grid, Paper } from '@mantine/core';
 import withAuth from "~/components/hoc/withAuth";
 import { Skeleton } from "@mantine/core";
 import { toast } from "react-toastify";
+import { Button } from "@mantine/core";
 
 export enum StatusUpdateUser {
     BelumDiajukan = "BelumDiajukan",
@@ -21,8 +22,8 @@ function AjuanDetail() {
     const { id } = router.query;
 
     const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id! as string);
-    const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaran.useMutation();
-    const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasi.useMutation();
+    const { mutate: updateStatusPembayaran, isLoading: updatePembayaranLoading } = api.ajuan.updateAjuanPembayaran.useMutation();
+    const { mutate: updateStatusRenovasi, isLoading: updateRenovLoading } = api.ajuan.updateAjuanRenovasi.useMutation();
     // console.log(ajuan);
 
     if (!ajuan) {
@@ -82,7 +83,9 @@ function AjuanDetail() {
                     <div className="bg-white rounded-md drop-shadow-md p-5">
                         <PageTitle title={`Detail Ajuan ${ajuan.type}`} withBackButton />
                         <div className="flex text-center">
-                            <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
+                            {/* <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link> */}
+                            {ajuan.status === "BelumDiajukan" && (updatePembayaranLoading === false || updateRenovLoading === false) ? (<>
+                                <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link></>) : (<><p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan</p></>)}
                         </div>
                         <Paper className="p-5 border-8">
                             <Grid gutter="md" grow={false}>
@@ -128,8 +131,9 @@ function AjuanDetail() {
                         {/* Update status to Menunggu */}
                         {ajuan.status === "BelumDiajukan" && ajuan.type === "Pembayaran" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="green"
                                     onClick={() => {
                                         updateStatusPembayaran(
                                             { id: ajuan.id, status: StatusUpdateUser.Menunggu },
@@ -143,13 +147,14 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Ajukan
-                                </button>
+                                </Button>
                             </div>
                         )}
                         {ajuan.status === "BelumDiajukan" && ajuan.type === "Renovasi" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="green"
                                     onClick={() => {
                                         updateStatusRenovasi(
                                             { id: ajuan.id, status: StatusUpdateUser.Menunggu },
@@ -163,13 +168,14 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Ajukan
-                                </button>
+                                </Button>
                             </div>
                         )}
                         {ajuan.status === "Menunggu" && ajuan.type === "Pembayaran" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="red"
                                     onClick={() => {
                                         updateStatusPembayaran(
                                             { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
@@ -182,14 +188,15 @@ function AjuanDetail() {
                                         );
                                     }}
                                 >
-                                    Batalkan
-                                </button>
+                                    Batalkan Ajuan
+                                </Button>
                             </div>
                         )}
                         {ajuan.status === "Menunggu" && ajuan.type === "Renovasi" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="red"
                                     onClick={() => {
                                         updateStatusRenovasi(
                                             { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
@@ -202,8 +209,8 @@ function AjuanDetail() {
                                         );
                                     }}
                                 >
-                                    Batalkan
-                                </button>
+                                    Batalkan Ajuan
+                                </Button>
                             </div>
                         )}
                     </div>

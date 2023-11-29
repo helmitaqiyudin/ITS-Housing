@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { api } from "~/utils/api";
 import PageTitle from "~/components/PageTitle";
-import { Badge, Grid, Paper } from '@mantine/core';
+import { Badge, Grid, Paper, Button } from '@mantine/core';
 import withAuth from "~/components/hoc/withAuth";
 import { Skeleton } from "@mantine/core";
 import { toast } from "react-toastify";
@@ -128,8 +128,9 @@ function AjuanDetail() {
                         </Paper>
                         {ajuan.type === "Pembayaran" && ajuan.status === "Menunggu" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="green"
                                     onClick={() => {
                                         updateStatusPembayaran(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Diterima },
@@ -143,9 +144,11 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Terima
-                                </button>
-                                <button
-                                    className="btn btn-danger ml-3"
+                                </Button>
+                                <Button
+                                    className="ml-3"
+                                    variant="filled"
+                                    color="red"
                                     onClick={() => {
                                         updateStatusPembayaran(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Ditolak },
@@ -159,13 +162,14 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Tolak
-                                </button>
+                                </Button>
                             </div>
                         )}
                         {ajuan.type === "Renovasi" && ajuan.status === "Menunggu" && (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="green"
                                     onClick={() => {
                                         updateStatusRenovasi(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Diterima },
@@ -179,9 +183,11 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Terima
-                                </button>
-                                <button
-                                    className="btn btn-danger ml-3"
+                                </Button>
+                                <Button
+                                    variant="filled"
+                                    color="red"
+                                    className="ml-3"
                                     onClick={() => {
                                         updateStatusRenovasi(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Ditolak },
@@ -195,13 +201,14 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Tolak
-                                </button>
+                                </Button>
                             </div>
                         )}
                         {ajuan.type === "Pembayaran" && (ajuan.status === "Diterima" || ajuan.status === "Ditolak") ? (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="red"
                                     onClick={() => {
                                         updateStatusPembayaran(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Menunggu },
@@ -215,13 +222,14 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Batalkan
-                                </button>
+                                </Button>
                             </div>
                         ) : null}
                         {ajuan.type === "Renovasi" && (ajuan.status === "Diterima" || ajuan.status === "Ditolak") ? (
                             <div className="flex justify-end mt-5">
-                                <button
-                                    className="btn btn-primary"
+                                <Button
+                                    variant="filled"
+                                    color="red"
                                     onClick={() => {
                                         updateStatusRenovasi(
                                             { id: ajuan.id, status: StatusUpdateAdmin.Menunggu },
@@ -236,7 +244,7 @@ function AjuanDetail() {
                                     }}
                                 >
                                     Batalkan
-                                </button>
+                                </Button>
                             </div>
                         ) : null}
                     </div>

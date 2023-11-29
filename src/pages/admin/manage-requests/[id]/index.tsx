@@ -8,12 +8,21 @@ import PageTitle from "~/components/PageTitle";
 import { Badge, Grid, Paper } from '@mantine/core';
 import withAuth from "~/components/hoc/withAuth";
 import { Skeleton } from "@mantine/core";
+import { toast } from "react-toastify";
+
+export enum StatusUpdateAdmin {
+    Menunggu = "Menunggu",
+    Diterima = "Diterima",
+    Ditolak = "Ditolak",
+}
 
 function AjuanDetail() {
     const router = useRouter();
     const { id } = router.query;
 
-    const { data: ajuan } = api.ajuan.getAjuanbyId.useQuery(id! as string);
+    const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id! as string);
+    const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaranAdmin.useMutation();
+    const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasiAdmin.useMutation();
     // console.log(ajuan);
 
     if (!ajuan) {
@@ -117,6 +126,119 @@ function AjuanDetail() {
 
                             </Grid>
                         </Paper>
+                        {ajuan.type === "Pembayaran" && ajuan.status === "Menunggu" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusPembayaran(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Diterima },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Terima
+                                </button>
+                                <button
+                                    className="btn btn-danger ml-3"
+                                    onClick={() => {
+                                        updateStatusPembayaran(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Ditolak },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Tolak
+                                </button>
+                            </div>
+                        )}
+                        {ajuan.type === "Renovasi" && ajuan.status === "Menunggu" && (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusRenovasi(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Diterima },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Terima
+                                </button>
+                                <button
+                                    className="btn btn-danger ml-3"
+                                    onClick={() => {
+                                        updateStatusRenovasi(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Ditolak },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Tolak
+                                </button>
+                            </div>
+                        )}
+                        {ajuan.type === "Pembayaran" && (ajuan.status === "Diterima" || ajuan.status === "Ditolak") ? (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusPembayaran(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Menunggu },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Batalkan
+                                </button>
+                            </div>
+                        ) : null}
+                        {ajuan.type === "Renovasi" && (ajuan.status === "Diterima" || ajuan.status === "Ditolak") ? (
+                            <div className="flex justify-end mt-5">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        updateStatusRenovasi(
+                                            { id: ajuan.id, status: StatusUpdateAdmin.Menunggu },
+                                            {
+                                                onSuccess: () => {
+                                                    void refetch();
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                    void refetch();
+                                                },
+                                            }
+                                        );
+                                    }}
+                                >
+                                    Batalkan
+                                </button>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             </main>

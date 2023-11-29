@@ -5,10 +5,8 @@ import {
   protectedProcedureAdmin,
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
-import {
-  StatusUpdateUser,
-  StatusUpdateAdmin,
-} from "~/pages/user/my-requests/[id]";
+import { StatusUpdateUser } from "~/pages/user/my-requests/[id]";
+import { StatusUpdateAdmin } from "~/pages/admin/manage-requests/[id]";
 
 interface AjuanPembayaran {
   id: string;

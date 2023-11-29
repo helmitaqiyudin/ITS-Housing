@@ -16,17 +16,11 @@ export enum StatusUpdateUser {
     Menunggu = "Menunggu",
 }
 
-export enum StatusUpdateAdmin {
-    Menunggu = "Menunggu",
-    Diterima = "Diterima",
-    Ditolak = "Ditolak",
-}
-
 function AjuanDetail() {
     const router = useRouter();
     const { id } = router.query;
 
-    const { data: ajuan } = api.ajuan.getAjuanbyId.useQuery(id! as string);
+    const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id! as string);
     const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaran.useMutation();
     const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasi.useMutation();
     // console.log(ajuan);
@@ -141,8 +135,8 @@ function AjuanDetail() {
                                             { id: ajuan.id, status: StatusUpdateUser.Menunggu },
                                             {
                                                 onSuccess: () => {
-                                                    toast.success("Ajuan berhasil diajukan");
-                                                    void router.push("/user/my-requests");
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                    void refetch();
                                                 },
                                             }
                                         );
@@ -161,8 +155,8 @@ function AjuanDetail() {
                                             { id: ajuan.id, status: StatusUpdateUser.Menunggu },
                                             {
                                                 onSuccess: () => {
-                                                    toast.success("Ajuan berhasil diajukan");
-                                                    void router.push("/user/my-requests");
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                    void refetch();
                                                 },
                                             }
                                         );
@@ -181,8 +175,8 @@ function AjuanDetail() {
                                             { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
                                             {
                                                 onSuccess: () => {
-                                                    toast.success("Ajuan berhasil dibatalkan");
-                                                    void router.push("/user/my-requests");
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                    void refetch();
                                                 },
                                             }
                                         );
@@ -201,8 +195,8 @@ function AjuanDetail() {
                                             { id: ajuan.id, status: StatusUpdateUser.BelumDiajukan },
                                             {
                                                 onSuccess: () => {
-                                                    toast.success("Ajuan berhasil dibatalkan");
-                                                    void router.push("/user/my-requests");
+                                                    toast.success("Status Ajuan berhasil diubah");
+                                                    void refetch();
                                                 },
                                             }
                                         );

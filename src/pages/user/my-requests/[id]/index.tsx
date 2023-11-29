@@ -22,8 +22,8 @@ function AjuanDetail() {
     const { id } = router.query;
 
     const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id! as string);
-    const { mutate: updateStatusPembayaran, isLoading: updatePembayaranLoading } = api.ajuan.updateAjuanPembayaran.useMutation();
-    const { mutate: updateStatusRenovasi, isLoading: updateRenovLoading } = api.ajuan.updateAjuanRenovasi.useMutation();
+    const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaran.useMutation();
+    const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasi.useMutation();
     // console.log(ajuan);
 
     if (!ajuan) {
@@ -84,7 +84,7 @@ function AjuanDetail() {
                         <PageTitle title={`Detail Ajuan ${ajuan.type}`} withBackButton />
                         <div className="flex text-center">
                             {/* <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link> */}
-                            {ajuan.status === "BelumDiajukan" && (updatePembayaranLoading === false || updateRenovLoading === false) ? (<>
+                            {ajuan.status === "BelumDiajukan" ? (<>
                                 <p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan •</p><Link href={`/user/my-requests/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link></>) : (<><p className="text-lg font-semibold text-gray-800 p-2">Detail Ajuan</p></>)}
                         </div>
                         <Paper className="p-5 border-8">

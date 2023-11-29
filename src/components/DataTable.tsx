@@ -77,9 +77,11 @@ export function DataTable<TData, TValue>({
     return (
         <div>
             <Modal opened={opened} onClose={close} centered size="100%" radius={"md"} title={`Tambah ${buttonlabel ?? ""}`}>
-                {buttonlabel === "Rumah" && <FormCreateHouse close={close} refetchData={refetchData} />}
-                {buttonlabel === "Ajuan Pembayaran" && <FormCreatePaymentRequest close={close} refetchData={refetchData} />}
-                {buttonlabel === "Ajuan Renovasi" && <FormCreateRenovationRequest close={close} refetchData={refetchData} />}
+                <div className="min-h-[30vh]">
+                    {buttonlabel === "Rumah" && <FormCreateHouse close={close} refetchData={refetchData} />}
+                    {buttonlabel === "Ajuan Pembayaran" && <FormCreatePaymentRequest close={close} refetchData={refetchData} />}
+                    {buttonlabel === "Ajuan Renovasi" && <FormCreateRenovationRequest close={close} refetchData={refetchData} />}
+                </div>
             </Modal>
             <div className="flex md:items-center justify-between gap-2 md:gap-5 md:flex-row flex-col-reverse py-4">
                 <div className="flex items-center gap-5 justify-between">

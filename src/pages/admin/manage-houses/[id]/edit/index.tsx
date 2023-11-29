@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Layout } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
-import { Paper, Grid, TextInput, Button, LoadingOverlay, Select } from "@mantine/core";
+import { Paper, Grid, TextInput, Button, Skeleton, Select } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 
 
@@ -41,11 +41,17 @@ function EditHouse() {
 
   if (!house || !user) {
     return (
-      <LoadingOverlay
-        visible={true}
-        zIndex={9999}
-        loaderProps={{ color: 'blue', type: 'bars' }}
-      />
+      <Layout>
+        <Seo templateTitle="Edit Rumah Negara" />
+        <main className=" min-h-[100vh]">
+          <div className="md:container mx-auto my-10">
+            <div className="bg-white rounded-md drop-shadow-md p-5">
+              <PageTitle title="Edit Rumah Negara" withBackButton />
+              <Skeleton height={400} className="mt-5" />
+            </div>
+          </div>
+        </main>
+      </Layout>
     )
   }
 

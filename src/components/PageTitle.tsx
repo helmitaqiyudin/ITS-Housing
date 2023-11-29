@@ -9,9 +9,9 @@ type PageTitleProps = {
 const PageTitle: React.FC<PageTitleProps> = ({ title, withBackButton }) => {
   const router = useRouter();
   return (
-    <div className="p-5 md:p-3 md:mb-5 flex justify-between md:justify-start">
+    <div className={`p-5 md:p-3 md:mb-5 flex gap-0 ${withBackButton ? 'justify-between' : 'justify-center'} md:justify-start md:gap-5`}>
       {withBackButton && (
-        <div className="mr-5 cursor-pointer self-center" onClick={() => router.back()}>
+        <div className="cursor-pointer self-center" onClick={() => router.back()}>
           <ArrowLeft size={24} />
         </div>
       )}

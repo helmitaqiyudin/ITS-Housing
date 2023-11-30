@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { api } from "~/utils/api";
 import PageTitle from "~/components/PageTitle";
-import { Card, Grid, Modal, Paper } from '@mantine/core';
+import { Card, Grid, Modal, Paper, Skeleton } from '@mantine/core';
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { toast } from "react-toastify"
@@ -22,7 +22,25 @@ function HouseDetail() {
 
   const { data: house } = api.house.getHouseById.useQuery({ id: id! as string });
   // console.log(house);
-  const blok = house?.blok;
+
+  if (!house) return (
+    <Layout>
+      <Seo templateTitle="Rumah Negara" />
+      <main className=" min-h-[100vh]">
+        <div className="md:container mx-auto my-10">
+          <div className="bg-white rounded-md drop-shadow-md p-5">
+            <PageTitle title="Rumah Negara Saya" />
+            <div className="flex text-center">
+              <p className="text-lg font-semibold text-gray-800 p-2">Detail</p>
+            </div>
+            <Skeleton height={300} className="mb-5" />
+          </div>
+        </div>
+      </main>
+    </Layout>
+  );
+
+  const blok = house.blok;
   return (
     <Layout>
       <Seo templateTitle="Detail Rumah Negara" />
@@ -30,7 +48,7 @@ function HouseDetail() {
         <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
             <PageTitle title="Detail Rumah Negara" withBackButton />
-            {house?.boundary && <MapComponent boundary={house.boundary} />}
+            {house.boundary && <MapComponent boundary={house.boundary} />}
             <div className="flex text-center">
               <p className="text-lg font-semibold text-gray-800 p-2">Detail •</p><Link href={`/admin/manage-houses/${id! as string}/edit`} className="self-center text-blue-500 font-medium"><span>Edit</span> </Link>
             </div>
@@ -38,55 +56,55 @@ function HouseDetail() {
               <Grid gutter="md" grow={false}>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Blok Rumah</dt>
-                  <dd className="text-gray-700">{house?.blok}</dd>
+                  <dd className="text-gray-700">{house.blok}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Nama Lengkap</dt>
-                  <dd className="text-gray-700">{house?.user?.name}</dd>
+                  <dd className="text-gray-700">{house.user?.name}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Dokumen Kepemilikan</dt>
-                  <dd className="text-gray-700">{house?.dokumen_kepemilikan}</dd>
+                  <dd className="text-gray-700">{house.dokumen_kepemilikan}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Luas Tanah</dt>
-                  <dd className="text-gray-700">{house?.luas_tanah}</dd>
+                  <dd className="text-gray-700">{house.luas_tanah}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Alamat</dt>
-                  <dd className="text-gray-700">{house?.alamat}</dd>
+                  <dd className="text-gray-700">{house.alamat}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Luas Bangunan</dt>
-                  <dd className="text-gray-700">{house?.luas_bangunan}</dd>
+                  <dd className="text-gray-700">{house.luas_bangunan}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Tanggal SK Rektor</dt>
-                  <dd className="text-gray-700">{moment(house?.tanggal_sk_rektor).format("DD MMMM YYYY")}</dd>
+                  <dd className="text-gray-700">{moment(house.tanggal_sk_rektor).format("DD MMMM YYYY")}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Tarif Sewa</dt>
-                  <dd className="text-gray-700">{house?.tarif_sewa}</dd>
+                  <dd className="text-gray-700">{house.tarif_sewa}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Sumber Dana Pembangunan</dt>
-                  <dd className="text-gray-700">{house?.sumber_dana_pembangunan}</dd>
+                  <dd className="text-gray-700">{house.sumber_dana_pembangunan}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Golongan</dt>
-                  <dd className="text-gray-700">{house?.golongan}</dd>
+                  <dd className="text-gray-700">{house.golongan}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">No. SK Penetapan Golongan</dt>
-                  <dd className="text-gray-700">{house?.sk_golongan}</dd>
+                  <dd className="text-gray-700">{house.sk_golongan}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Nomor Hum</dt>
-                  <dd className="text-gray-700">{house?.nomor_hum}</dd>
+                  <dd className="text-gray-700">{house.nomor_hum}</dd>
                 </Grid.Col>
                 <Grid.Col span={{ xs: 12, md: 3 }}>
                   <dt className="font-medium text-gray-900">Kode Hum</dt>
-                  <dd className="text-gray-700">{house?.kode_hum}</dd>
+                  <dd className="text-gray-700">{house.kode_hum}</dd>
                 </Grid.Col>
               </Grid>
             </Paper>
@@ -146,6 +164,13 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
     }
   };
 
+  if (!catatanPenghunian) return (
+    <div className="flex text-center flex-wrap mt-5">
+      <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian</p>
+      <Skeleton height={100} className="mb-5" />
+    </div>
+  );
+
   return (
     <>
       <Modal opened={deleteConfirmationModal} onClose={closeDeleteModal} radius={"md"} centered>
@@ -171,7 +196,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
       <div className="flex flex-wrap text-center mt-5">
         <p className="text-lg font-semibold text-gray-800 p-2">Catatan Penghunian •</p><a onClick={open} className="self-center text-blue-500 font-medium cursor-pointer"><span>Tambah</span></a>
       </div>
-      {catatanPenghunian?.map((catatan) => {
+      {catatanPenghunian.map((catatan) => {
         return (
           <div key={catatan.id} className="mb-2">
             <Card withBorder className="p-2">
@@ -189,7 +214,7 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
           </div>
         )
       })}
-      {catatanPenghunian?.length === 0 && (
+      {catatanPenghunian.length === 0 && (
         <div className="flex justify-center p-3">
           <p className="text-lg font-normal text-gray-800">Belum ada catatan penghunian</p>
         </div>

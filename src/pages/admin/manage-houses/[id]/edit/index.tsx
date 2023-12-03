@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Layout } from "~/components/Layout";
 import PageTitle from "~/components/PageTitle";
 import Seo from "~/components/Seo";
-import { Paper, Grid, TextInput, Button, Skeleton, Select } from "@mantine/core";
+import { Paper, Grid, TextInput, Button, Skeleton, Select, InputLabel } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 
 
@@ -24,7 +24,7 @@ function EditHouse() {
   const form = useForm({
     initialValues: {
       blok: house?.blok,
-      id_tenaga: userObject?.id ?? "",
+      id_tenaga: userObject?.id,
       dokumen_kepemilikan: house?.dokumen_kepemilikan,
       luas_tanah: house?.luas_tanah,
       alamat: house?.alamat,
@@ -46,7 +46,7 @@ function EditHouse() {
         <main className=" min-h-[100vh]">
           <div className="md:container mx-auto my-10">
             <div className="bg-white rounded-md drop-shadow-md p-5">
-              <PageTitle title="Edit Rumah Negara" withBackButton />
+              <PageTitle title="Edit Rumah Negara" />
               <Skeleton height={400} className="mt-5" />
             </div>
           </div>
@@ -102,10 +102,7 @@ function EditHouse() {
       <main className=" min-h-[100vh]">
         <div className="md:container mx-auto my-10">
           <div className="bg-white rounded-md drop-shadow-md p-5">
-            <PageTitle title="Edit Rumah Negara" withBackButton />
-            <div className="flex text-center">
-              <p className="text-lg font-semibold text-gray-800 p-2">Detail</p>
-            </div>
+            <PageTitle title="Edit Rumah Negara" />
             <Paper className="p-5 border-8">
               <form className="mb-5 flex flex-col" onSubmit={(e) => {
                 handleSubmit();
@@ -114,7 +111,7 @@ function EditHouse() {
               >
                 <Grid gutter="md" grow={false}>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Blok Rumah</label>
+                    <InputLabel required className="font-medium text-gray-900">Blok Rumah</InputLabel>
                     <TextInput
                       placeholder="Blok Rumah"
                       value={form.values.blok}
@@ -122,7 +119,7 @@ function EditHouse() {
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Nama Lengkap</label>
+                    <InputLabel required className="font-medium text-gray-900">Nama Lengkap</InputLabel>
                     <Select
                       placeholder="Nama Lengkap"
                       value={form.values.id_tenaga}
@@ -135,18 +132,18 @@ function EditHouse() {
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Dokumen Kepemilikan</label>
+                    <InputLabel required className="font-medium text-gray-900">Dokumen Kepemilikan</InputLabel>
                     <TextInput
                       placeholder="Dokumen Kepemilikan"
-                      value={form.values.dokumen_kepemilikan ?? ""}
+                      value={form.values.dokumen_kepemilikan}
                       onChange={(event) => form.setFieldValue("dokumen_kepemilikan", event.currentTarget.value)}
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Luas Tanah</label>
+                    <InputLabel required className="font-medium text-gray-900">Luas Tanah</InputLabel>
                     <TextInput
                       placeholder="Luas Tanah"
-                      value={form.values.luas_tanah ?? ""}
+                      value={form.values.luas_tanah}
                       onChange={(event) => {
                         const value = event.currentTarget.value;
                         form.setFieldValue("luas_tanah", value ? parseInt(value) : 0);
@@ -154,18 +151,18 @@ function EditHouse() {
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Alamat</label>
+                    <InputLabel required className="font-medium text-gray-900">Alamat</InputLabel>
                     <TextInput
                       placeholder="Alamat"
-                      value={form.values.alamat ?? ""}
+                      value={form.values.alamat}
                       onChange={(event) => form.setFieldValue("alamat", event.currentTarget.value)}
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Luas Bangunan</label>
+                    <InputLabel required className="font-medium text-gray-900">Luas Bangunan</InputLabel>
                     <TextInput
                       placeholder="Luas Bangunan"
-                      value={form.values.luas_bangunan ?? ""}
+                      value={form.values.luas_bangunan}
                       onChange={(event) => {
                         const value = event.currentTarget.value;
                         form.setFieldValue("luas_bangunan", value ? parseInt(value) : 0);
@@ -173,7 +170,7 @@ function EditHouse() {
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Tanggal SK Rektor</label>
+                    <InputLabel required className="font-medium text-gray-900">Tanggal SK Rektor</InputLabel>
                     <DateInput
                       placeholder="Tanggal SK Rektor"
                       value={form.values.tanggal_sk_rektor ? new Date(form.values.tanggal_sk_rektor) : undefined}
@@ -182,7 +179,7 @@ function EditHouse() {
                       required />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Tarif Sewa</label>
+                    <InputLabel className="font-medium text-gray-900">Tarif Sewa</InputLabel>
                     <TextInput
                       placeholder="Tarif Sewa"
                       value={form.values.tarif_sewa ?? ""}
@@ -193,34 +190,34 @@ function EditHouse() {
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Sumber Dana Pembangunan</label>
+                    <InputLabel required className="font-medium text-gray-900">Sumber Dana Pembangunan</InputLabel>
                     <TextInput
                       placeholder="Sumber Dana Pembangunan"
-                      value={form.values.sumber_dana_pembangunan ?? ""}
+                      value={form.values.sumber_dana_pembangunan}
                       onChange={(event) => form.setFieldValue("sumber_dana_pembangunan", event.currentTarget.value)}
                       required
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Golongan</label>
+                    <InputLabel required className="font-medium text-gray-900">Golongan</InputLabel>
                     <TextInput
                       placeholder="Golongan"
-                      value={form.values.golongan ?? ""}
+                      value={form.values.golongan}
                       onChange={(event) => form.setFieldValue("golongan", event.currentTarget.value)}
                       required
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">No. SK Penetapan Golongan</label>
+                    <InputLabel required className="font-medium text-gray-900">No. SK Penetapan Golongan</InputLabel>
                     <TextInput
                       placeholder="No. SK Penetapan Golongan"
-                      value={form.values.sk_golongan ?? ""}
+                      value={form.values.sk_golongan}
                       onChange={(event) => form.setFieldValue("sk_golongan", event.currentTarget.value)}
                       required
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Nomor Hum</label>
+                    <InputLabel className="font-medium text-gray-900">Nomor Hum</InputLabel>
                     <TextInput
                       placeholder="Nomor Hum"
                       value={form.values.nomor_hum ?? ""}
@@ -228,7 +225,7 @@ function EditHouse() {
                     />
                   </Grid.Col>
                   <Grid.Col span={{ xs: 12, md: 3 }}>
-                    <label className="font-medium text-gray-900">Kode Hum</label>
+                    <InputLabel className="font-medium text-gray-900">Kode Hum</InputLabel>
                     <TextInput
                       placeholder="Kode Hum"
                       value={form.values.kode_hum ?? ""}

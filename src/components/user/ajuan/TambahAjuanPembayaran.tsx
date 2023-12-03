@@ -114,7 +114,7 @@ export default function FormCreatePaymentRequest({ close, refetchData }: { close
                                 placeholder="Jumlah Bayar"
                                 value={formatRupiah(jumlahBayarRaw)}
                                 onChange={(event) => {
-                                    const value = event.currentTarget.value.replace(/\D/g, ''); // Remove non-numeric characters
+                                    const value = event.currentTarget.value.replace(/\D/g, '');
                                     setJumlahBayarRaw(value ? parseInt(value, 10) : 0);
                                 }}
                                 required

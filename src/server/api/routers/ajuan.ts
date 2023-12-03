@@ -12,6 +12,7 @@ interface AjuanPembayaran {
   id: string;
   user: {
     name: string;
+    id: string;
   };
   house: {
     id: string;
@@ -19,6 +20,7 @@ interface AjuanPembayaran {
     alamat: string;
     user: {
       name: string;
+      id: string;
     };
   };
   bulan_bayar: string;
@@ -34,6 +36,7 @@ interface AjuanRenovasi {
   id: string;
   user: {
     name: string;
+    id: string;
   };
   house: {
     id: string;
@@ -41,6 +44,7 @@ interface AjuanRenovasi {
     alamat: string;
     user: {
       name: string;
+      id: string;
     };
   };
   AjuanRenovasiDocument: unknown;
@@ -69,6 +73,34 @@ export const ajuanRouter = createTRPCRouter({
       });
     }),
 
+  updateAjuan: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        type: z.string(),
+        blok: z.string(),
+        id_tenaga: z.string(),
+        bulan_bayar: z.string().optional(),
+        jumlah_bayar: z.number().optional(),
+        keterangan: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const { id, type, ...updateData } = input;
+
+      if (type == "Pembayaran") {
+        return await db.ajuanPembayaran.update({
+          where: { id: id },
+          data: updateData,
+        });
+      } else if (type == "Renovasi") {
+        return await db.ajuanRenovasi.update({
+          where: { id: id },
+          data: updateData,
+        });
+      }
+    }),
+
   createAjuanRenovasi: protectedProcedure
     .input(
       z.object({
@@ -85,7 +117,7 @@ export const ajuanRouter = createTRPCRouter({
     }),
 
   // UPDATE status ajuan user
-  updateAjuanPembayaran: protectedProcedure
+  updateStatusAjuanPembayaran: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -100,7 +132,7 @@ export const ajuanRouter = createTRPCRouter({
       });
     }),
 
-  updateAjuanRenovasi: protectedProcedure
+  updateStatusAjuanRenovasi: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -116,7 +148,7 @@ export const ajuanRouter = createTRPCRouter({
     }),
 
   // UPDATE status ajuan admin
-  updateAjuanPembayaranAdmin: protectedProcedureAdmin
+  updateStatusAjuanPembayaranAdmin: protectedProcedureAdmin
     .input(
       z.object({
         id: z.string(),
@@ -131,7 +163,7 @@ export const ajuanRouter = createTRPCRouter({
       });
     }),
 
-  updateAjuanRenovasiAdmin: protectedProcedureAdmin
+  updateStatusAjuanRenovasiAdmin: protectedProcedureAdmin
     .input(
       z.object({
         id: z.string(),
@@ -173,6 +205,7 @@ export const ajuanRouter = createTRPCRouter({
           id: true,
           user: {
             select: {
+              id: true,
               name: true,
             },
           },
@@ -183,6 +216,7 @@ export const ajuanRouter = createTRPCRouter({
               alamat: true,
               user: {
                 select: {
+                  id: true,
                   name: true,
                 },
               },
@@ -211,6 +245,7 @@ export const ajuanRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           house: {
@@ -221,6 +256,7 @@ export const ajuanRouter = createTRPCRouter({
               user: {
                 select: {
                   name: true,
+                  id: true,
                 },
               },
             },
@@ -235,8 +271,8 @@ export const ajuanRouter = createTRPCRouter({
       if (ajuanRenovasi) {
         return {
           ...ajuanRenovasi,
-          type: "Renovasi", // Ensure the type property is set correctly
-        } as AjuanRenovasi; // Explicit type assertion
+          type: "Renovasi",
+        } as AjuanRenovasi;
       }
 
       return null;
@@ -268,6 +304,7 @@ export const ajuanRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           house: {
@@ -278,6 +315,7 @@ export const ajuanRouter = createTRPCRouter({
               user: {
                 select: {
                   name: true,
+                  id: true,
                 },
               },
             },
@@ -299,6 +337,7 @@ export const ajuanRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           house: {
@@ -309,6 +348,7 @@ export const ajuanRouter = createTRPCRouter({
               user: {
                 select: {
                   name: true,
+                  id: true,
                 },
               },
             },
@@ -345,6 +385,7 @@ export const ajuanRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           house: {
@@ -355,6 +396,7 @@ export const ajuanRouter = createTRPCRouter({
               user: {
                 select: {
                   name: true,
+                  id: true,
                 },
               },
             },
@@ -375,6 +417,7 @@ export const ajuanRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           house: {
@@ -385,6 +428,7 @@ export const ajuanRouter = createTRPCRouter({
               user: {
                 select: {
                   name: true,
+                  id: true,
                 },
               },
             },

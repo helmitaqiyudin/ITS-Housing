@@ -22,8 +22,8 @@ function AjuanDetail() {
     const { id } = router.query;
 
     const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id! as string);
-    const { mutate: updateStatusPembayaran } = api.ajuan.updateAjuanPembayaran.useMutation();
-    const { mutate: updateStatusRenovasi } = api.ajuan.updateAjuanRenovasi.useMutation();
+    const { mutate: updateStatusPembayaran } = api.ajuan.updateStatusAjuanPembayaran.useMutation();
+    const { mutate: updateStatusRenovasi } = api.ajuan.updateStatusAjuanRenovasi.useMutation();
     // console.log(ajuan);
 
     if (!ajuan) {

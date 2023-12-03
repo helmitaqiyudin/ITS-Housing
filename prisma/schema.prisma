@@ -58,6 +58,7 @@ model User {
     house           House?
     AjuanPembayaran AjuanPembayaran[]
     AjuanRenovasi   AjuanRenovasi[]
+    Pembayaran      Pembayaran[]
 }
 
 model House {
@@ -98,22 +99,6 @@ model HouseDocument {
     created_at   DateTime @default(now())
     updated_at   DateTime @updatedAt
     house        House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
-
-    @@index([blok])
-}
-
-model Pembayaran {
-    id            String   @id @default(uuid())
-    blok          String
-    nama_penghuni String
-    bulan_sewa    String
-    tanggal_bayar DateTime
-    jumlah_bayar  Int
-    sisa_bayar    Int
-    keterangan    String?
-    created_at    DateTime @default(now())
-    updated_at    DateTime @updatedAt
-    house         House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
 
     @@index([blok])
 }
@@ -177,6 +162,24 @@ model AjuanRenovasiDocument {
     updated_at    DateTime      @updatedAt
 
     @@index([id])
+}
+
+model Pembayaran {
+    id            String   @id @default(uuid())
+    blok          String
+    id_tenaga     String
+    bulan_bayar   String
+    tanggal_bayar DateTime
+    jumlah_bayar  Int
+    sisa_bayar    Int
+    keterangan    String?
+    created_at    DateTime @default(now())
+    updated_at    DateTime @updatedAt
+    house         House    @relation(fields: [blok], references: [blok], onDelete: Cascade)
+    user          User     @relation(fields: [id_tenaga], references: [id], onDelete: Cascade)
+
+    @@index([blok])
+    @@index([id_tenaga])
 }
 
 model AjuanPembayaran {

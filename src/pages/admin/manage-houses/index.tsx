@@ -35,7 +35,7 @@ function ManageHouse() {
             <div className="flex flex-col items-center justify-center w-full">
               {isLoading ? <Skeleton height={300} className="mt-5" /> :
                 <div className="w-full">
-                  <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" />
+                  <DataTable columns={columns} data={houses} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Rumah" type="rumah" />
                 </div>
               }
             </div>

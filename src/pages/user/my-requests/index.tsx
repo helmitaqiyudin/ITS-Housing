@@ -61,8 +61,8 @@ function UserRequest() {
                 onChange={handleQueryChange} />
               {isLoading ? <Skeleton height={300} className="mt-5" /> :
                 <div className="w-full">
-                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" />}
-                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" />}
+                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Pembayaran" type="ajuan" />}
+                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} buttonlabel="Ajuan Renovasi" type="ajuan" />}
                 </div>
               }
             </div>

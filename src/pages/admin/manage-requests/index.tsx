@@ -64,8 +64,8 @@ function ManageRequests() {
                 onChange={handleQueryChange} />
               {isLoading ? <Skeleton height={300} className="mt-5" /> :
                 <div className="w-full">
-                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} />}
-                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} />}
+                  {query === "pembayaran" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} type="ajuan" />}
+                  {query === "renovasi" && <DataTable columns={columns} data={pembayaran} refetchData={refetcher} filteroptions={filteroptions} type="ajuan" />}
                 </div>
               }
             </div>

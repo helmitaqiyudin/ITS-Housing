@@ -21,6 +21,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     refetchData: () => void
     filteroptions: { value: string; label: string }[]
+    type: "rumah" | "ajuan"
     buttonlabel?: string
 }
 
@@ -28,8 +29,9 @@ export function DataTable<TData, TValue>({
     columns,
     data,
     refetchData,
-    filteroptions,
     buttonlabel,
+    type,
+    filteroptions,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -71,6 +73,14 @@ export function DataTable<TData, TValue>({
         table.getColumn(filter?.split('.')[0] ?? "")?.setFilterValue(selectedFilterValue);
     }
 
+    const [statusFilter, setStatusFilter] = React.useState("");
+
+    const handleChangeStatusFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedStatus = event.target.value;
+        setStatusFilter(selectedStatus);
+        table.getColumn("status")?.setFilterValue(selectedStatus);
+    };
+
     const [opened, { open, close }] = useDisclosure(false);
 
 
@@ -84,25 +94,42 @@ export function DataTable<TData, TValue>({
                 </div>
             </Modal>
             <div className="flex md:items-center justify-between gap-2 md:gap-5 md:flex-row flex-col-reverse py-4">
-                <div className="flex items-center gap-5 justify-between">
-                    <NativeSelect
-                        className="md:w-full max-w-sm"
-                        value={filter}
-                        onChange={(event) => handleChangeFilter(event)}
-                    >
-                        {filteroptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </NativeSelect>
-                    <TextInput
-                        placeholder={`Filter by ${filteroptions.find((option) => option.value === filter)?.label}`}
-                        value={filterValue}
-                        onChange={(event) => handleChangeFilterValue(event)}
-                        className="max-w-sm w-full"
-                    />
-                </div>
+                {type === "rumah" && (
+                    <div className="flex items-center gap-5 justify-between">
+                        <NativeSelect
+                            className="md:w-full max-w-sm"
+                            value={filter}
+                            onChange={(event) => handleChangeFilter(event)}
+                        >
+                            {filteroptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </NativeSelect>
+                        <TextInput
+                            placeholder={`Filter by ${filteroptions.find((option) => option.value === filter)?.label}`}
+                            value={filterValue}
+                            onChange={(event) => handleChangeFilterValue(event)}
+                            className="max-w-sm w-full"
+                        />
+                    </div>
+                )}
+                {type === "ajuan" && (
+                    <div className="flex items-center gap-5 justify-between">
+                        <NativeSelect
+                            className="md:w-full max-w-sm"
+                            value={statusFilter}
+                            onChange={(event) => handleChangeStatusFilter(event)}
+                        >
+                            <option value="">Semua</option>
+                            <option value="BelumDiajukan">Belum Diajukan</option>
+                            <option value="Menunggu">Menunggu</option>
+                            <option value="Diterima">Diterima</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </NativeSelect>
+                    </div>
+                )}
                 {buttonlabel && (
                     <div className="flex items-center justify-end">
                         <MantineButton

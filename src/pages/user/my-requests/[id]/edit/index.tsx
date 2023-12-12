@@ -23,9 +23,9 @@ function EditAjuan() {
 
     const { data: ajuan, refetch } = api.ajuan.getAjuanbyId.useQuery(id as string);
     const mutation = api.ajuan.updateAjuan.useMutation();
-    const [jumlahBayarRaw, setJumlahBayarRaw] = useState(0);
 
     const type = ajuan?.type;
+    const [jumlahBayarRaw, setJumlahBayarRaw] = useState(ajuan?.type === "Pembayaran" ? ajuan.jumlah_bayar : 0);
 
     const form = useForm({
         initialValues: {

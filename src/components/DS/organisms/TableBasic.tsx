@@ -1,13 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useReactTable,
   getCoreRowModel,
-  ColumnDef,
+  type ColumnDef,
   flexRender,
 } from "@tanstack/react-table";
-import { fuzzyFilter, dateFilter } from "@/utils/table";
+import { fuzzyFilter, dateFilter } from "~/utils/table";
 import {
-  Box,
-  Card,
   Flex,
   Table,
   TableContainer,

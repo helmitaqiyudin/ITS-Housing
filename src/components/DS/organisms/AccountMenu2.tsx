@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import AppSettingContext from "~/providers/AppSettingProvider";
 import {
   Box,
   Button,
-  Collapse,
-  Fade,
   Flex,
   Image,
   Link,
@@ -25,7 +25,6 @@ import {
 import NextLink from "next/link";
 import { useContext } from "react";
 import { IoFingerPrint, IoLogOut, IoPersonCircle } from "react-icons/io5";
-import { motion } from "framer-motion";
 import { useState } from "react";
 
 const AccountMenu = () => {

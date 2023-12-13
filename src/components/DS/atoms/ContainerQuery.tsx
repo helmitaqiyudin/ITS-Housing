@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import AppSettingContext from "~/providers/AppSettingProvider";
-import { Box, Flex } from "@chakra-ui/react";
-import { NextComponentType, NextPageContext } from "next";
+import { Box } from "@chakra-ui/react";
 import {
-  Component,
-  ReactNode,
-  createContext,
-  useState,
+  type ReactNode,
   useContext,
 } from "react";
 import useDimensions from "react-cool-dimensions";

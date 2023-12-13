@@ -1,27 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   Box,
-  Button,
   Flex,
-  Input,
   Text,
   Tooltip,
   useColorMode,
 } from "@chakra-ui/react";
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
-import { Wizard, useWizard } from "react-use-wizard";
-import DatePicker from "react-datepicker";
+import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Textarea,
 } from "@chakra-ui/react";
-import { Field, Form, Formik, useField, useFormikContext } from "formik";
+import { useField, useFormikContext } from "formik";
 import { FileUploader } from "react-drag-drop-files";
-import { CloseIcon, EyeIcon } from "../atoms/IconParams";
-import { title } from "process";
+import { CloseIcon } from "../atoms/IconParams";
 
 const fileTypes = ["JPEG", "PNG", "JPG"];
 
@@ -73,13 +70,15 @@ const InputFileFormik = ({ ...props }: InputProps) => {
     setFile(file);
     console.log(file[0].name);
     const reader = new FileReader();
-    reader.readAsDataURL(file[0]);
-    setFileName(file[0].name);
-    setFileSize(file[0].size);
+    reader.readAsDataURL(file[0] as Blob);
+    setFileName(file[0].name as string);
+    setFileSize((file as File[])[0]?.size);
     reader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
       if (readerEvent?.target?.result) {
-        setFieldValue(props.name, readerEvent.target.result);
-        setObjectUrl(URL.createObjectURL(file[0]));
+        void setFieldValue(props.name, readerEvent.target.result);
+        if (file[0] instanceof Blob) {
+          setObjectUrl(URL.createObjectURL(file[0]));
+        }
       }
     };
     file[0].value = "";
@@ -124,7 +123,7 @@ const InputFileFormik = ({ ...props }: InputProps) => {
 
             <Text
               display={
-                (meta.touched && meta.error) || statusFile == "error"
+                (meta.touched && meta.error) ?? statusFile == "error"
                   ? "block"
                   : "none"
               }
@@ -210,20 +209,20 @@ const InputFileFormik = ({ ...props }: InputProps) => {
                 filter={
                   !dragged
                     ? "grayscale(0)"
-                    : (meta.touched && meta.error) || statusFile == "error"
-                    ? statusFile == "selected" || statusFile == "dropped"
-                      ? "grayscale(1)"
-                      : "grayscale(0) hue-rotate(140deg)"
-                    : "grayscale(1)"
+                    : (meta.touched && meta.error) ?? statusFile == "error"
+                      ? statusFile == "selected" || statusFile == "dropped"
+                        ? "grayscale(1)"
+                        : "grayscale(0) hue-rotate(140deg)"
+                      : "grayscale(1)"
                 }
                 opacity={
                   !dragged
                     ? "1"
-                    : (meta.touched && meta.error) || statusFile == "error"
-                    ? statusFile == "selected" || statusFile == "dropped"
-                      ? "0.45"
-                      : "1"
-                    : "0.45"
+                    : (meta.touched && meta.error) ?? statusFile == "error"
+                      ? statusFile == "selected" || statusFile == "dropped"
+                        ? "0.45"
+                        : "1"
+                      : "0.45"
                 }
                 transition="all 0.18s"
                 _groupHover={{
@@ -267,10 +266,10 @@ const InputFileFormik = ({ ...props }: InputProps) => {
                       !dragged
                         ? "#008fff"
                         : meta.touched && meta.error
-                        ? statusFile == "selected" || statusFile == "dropped"
-                          ? "#808080"
+                          ? statusFile == "selected" || statusFile == "dropped"
+                            ? "#808080"
+                            : "#808080"
                           : "#808080"
-                        : "#808080"
                     }
                   >
                     &nbsp;seret & lepas file disini
@@ -409,7 +408,7 @@ const InputFileFormik = ({ ...props }: InputProps) => {
                   e.stopPropagation();
                   setFileName(undefined);
                   setFileSize(undefined);
-                  setFieldValue(props.name, "");
+                  void setFieldValue(props.name, "");
                   setStatus("error");
                 }}
               >

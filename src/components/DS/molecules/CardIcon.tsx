@@ -4,7 +4,7 @@ import {
 	Box,
 	Button,
 	Card,
-	CardProps,
+	type CardProps,
 	HStack,
 	Heading,
 	Link,

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { Flex, Icon, Link, Text, useColorMode, Box } from "@chakra-ui/react";
-import { DiscoveryIcon, WalletIcon } from "../atoms/IconParams";
 import { type MenuItem } from "~/types/menu-item";
 import NextLink from "next/link";
 import { useRouter } from "next/router";

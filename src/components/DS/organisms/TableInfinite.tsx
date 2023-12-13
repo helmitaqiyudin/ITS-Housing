@@ -1,6 +1,10 @@
-import { Box, Text, HStack, Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Table } from "@tanstack/table-core";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box, Text, HStack } from "@chakra-ui/react";
+import { useState } from "react";
+import { type Table } from "@tanstack/table-core";
 import { flexRender } from "@tanstack/react-table";
 import { CgChevronDown, CgChevronUp } from "react-icons/cg";
 import { BsChevronExpand } from "react-icons/bs";
@@ -26,7 +30,7 @@ const TableInfinite = ({
 }) => {
 	const dataLength = table.getRowModel().rows.length;
 	const { fetchNextPage, hasNextPage, isFetchingNextPage } = infiniteData;
-	const [list, setList] = useState<Number[]>([]);
+	const [list, setList] = useState<number[]>([]);
 	const [allChecked, setAllChecked] = useState<boolean>(false);
 	const [someChecked, setSomeChecked] = useState<boolean>(false);
 
@@ -43,7 +47,7 @@ const TableInfinite = ({
 		}
 	};
 
-	const checkOne = (id: Number, checked: boolean) => {
+	const checkOne = (id: number, checked: boolean) => {
 		const temp = list;
 
 		if (checked) {
@@ -154,7 +158,7 @@ const TableInfinite = ({
 									</TableMain>
 									<TableMore
 										moreText={hasNextPage ? "Tampilkan lebih" : "All data loaded"}
-										onClick={() => fetchNextPage()}
+										onClick={() => void fetchNextPage()}
 										isDisabled={!hasNextPage || isFetchingNextPage ? true : false}
 									/>
 								</>

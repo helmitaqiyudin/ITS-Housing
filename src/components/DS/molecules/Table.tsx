@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   Box,
   Button,
@@ -8,14 +13,14 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { ReactNode, useState, useEffect, useRef } from "react";
+import { type ReactNode, useState, useEffect, useRef } from "react";
 import { SearchIconMade } from "../atoms/IconsMade";
 import NextLink from "next/link";
-import { DropdownDateItem, DropdownItem } from "~/types/dropdown-items";
-import { Column } from "@tanstack/table-core";
+import { type DropdownDateItem, type DropdownItem } from "~/types/dropdown-items";
+import { type Column } from "@tanstack/table-core";
 import {
-  ButtonImageInterface,
-  TableCheckboxInterface,
+  type ButtonImageInterface,
+  type TableCheckboxInterface,
 } from "~/types/component";
 
 const TableWrapper = ({ children }: { children: ReactNode }) => {
@@ -155,7 +160,9 @@ const TableSearch = ({
           _focusVisible={{
             border: "none",
           }}
-          onChange={(e) => target(e.target.value)}
+          onChange={(e) => {
+            target.setFilter(e.target.value);
+          }}
         />
       </Box>
     </>

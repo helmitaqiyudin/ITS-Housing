@@ -1,13 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import AppSettingContext from "~/providers/AppSettingProvider";
 import {
   Box,
   useColorMode,
-  Link,
   Flex,
   Text,
-  CardProps,
-  BoxProps,
-  ChakraComponent,
+  type BoxProps,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import NextLink from "next/link";

@@ -1,5 +1,8 @@
-import { menuItem, menuItemInsights } from "@/data/dummy";
-import AppSettingContext from "@/providers/AppSettingProvider";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+
+import { menuItem, menuItemInsights } from "~/data/dummy";
+import AppSettingContext from "~/providers/AppSettingProvider";
 import {
   Box,
   Button,

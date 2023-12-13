@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     useReactTable,
     ColumnFiltersState,
@@ -12,13 +16,13 @@ import {
     FilterFn,
 } from '@tanstack/react-table'
 import { useState } from "react";
-import { DebouncedInput, Filter } from "@/utils/table_old";
+import { DebouncedInput, Filter } from "~/utils/table_old";
 import { Box, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, Button, Input, InputGroup, Stack, HStack } from '@chakra-ui/react';
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from 'axios';
-import { dateFilter, fuzzyFilter } from '@/utils/table';
+import { dateFilter, fuzzyFilter } from '~/utils/table';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 
 const PAGE_SIZE = 20

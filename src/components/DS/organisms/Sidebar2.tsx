@@ -1,6 +1,8 @@
-import AppSettingContext from "@/providers/AppSettingProvider";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import AppSettingContext from "~/providers/AppSettingProvider";
 import { Box, Flex, Image, Text, useColorMode } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import MainMenu2 from "./MainMenu2";
 import { MotionBox, MotionButton } from "../motion/Motion";
 
@@ -23,8 +25,7 @@ const Sidebar = () => {
           flexDirection="column"
           width="260px"
           animate={{ width: isNavbarOpen ? 88 : 260 }}
-          // @ts-ignore
-          transition={{ ease: [0.7, 0.193, 0.25, 0.958], duration: 0.2 }}
+          transition={{ "ease": "0.7, 0.193, 0.25, 0.958", "duration": "0.2" }}
         >
           <Flex
             w={isNavbarOpen ? 58 : 220}
@@ -73,7 +74,7 @@ const Sidebar = () => {
             display={{ base: "none", lg: "block" }}
             w="full"
             pos="relative"
-        
+
             sx={{
               overflowX: "hidden",
               overflowY: "auto",
@@ -111,17 +112,17 @@ const Sidebar = () => {
               transition: { duration: 0.3 },
             }}
             animate={{ right: isNavbarOpen ? "16px" : "24px" }}
-            // @ts-ignore
-            transition={{ ease: [0.7, 0.193, 0.25, 0.958], duration: 0.2 }}
+
+            transition={{ "ease": "0.7, 0.193, 0.25, 0.958", "duration": "0.2" }}
           >
             <MotionBox
               animate={{
                 rotate: isNavbarOpen ? 180 : 0,
               }}
-              // @ts-ignore
+
               transition={{
                 ease: "easeOut",
-                duration: 0.2,
+                duration: "0.2",
               }}
             >
               <Image

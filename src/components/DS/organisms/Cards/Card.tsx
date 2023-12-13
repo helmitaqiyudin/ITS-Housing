@@ -1,6 +1,6 @@
-import { Box, BoxProps, ChakraComponent, useColorMode } from "@chakra-ui/react";
+import { Box, type BoxProps, type ChakraComponent, useColorMode } from "@chakra-ui/react";
 
-type DivComponent = ChakraComponent<"div", {}>;
+type DivComponent = ChakraComponent<"div", object>;
 
 const PlainCard = ((props: BoxProps) => {
   const { colorMode } = useColorMode();

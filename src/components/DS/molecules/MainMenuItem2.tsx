@@ -1,5 +1,9 @@
+
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import AppSettingContext from "~/providers/AppSettingProvider";
-import { MenuItem } from "~/types/menu-item";
+import { type MenuItem } from "~/types/menu-item";
 import {
   Box,
   Button,

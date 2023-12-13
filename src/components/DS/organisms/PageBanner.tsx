@@ -1,4 +1,4 @@
-import { Box, useColorMode, Text } from "@chakra-ui/react";
+import { Box, useColorMode } from "@chakra-ui/react";
 
 const PageBanner = () => {
   const { colorMode } = useColorMode();

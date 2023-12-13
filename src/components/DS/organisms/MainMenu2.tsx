@@ -1,5 +1,5 @@
-import { Box } from "@chakra-ui/react";
-import MainMenuItem from "../molecules/MainMenuItem";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { menuItem } from "~/data/dummy";
 import { motion } from "framer-motion";
 import MainMenuItem2 from "../molecules/MainMenuItem2";

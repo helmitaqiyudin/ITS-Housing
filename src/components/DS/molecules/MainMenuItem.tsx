@@ -1,3 +1,6 @@
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import {
     Box,
     Button,
@@ -6,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { IoChevronDown, IoChevronUp } from "react-icons/io5"
 import NextLink from 'next/link'
-import { MenuItem } from '~/types/menu-item'
+import { type MenuItem } from '~/types/menu-item'
 import AppSettingContext from '~/providers/AppSettingProvider'
 import { useContext } from 'react'
 

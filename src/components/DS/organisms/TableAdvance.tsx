@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useReactTable,
-  ColumnFiltersState,
+  type ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
   getFacetedRowModel,
@@ -8,13 +9,11 @@ import {
   getFacetedMinMaxValues,
   getPaginationRowModel,
   getSortedRowModel,
-  ColumnDef,
+  type ColumnDef,
   flexRender,
-  FilterFn,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { DebouncedInput, Filter } from "@/utils/table_old";
-import { RankingInfo } from "@tanstack/match-sorter-utils";
+import { DebouncedInput, Filter } from "~/utils/table_old";
 import {
   Box,
   Button,
@@ -36,7 +35,7 @@ import {
   IoChevronForward,
   IoChevronForwardCircle,
 } from "react-icons/io5";
-import { dateFilter, fuzzyFilter } from "@/utils/table";
+import { dateFilter, fuzzyFilter } from "~/utils/table";
 
 const TableAdvance = ({
   columns,

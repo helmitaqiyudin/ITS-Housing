@@ -1,20 +1,11 @@
 import {
   Box,
-  Button,
   Checkbox,
   Flex,
-  Input,
   useColorMode,
-  Link,
-  Text,
 } from "@chakra-ui/react";
-import { ReactNode, useState, useEffect, useRef } from "react";
-import { SearchIconMade } from "../atoms/IconsMade";
-import NextLink from "next/link";
-import { DropdownDateItem, DropdownItem } from "~/types/dropdown-items";
-import { Column } from "@tanstack/table-core";
+import { useState, useEffect } from "react";
 import {
-  ButtonImageInterface,
   type CustomCheckboxInterface,
 } from "~/types/component";
 

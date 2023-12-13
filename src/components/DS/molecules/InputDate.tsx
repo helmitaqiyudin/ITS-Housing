@@ -1,16 +1,16 @@
-import { Box, Button, Flex, Input, Text, useColorMode } from "@chakra-ui/react";
-import { ReactNode, forwardRef, useContext, useState } from "react";
-import { Wizard, useWizard } from "react-use-wizard";
-import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Box, Flex, Input, Text, useColorMode } from "@chakra-ui/react";
+import { type ReactNode, forwardRef } from "react";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-  FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Textarea,
 } from "@chakra-ui/react";
-import { Field, Form, Formik, useField, useFormikContext } from "formik";
+import { useField, useFormikContext } from "formik";
 
 interface InputPropsDate {
   label: string;
@@ -33,9 +33,9 @@ export const InputDateFormik = ({ ...props }: InputPropsDate) => {
     <DatePicker
       {...field}
       {...props}
-      selected={(field.value && new Date(field.value)) || null}
+      selected={(field.value && new Date(field.value as string)) || null}
       onChange={(val) => {
-        setFieldValue(field.name, val);
+        void setFieldValue(field.name, val);
       }}
       customInput={<TanggalMulaiInput />}
     />

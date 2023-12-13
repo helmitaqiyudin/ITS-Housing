@@ -1,26 +1,7 @@
-import PageTransition from "~/components/DS/PageLayout";
-import MenuWrapper from "~/components/DS/atoms/ContainerQuery";
-import PageRow from "~/components/DS/atoms/PageRow";
-import {
-  TableContainer,
-  TableFilter,
-  TableFilterDate,
-  TableSearch,
-  TableSorting,
-  TableSortingCol,
-  TableSortingRow,
-  TableWrapper,
-} from "~/components/DS/molecules/Table";
 import { MotionBox } from "~/components/DS/motion/Motion";
-import { TableInfinite } from "~/components/DS/organisms/TableInfinite";
-import { DropdownItem, DropdownItemDate } from "~/data/dummy";
-import { kolomTabelBerkas } from "~/data/table";
-import WizardWidget from "/pages/cuti/wizard/wizard";
-import ModalContext, { ModalContextProvider } from "@/providers/ModalProvider";
-import { InfiniteQuery, TableLoadMoreConf } from "@/utils/table";
+import ModalContext from "~/providers/ModalProvider";
 import { Box, Button, useColorMode } from "@chakra-ui/react";
-import { ReactNode, useContext, useEffect, useState } from "react";
-// import WizardWidget from "./wizard/wizard";
+import { type ReactNode, useContext, useEffect, useState } from "react";
 
 export const ModalButton = ({ children }: { children: ReactNode }) => {
   const { isModalActive, setIsModalActive } = useContext(ModalContext);

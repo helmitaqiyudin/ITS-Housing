@@ -1,7 +1,9 @@
-import AppSettingContext from "@/providers/AppSettingProvider";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import AppSettingContext from "~/providers/AppSettingProvider";
 import { Box, Button, Flex, Input, Text, useColorMode } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { ReactNode, useContext, useEffect } from "react";
+import { type ReactNode, useContext, useEffect } from "react";
 import { BellIconMade, SearchIconMade } from "./atoms/IconsMade";
 import { MotionBox } from "./motion/Motion";
 
@@ -207,11 +209,11 @@ const PageTransition = ({
             <Box
               className="header__user"
               cursor="pointer"
-              display={{ base: "block"}}
+              display={{ base: "block" }}
               flexShrink="0"
               w="40px"
               h="40px"
-              ml={{base: "0", m: "24px"}}
+              ml={{ base: "0", m: "24px" }}
               fontSize="0"
               bgImage="/pp.jpg"
               backgroundSize="contain"
@@ -226,12 +228,12 @@ const PageTransition = ({
         initial="initial"
         animate="animate"
         exit="exit"
-        // @ts-ignore
-        transition={{
-          duration: 0.25,
-          ease: "easeInOut",
-          delay: 0,
-        }}
+        // transition={{
+        //   duration: 0.25,
+        //   ease: "easeInOut",
+        //   delay: 0,
+        // }}
+        transition={{ type: "easeInOut", duration: "0.25" }}
       >
         {children}
       </MotionBox>

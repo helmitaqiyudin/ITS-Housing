@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 
@@ -9,7 +14,7 @@ export function DragnDrop() {
     setFile(file);
     console.log(file[0].name);
     const reader = new FileReader();
-    reader.readAsDataURL(file[0]);
+    reader.readAsDataURL(file[0] as Blob);
     reader.onloadend = (readerEvent: ProgressEvent<FileReader>) => {
       if (readerEvent?.target?.result) {
         console.log(file[0].name, readerEvent.target.result);

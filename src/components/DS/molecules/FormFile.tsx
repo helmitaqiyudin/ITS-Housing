@@ -3,23 +3,23 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { URL } from 'url';
 
 interface FormFileInterface {
-    title?: string;
-    helper?: string;
-    isRequired: boolean;
-    isInvalid: boolean;
-    isDisabled: boolean;
-    errorHelper?: string;
-  }
+  title?: string;
+  helper?: string;
+  isRequired: boolean;
+  isInvalid: boolean;
+  isDisabled: boolean;
+  errorHelper?: string;
+}
 
 const FormFile = (props: Partial<FormFileInterface>) => {
-  const {title, isInvalid, helper, errorHelper, isRequired, isDisabled, ...nativeProps} = props;
+  const { title, isInvalid, helper, errorHelper, isRequired, isDisabled, ...nativeProps } = props;
 
   const inputRef = useRef(null);
 
   const handleClick = () => {
     // inputRef.current.click();
   }
-  
+
   return (
     <></>
     // <FormControl isInvalid={isInvalid} isRequired={isRequired} isDisabled={isDisabled}>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import AppSettingContext from "~/providers/AppSettingProvider";
 import {
   Box,
@@ -10,7 +12,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { MotionBox } from "../motion/Motion";
 import MainMenu from "./MainMenu";

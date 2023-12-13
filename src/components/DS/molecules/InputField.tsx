@@ -1,16 +1,12 @@
-import { Box, Button, Flex, Input, Text, useColorMode } from "@chakra-ui/react";
-import { useContext, useState } from "react";
-import { Wizard, useWizard } from "react-use-wizard";
-import DatePicker from "react-datepicker";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Box, Flex, Input, Text, useColorMode } from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Textarea,
 } from "@chakra-ui/react";
-import { Field, Form, Formik, useField } from "formik";
+import { useField } from "formik";
 
 type InputProps = {
   label: string;

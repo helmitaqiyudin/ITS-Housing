@@ -1,5 +1,5 @@
 import * as React from "react"
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel, type SortingState, getSortedRowModel, type ColumnFiltersState, getFilteredRowModel, } from "@tanstack/react-table";
+import { type ColumnDef, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel, type SortingState, getSortedRowModel, type ColumnFiltersState, getFilteredRowModel, type Row, } from "@tanstack/react-table";
 import {
     Table,
     TableBody,
@@ -51,6 +51,14 @@ export function DataTable<TData, TValue>({
             sorting,
             columnFilters,
         },
+        filterFns: {
+            fuzzy: (value: Row<TData>, filterValue: string) => {
+                return JSON.stringify(value)?.toString().toLowerCase().includes(filterValue?.toString().toLowerCase())
+            },
+            date: (value: Row<TData>, filterValue: string) => {
+                return typeof value === 'string' && typeof filterValue === 'string' && (value as string).toLowerCase().includes((filterValue).toLowerCase())
+            }
+        }
     })
 
     const [filter, setFilter] = React.useState(filteroptions[0]?.value)

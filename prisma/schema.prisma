@@ -52,7 +52,7 @@ model User {
     email           String?           @unique
     emailVerified   DateTime?
     image           String?
-    role            Role?             @default(admin)
+    role            Role?             @default(user)
     accounts        Account[]
     sessions        Session[]
     house           House?

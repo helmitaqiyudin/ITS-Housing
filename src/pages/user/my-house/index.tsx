@@ -150,4 +150,4 @@ function CatatanPenghunian({ blok }: CatatanPenghunianProps) {
   );
 }
 
-export default withAuth(HouseDetail, 'all', 'user');;
+export default withAuth(HouseDetail, 'all', 'user');

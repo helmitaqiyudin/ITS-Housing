@@ -86,7 +86,7 @@ export default function MapComponent({ boundary }: MapComponentProps) {
                     {...viewState}
                     initialViewState={initialViewport}
                     mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    mapStyle="mapbox://styles/mapbox/standard"
                     onMove={(evt) => setViewState(evt.viewState)}
                     style={{
                         width: "100%",
